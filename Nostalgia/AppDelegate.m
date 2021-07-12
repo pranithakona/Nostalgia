@@ -28,8 +28,12 @@
 
     [Parse initializeWithConfiguration:config];
     
-    [GMSServices provideAPIKey:@"AIzaSyBi17inOTjjpnkGEYZhMrrxTFMbW0upKaE"];
-    [GMSPlacesClient provideAPIKey:@"AIzaSyBi17inOTjjpnkGEYZhMrrxTFMbW0upKaE"];
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *key= [dict objectForKey: @"API_Key"];
+    
+    [GMSServices provideAPIKey:key];
+    [GMSPlacesClient provideAPIKey:key];
 
     return YES;
 }

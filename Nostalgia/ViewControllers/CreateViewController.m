@@ -6,19 +6,96 @@
 //
 
 #import "CreateViewController.h"
+#import "Destination.h"
+#import "CreateCell.h"
 @import GooglePlaces;
 
-@interface CreateViewController ()
+@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 
 @end
 
 @implementation CreateViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    
+    UICollectionViewFlowLayout *layout = [self.collectionView collectionViewLayout];
+    layout.minimumLineSpacing = 5;
+    layout.minimumInteritemSpacing = 5;
+    CGFloat itemWidth = self.collectionView.frame.size.width;
+    layout.itemSize = CGSizeMake(itemWidth, 100);
+    
+    self.arrayOfDestinations = [NSMutableArray array];
 }
 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.arrayOfDestinations.count;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CreateCell" forIndexPath:indexPath];
+    
+    GMSPlace *dest = self.arrayOfDestinations[indexPath.item];
+    cell.nameLabel.text = dest.name;
+    
+    return cell;
+}
+
+- (IBAction)addLocation:(id)sender {
+    GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
+    acController.delegate = self;
+
+    GMSPlaceField fields = (GMSPlaceFieldName | GMSPlaceFieldPlaceID | GMSPlaceFieldCoordinate);
+    acController.placeFields = fields;
+
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterNoFilter;
+    acController.autocompleteFilter = filter;
+
+    [self presentViewController:acController animated:YES completion:nil];
+}
+
+- (void)viewController:(GMSAutocompleteViewController *)viewController
+    didAutocompleteWithPlace:(GMSPlace *)place {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.arrayOfDestinations addObject:place];
+    [self.collectionView reloadData];
+        
+    
+    NSLog(@"Place name %@", place.name);
+    NSLog(@"Place ID %@", place.placeID);
+    NSLog(@"Place attributions %@", place.attributions.string);
+}
+
+- (void)viewController:(GMSAutocompleteViewController *)viewController
+didFailAutocompleteWithError:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    // TODO: handle the error.
+    NSLog(@"Error: %@", [error description]);
+}
+
+// User canceled the operation.
+- (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
+[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Turn the network activity indicator on and off again.
+- (void)didRequestAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
 /*
 #pragma mark - Navigation
 
