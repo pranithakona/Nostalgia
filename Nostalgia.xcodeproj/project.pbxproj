@@ -3,19 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0010C689D3EF9BA10C0C4F5D /* Pods_Nostalgia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */; };
+		28704E0FA8132A71515CAD6A /* Pods_NostalgiaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */; };
 		33C64127269A646E00726C4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64126269A646E00726C4E /* AppDelegate.m */; };
 		33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64129269A646E00726C4E /* SceneDelegate.m */; };
-		33C6412D269A646E00726C4E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6412C269A646E00726C4E /* ViewController.m */; };
 		33C64130269A646E00726C4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33C6412E269A646E00726C4E /* Main.storyboard */; };
 		33C64132269A646F00726C4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33C64131269A646F00726C4E /* Assets.xcassets */; };
 		33C64135269A646F00726C4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33C64133269A646F00726C4E /* LaunchScreen.storyboard */; };
 		33C64138269A646F00726C4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64137269A646F00726C4E /* main.m */; };
 		33C64142269A646F00726C4E /* NostalgiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64141269A646F00726C4E /* NostalgiaTests.m */; };
 		33C6414D269A646F00726C4E /* NostalgiaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6414C269A646F00726C4E /* NostalgiaUITests.m */; };
+		33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64161269A6DBB00726C4E /* LoginViewController.m */; };
+		33C64165269A6E1F00726C4E /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64164269A6E1F00726C4E /* SignUpViewController.m */; };
+		33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64167269A7D5D00726C4E /* HomeViewController.m */; };
+		33C6416E269A891C00726C4E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6416D269A891C00726C4E /* MapViewController.m */; };
+		33C64171269A8B7400726C4E /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64170269A8B7400726C4E /* CreateViewController.m */; };
+		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,13 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NostalgiaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AEAA43EEA0FFFE11C27A60D /* Pods-Nostalgia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.release.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.release.xcconfig"; sourceTree = "<group>"; };
+		326E31CE31439C428A6B4AF5 /* Pods-Nostalgia-NostalgiaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.release.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.release.xcconfig"; sourceTree = "<group>"; };
+		32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia_NostalgiaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C64122269A646E00726C4E /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C64125269A646E00726C4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		33C64126269A646E00726C4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		33C64128269A646E00726C4E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		33C64129269A646E00726C4E /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		33C6412B269A646E00726C4E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		33C6412C269A646E00726C4E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		33C6412F269A646E00726C4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		33C64131269A646F00726C4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33C64134269A646F00726C4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +63,21 @@
 		33C64148269A646F00726C4E /* NostalgiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NostalgiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C6414C269A646F00726C4E /* NostalgiaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NostalgiaUITests.m; sourceTree = "<group>"; };
 		33C6414E269A646F00726C4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33C64160269A6DBB00726C4E /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		33C64161269A6DBB00726C4E /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		33C64163269A6E1F00726C4E /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		33C64164269A6E1F00726C4E /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		33C64166269A7D5D00726C4E /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		33C64167269A7D5D00726C4E /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		33C6416C269A891C00726C4E /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		33C6416D269A891C00726C4E /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		33C6416F269A8B7400726C4E /* CreateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
+		33C64170269A8B7400726C4E /* CreateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
+		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
+		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE0ACBD96A1B5CBEFA99549A /* Pods-NostalgiaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NostalgiaTests.debug.xcconfig"; path = "Target Support Files/Pods-NostalgiaTests/Pods-NostalgiaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F4A4C3F71E1A79066DFDBEE0 /* Pods-NostalgiaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NostalgiaTests.release.xcconfig"; path = "Target Support Files/Pods-NostalgiaTests/Pods-NostalgiaTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0010C689D3EF9BA10C0C4F5D /* Pods_Nostalgia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28704E0FA8132A71515CAD6A /* Pods_NostalgiaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +101,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07B761E4E4EC79F6022F5AFE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */,
+				32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */,
+				051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		33C64119269A646E00726C4E = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +125,8 @@
 				33C64140269A646F00726C4E /* NostalgiaTests */,
 				33C6414B269A646F00726C4E /* NostalgiaUITests */,
 				33C64123269A646E00726C4E /* Products */,
+				8DFDFB854A46ADF0851456FC /* Pods */,
+				07B761E4E4EC79F6022F5AFE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,12 +143,13 @@
 		33C64124269A646E00726C4E /* Nostalgia */ = {
 			isa = PBXGroup;
 			children = (
+				33C6415A269A6A6800726C4E /* ViewControllers */,
+				33C6415B269A6BEF00726C4E /* Views */,
+				33C6415C269A6BFC00726C4E /* Models */,
 				33C64125269A646E00726C4E /* AppDelegate.h */,
 				33C64126269A646E00726C4E /* AppDelegate.m */,
 				33C64128269A646E00726C4E /* SceneDelegate.h */,
 				33C64129269A646E00726C4E /* SceneDelegate.m */,
-				33C6412B269A646E00726C4E /* ViewController.h */,
-				33C6412C269A646E00726C4E /* ViewController.m */,
 				33C6412E269A646E00726C4E /* Main.storyboard */,
 				33C64131269A646F00726C4E /* Assets.xcassets */,
 				33C64133269A646F00726C4E /* LaunchScreen.storyboard */,
@@ -137,6 +177,50 @@
 			path = NostalgiaUITests;
 			sourceTree = "<group>";
 		};
+		33C6415A269A6A6800726C4E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				33C64166269A7D5D00726C4E /* HomeViewController.h */,
+				33C64167269A7D5D00726C4E /* HomeViewController.m */,
+				33C64160269A6DBB00726C4E /* LoginViewController.h */,
+				33C64161269A6DBB00726C4E /* LoginViewController.m */,
+				33C64163269A6E1F00726C4E /* SignUpViewController.h */,
+				33C64164269A6E1F00726C4E /* SignUpViewController.m */,
+				33C6416C269A891C00726C4E /* MapViewController.h */,
+				33C6416D269A891C00726C4E /* MapViewController.m */,
+				33C6416F269A8B7400726C4E /* CreateViewController.h */,
+				33C64170269A8B7400726C4E /* CreateViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		33C6415B269A6BEF00726C4E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		33C6415C269A6BFC00726C4E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8DFDFB854A46ADF0851456FC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */,
+				0AEAA43EEA0FFFE11C27A60D /* Pods-Nostalgia.release.xcconfig */,
+				3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */,
+				326E31CE31439C428A6B4AF5 /* Pods-Nostalgia-NostalgiaUITests.release.xcconfig */,
+				EE0ACBD96A1B5CBEFA99549A /* Pods-NostalgiaTests.debug.xcconfig */,
+				F4A4C3F71E1A79066DFDBEE0 /* Pods-NostalgiaTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +228,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33C64151269A646F00726C4E /* Build configuration list for PBXNativeTarget "Nostalgia" */;
 			buildPhases = (
+				E1242128D36C95C5F5F94BED /* [CP] Check Pods Manifest.lock */,
 				33C6411E269A646E00726C4E /* Sources */,
 				33C6411F269A646E00726C4E /* Frameworks */,
 				33C64120269A646E00726C4E /* Resources */,
+				D15EB4FBD5C3365222ABD3BB /* [CP] Embed Pods Frameworks */,
+				1DFEF63D51C2A68BF4A5E2D8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,6 +248,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33C64154269A646F00726C4E /* Build configuration list for PBXNativeTarget "NostalgiaTests" */;
 			buildPhases = (
+				DAA07878A36A3A55DEAC6F90 /* [CP] Check Pods Manifest.lock */,
 				33C64139269A646F00726C4E /* Sources */,
 				33C6413A269A646F00726C4E /* Frameworks */,
 				33C6413B269A646F00726C4E /* Resources */,
@@ -179,9 +267,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33C64157269A646F00726C4E /* Build configuration list for PBXNativeTarget "NostalgiaUITests" */;
 			buildPhases = (
+				9C68E90E01C75DC493747C8A /* [CP] Check Pods Manifest.lock */,
 				33C64144269A646F00726C4E /* Sources */,
 				33C64145269A646F00726C4E /* Frameworks */,
 				33C64146269A646F00726C4E /* Resources */,
+				5684A04DF6127385D943766C /* [CP] Embed Pods Frameworks */,
+				12584B155491CABE0296A84C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,15 +352,156 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		12584B155491CABE0296A84C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1DFEF63D51C2A68BF4A5E2D8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5684A04DF6127385D943766C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C68E90E01C75DC493747C8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nostalgia-NostalgiaUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D15EB4FBD5C3365222ABD3BB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nostalgia/Pods-Nostalgia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DAA07878A36A3A55DEAC6F90 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NostalgiaTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1242128D36C95C5F5F94BED /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nostalgia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		33C6411E269A646E00726C4E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33C6412D269A646E00726C4E /* ViewController.m in Sources */,
 				33C64127269A646E00726C4E /* AppDelegate.m in Sources */,
+				33C64165269A6E1F00726C4E /* SignUpViewController.m in Sources */,
+				33C6416E269A891C00726C4E /* MapViewController.m in Sources */,
 				33C64138269A646F00726C4E /* main.m in Sources */,
+				33C64171269A8B7400726C4E /* CreateViewController.m in Sources */,
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
+				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
+				33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +670,7 @@
 		};
 		33C64152269A646F00726C4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -456,6 +689,7 @@
 		};
 		33C64153269A646F00726C4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AEAA43EEA0FFFE11C27A60D /* Pods-Nostalgia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -474,6 +708,7 @@
 		};
 		33C64155269A646F00726C4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE0ACBD96A1B5CBEFA99549A /* Pods-NostalgiaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -494,6 +729,7 @@
 		};
 		33C64156269A646F00726C4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4A4C3F71E1A79066DFDBEE0 /* Pods-NostalgiaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -514,6 +750,7 @@
 		};
 		33C64158269A646F00726C4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TS38J5T7ZU;
@@ -532,6 +769,7 @@
 		};
 		33C64159269A646F00726C4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 326E31CE31439C428A6B4AF5 /* Pods-Nostalgia-NostalgiaUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TS38J5T7ZU;
