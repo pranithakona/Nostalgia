@@ -8,13 +8,12 @@
 #import "CreateViewController.h"
 #import "Destination.h"
 #import "CreateCell.h"
-@import GooglePlaces;
 
 @interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 
 @end
 
@@ -34,6 +33,7 @@
     layout.itemSize = CGSizeMake(itemWidth, 100);
     
     self.arrayOfDestinations = [NSMutableArray array];
+    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -43,8 +43,8 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CreateCell" forIndexPath:indexPath];
     
-    GMSPlace *dest = self.arrayOfDestinations[indexPath.item];
-    cell.nameLabel.text = dest.name;
+    Destination *dest = self.arrayOfDestinations[indexPath.item];
+    [cell setCellWithDestination:dest];
     
     return cell;
 }
@@ -67,8 +67,14 @@
     didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self.arrayOfDestinations addObject:place];
-    [self.collectionView reloadData];
+    [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+        if (!error){
+            [self.arrayOfDestinations addObject:dest];
+            [self.collectionView reloadData];
+        } else {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+    }];
         
     
     NSLog(@"Place name %@", place.name);

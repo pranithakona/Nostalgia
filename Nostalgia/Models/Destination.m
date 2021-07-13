@@ -21,7 +21,7 @@
     return @"Destination";
 }
 
-+ (Destination *) postDestination: (GMSPlace *)place withCompletion: (PFBooleanResultBlock _Nullable)completion {
++ (void) postDestination: (GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion {
     Destination *newDest = [Destination new];
     newDest.name = place.name;
     newDest.placeID = place.placeID;
@@ -30,9 +30,14 @@
     newDest.isFixed = false;
     newDest.order = 0;
     
-    [newDest saveInBackgroundWithBlock:completion];
     
-    return newDest;
+    [newDest saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded){
+            completion(newDest, error);
+        } else{
+            completion(nil, error);
+        }
+    }];
 }
 
 @end

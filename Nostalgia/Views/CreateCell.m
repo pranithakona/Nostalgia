@@ -9,4 +9,13 @@
 
 @implementation CreateCell
 
+- (void)setCellWithDestination: (Destination *) destination {
+    self.destination = destination;
+    self.nameLabel.text = destination.name;
+}
+
+- (IBAction)changeFixed:(id)sender {
+    
+}
+
 @end

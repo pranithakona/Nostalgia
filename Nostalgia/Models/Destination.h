@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int order;
 @property (nonatomic) BOOL isFixed;
 
-+ (Destination *) postDestination: (GMSPlace *)place withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postDestination: (GMSPlace *)place withCompletion: (void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
 
 @end
 
