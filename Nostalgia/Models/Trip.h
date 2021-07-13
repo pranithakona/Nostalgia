@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PFUser *owner;
 @property (strong, nonatomic) NSArray * _Nullable users;
 @property (strong, nonatomic) PFGeoPoint *region;
-@property (strong, nonatomic) PFGeoPoint *startLocation;
-@property (strong, nonatomic) PFGeoPoint *endLocation;
+@property (strong, nonatomic) Destination *startLocation;
+@property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSArray *destinations;
 @property (strong, nonatomic) NSDate * _Nullable startTime;
 @property (strong, nonatomic) NSDate * _Nullable endtime;

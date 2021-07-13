@@ -6,6 +6,7 @@
 //
 
 #import "CreateViewController.h"
+#import "MapViewController.h"
 #import "Trip.h"
 #import "CreateCell.h"
 #import "DateTools.h"
@@ -14,6 +15,7 @@
 @interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSMutableDictionary *dictOfDestinations;
@@ -46,7 +48,7 @@
 }
 
 -(void)fetchOptimizedRoute {
-    
+    [self.activityIndicator startAnimating];
     NSArray *startCoordinates = @[[NSNumber numberWithDouble:self.startLocation.coordinates.longitude],[NSNumber numberWithDouble:self.startLocation.coordinates.latitude]];
     NSArray *userArray = @[@{@"start_location":startCoordinates, @"end_location": startCoordinates}];
     
@@ -60,7 +62,6 @@
     NSDictionary *bodyDictionary = @{@"mode" : @"drive", @"agents": userArray, @"jobs": locationsArray};
     
     if ([NSJSONSerialization isValidJSONObject:bodyDictionary]) {
-        NSLog(@"hello");
         NSError* error;
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:bodyDictionary options:NSJSONWritingPrettyPrinted error: &error];
         NSURL* url = [NSURL URLWithString:@"https://api.geoapify.com/v1/routeplanner?apiKey=e4a9731275b64f91b0f45802e73d284e"];
@@ -74,10 +75,10 @@
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if ([data length]>0 && error == nil) {
                 NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+                
                 NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
+                [self createTripWithDestinations:orderedArrayOfDestinations];
                 
-                
-
             } else if ([data length]==0 && error ==nil) {
                 NSLog(@" download data is null");
             } else if( error!=nil) {
@@ -130,14 +131,15 @@
     newTrip.tripDescription = self.tripDescription;
     newTrip.owner = [PFUser currentUser];
     newTrip.region = [PFGeoPoint geoPointWithLatitude:self.region.coordinate.latitude longitude:self.region.coordinate.longitude];
-    newTrip.startLocation = [PFGeoPoint geoPointWithLatitude:self.startLocation.coordinates.latitude longitude:self.startLocation.coordinates.longitude];
-    newTrip.endLocation = [PFGeoPoint geoPointWithLatitude:self.endLocation.coordinates.latitude longitude:self.endLocation.coordinates.longitude];;
+    newTrip.startLocation = self.startLocation;
+    newTrip.endLocation = self.endLocation;
     newTrip.startTime = self.startTime;
     newTrip.destinations = destinationsArray;
     
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
-
+            [self.activityIndicator stopAnimating];
+            [self performSegueWithIdentifier:@"mapSegue" sender:trip];
         } else {
             NSLog(@"error: %@", error.localizedDescription);
         }
@@ -211,14 +213,15 @@ didFailAutocompleteWithError:(NSError *)error {
 - (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqual: @"mapSegue"]){
+        MapViewController *mapViewController = [segue destinationViewController];
+        mapViewController.trip = sender;
+    }
 }
-*/
+
 
 @end

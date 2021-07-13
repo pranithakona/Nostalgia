@@ -9,7 +9,6 @@
 @import GoogleMaps;
 
 @interface MapViewController ()
-@property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 
 @end
 
@@ -18,10 +17,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86 longitude:151.20 zoom:6];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.region.latitude longitude:self.trip.region.longitude zoom:6];
+    
     GMSMapView *mapView = [GMSMapView mapWithFrame:self.view.frame camera:camera];
       mapView.myLocationEnabled = YES;
       [self.view addSubview:mapView];
+    
+    for (Destination *dest in self.trip.destinations){
+        CLLocationCoordinate2D position = CLLocationCoordinate2DMake(dest.coordinates.latitude, dest.coordinates.longitude);
+        GMSMarker *marker = [GMSMarker markerWithPosition:position];
+        marker.title = dest.name;
+        marker.map = mapView;
+    }
     
 }
 
