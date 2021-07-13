@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Destination : PFObject <PFSubclassing>
 
-@property (strong, nonatomic) NSString *objectID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *placeID;
 @property (strong, nonatomic) PFGeoPoint *coordinates;

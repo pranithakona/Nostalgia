@@ -9,7 +9,6 @@
 
 @implementation Destination 
 
-@dynamic objectID;
 @dynamic name;
 @dynamic placeID;
 @dynamic coordinates;

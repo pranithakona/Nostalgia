@@ -36,6 +36,54 @@
     
 }
 
+- (IBAction)nextButton:(id)sender {
+    [self PostJson];
+}
+
+-(void)PostJson {
+
+    __block NSMutableDictionary *resultsDictionary;
+    
+    NSArray *startCoordinates = @[[NSNumber numberWithDouble:self.startLocation.coordinate.longitude],[NSNumber numberWithDouble:self.startLocation.coordinate.latitude]];
+    NSArray *userArray = @[@{@"start_location":startCoordinates, @"end_location": startCoordinates}];
+    
+    NSMutableArray *locationsArray = [NSMutableArray array];
+    for (Destination *dest in self.arrayOfDestinations){
+        NSArray *coordinates = @[[NSNumber numberWithDouble:dest.coordinates.longitude],[NSNumber numberWithDouble:dest.coordinates.latitude]];
+        NSDictionary *locationDict = @{ @"location" : coordinates, @"duration" : @3600, @"id" : dest.objectId};
+        [locationsArray addObject:locationDict];
+    }
+
+    NSDictionary *bodyDictionary = @{@"mode" : @"drive", @"agents": userArray, @"jobs": locationsArray};
+    
+    if ([NSJSONSerialization isValidJSONObject:bodyDictionary]) {
+        NSLog(@"hello");
+        NSError* error;
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:bodyDictionary options:NSJSONWritingPrettyPrinted error: &error];
+        NSURL* url = [NSURL URLWithString:@"https://api.geoapify.com/v1/routeplanner?apiKey=e4a9731275b64f91b0f45802e73d284e"];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:jsonData];
+         __block NSError *error1 = [[NSError alloc] init];
+
+
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if ([data length]>0 && error == nil) {
+                resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+                NSLog(@"resultsDictionary is %@",resultsDictionary);
+
+            } else if ([data length]==0 && error ==nil) {
+                NSLog(@" download data is null");
+            } else if( error!=nil) {
+                NSLog(@" error is %@",error);
+            }
+        }];
+        [task resume];
+    }
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.arrayOfDestinations.count;
 }
@@ -58,6 +106,7 @@
 
     GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
     filter.type = kGMSPlacesAutocompleteTypeFilterNoFilter;
+    //filter.locationBias = self.region;
     acController.autocompleteFilter = filter;
 
     [self presentViewController:acController animated:YES completion:nil];
@@ -89,12 +138,10 @@ didFailAutocompleteWithError:(NSError *)error {
     NSLog(@"Error: %@", [error description]);
 }
 
-// User canceled the operation.
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
 [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// Turn the network activity indicator on and off again.
 - (void)didRequestAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }

@@ -88,8 +88,10 @@
 
     if (viewController.autocompleteFilter.type == kGMSPlacesAutocompleteTypeFilterRegion){
         [self.regionButton setTitle: place.name forState:UIControlStateNormal];
+        self.region = place;
     } else {
         [self.startLocationButton setTitle: place.name forState:UIControlStateNormal];
+        self.startLocation = place;
     }
 }
 
@@ -118,9 +120,10 @@ didFailAutocompleteWithError:(NSError *)error {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"%@", self.startLocation.name);
     CreateViewController *createViewController = [segue destinationViewController];
     createViewController.name = self.nameField.text;
-    createViewController.description = self.descriptionField.text;
+//    createViewController.description = self.descriptionField.text;
     createViewController.region = self.region;
     createViewController.startTime = self.startTime;
     createViewController.startLocation = self.startLocation;

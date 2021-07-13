@@ -10,11 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol CreateCellDelegate
-
-- (void)changeIsFixed: (Destination *) destination;
-
-@end
 
 @interface CreateCell : UICollectionViewCell
 
@@ -23,10 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *timeLabel;
 
 @property (strong, nonatomic) Destination *destination;
-@property (weak, nonatomic) id<CreateCellDelegate> delegate;
 
 - (void)setCellWithDestination: (Destination *) destination;
 
 @end
+
 
 NS_ASSUME_NONNULL_END

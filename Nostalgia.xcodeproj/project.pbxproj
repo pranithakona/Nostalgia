@@ -26,6 +26,7 @@
 		33C64176269BCA6100726C4E /* Destination.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64175269BCA6100726C4E /* Destination.m */; };
 		33C64179269BEAD000726C4E /* CreateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64178269BEAD000726C4E /* CreateCell.m */; };
 		33C6417C269CF76B00726C4E /* NewTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6417B269CF76B00726C4E /* NewTripViewController.m */; };
+		33C6417F269E1B5700726C4E /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6417E269E1B5700726C4E /* Trip.m */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,8 @@
 		33C64178269BEAD000726C4E /* CreateCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateCell.m; sourceTree = "<group>"; };
 		33C6417A269CF76B00726C4E /* NewTripViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewTripViewController.h; sourceTree = "<group>"; };
 		33C6417B269CF76B00726C4E /* NewTripViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewTripViewController.m; sourceTree = "<group>"; };
+		33C6417D269E1B5700726C4E /* Trip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Trip.h; sourceTree = "<group>"; };
+		33C6417E269E1B5700726C4E /* Trip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Trip.m; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +225,8 @@
 			children = (
 				33C64174269BCA6100726C4E /* Destination.h */,
 				33C64175269BCA6100726C4E /* Destination.m */,
+				33C6417D269E1B5700726C4E /* Trip.h */,
+				33C6417E269E1B5700726C4E /* Trip.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				33C64171269A8B7400726C4E /* CreateViewController.m in Sources */,
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
+				33C6417F269E1B5700726C4E /* Trip.m in Sources */,
 				33C6417C269CF76B00726C4E /* NewTripViewController.m in Sources */,
 				33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */,
 				33C64179269BEAD000726C4E /* CreateCell.m in Sources */,
