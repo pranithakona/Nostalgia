@@ -7,6 +7,7 @@
 
 #import "NewTripViewController.h"
 #import "CreateViewController.h"
+#import "Destination.h"
 @import GooglePlaces;
 
 @interface NewTripViewController () <GMSAutocompleteViewControllerDelegate> 
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) GMSPlace *region;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) GMSPlace *startLocation;
+@property (strong, nonatomic) GMSPlace *endLocation;
 @end
 
 @implementation NewTripViewController
@@ -92,6 +94,7 @@
     } else {
         [self.startLocationButton setTitle: place.name forState:UIControlStateNormal];
         self.startLocation = place;
+        self.endLocation = place;
     }
 }
 
@@ -120,13 +123,28 @@ didFailAutocompleteWithError:(NSError *)error {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"%@", self.startLocation.name);
     CreateViewController *createViewController = [segue destinationViewController];
+    
+    [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+        if (!error){
+            createViewController.startLocation = dest;
+        } else {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+    }];
+    
+    [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) { 
+        if (!error){
+            createViewController.endLocation = dest;
+        } else {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+    }];
+    
     createViewController.name = self.nameField.text;
-//    createViewController.description = self.descriptionField.text;
+    createViewController.tripDescription = self.descriptionField.text;
     createViewController.region = self.region;
     createViewController.startTime = self.startTime;
-    createViewController.startLocation = self.startLocation;
 }
 
 @end

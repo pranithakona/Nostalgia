@@ -13,7 +13,9 @@
 @dynamic placeID;
 @dynamic coordinates;
 @dynamic time;
-@dynamic order;
+@dynamic timeToNextDestination;
+@dynamic distanceToNextDestination;
+@dynamic duration;
 @dynamic isFixed;
 
 + (nonnull NSString *)parseClassName {
@@ -27,8 +29,6 @@
     newDest.coordinates = [PFGeoPoint geoPointWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];
     newDest.time = nil;
     newDest.isFixed = false;
-    newDest.order = 0;
-    
     
     [newDest saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded){

@@ -7,6 +7,7 @@ target 'Nostalgia' do
   pod 'Parse'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'DateTools'
 
   # Pods for Nostalgia
 

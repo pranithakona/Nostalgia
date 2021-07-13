@@ -6,6 +6,7 @@
 //
 
 #import <Parse/Parse.h>
+#import "Destination.h"
 @import GooglePlaces;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -13,15 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Trip : PFObject <PFSubclassing>
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *description;
+@property (strong, nonatomic) NSString *tripDescription;
+@property (strong, nonatomic) PFUser *owner;
+@property (strong, nonatomic) NSArray * _Nullable users;
 @property (strong, nonatomic) PFGeoPoint *region;
 @property (strong, nonatomic) PFGeoPoint *startLocation;
 @property (strong, nonatomic) PFGeoPoint *endLocation;
-@property (strong, nonatomic) NSArray *locations;
-@property (strong, nonatomic) NSDate *startTime;
-@property (strong, nonatomic) NSDate *endtime;
+@property (strong, nonatomic) NSArray *destinations;
+@property (strong, nonatomic) NSDate * _Nullable startTime;
+@property (strong, nonatomic) NSDate * _Nullable endtime;
 
-+ (void) postDestination: (GMSPlace *)place withCompletion: (void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
++ (void) postTrip: (Trip *)trip withCompletion: (void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion;
 
 @end
 

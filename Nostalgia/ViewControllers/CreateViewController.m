@@ -6,14 +6,18 @@
 //
 
 #import "CreateViewController.h"
-#import "Destination.h"
+#import "Trip.h"
 #import "CreateCell.h"
+#import "DateTools.h"
+@import Parse;
 
 @interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
+@property (strong, nonatomic) NSMutableDictionary *dictOfDestinations;
+
 
 @end
 
@@ -33,18 +37,17 @@
     layout.itemSize = CGSizeMake(itemWidth, 100);
     
     self.arrayOfDestinations = [NSMutableArray array];
+    self.dictOfDestinations = [NSMutableDictionary dictionary];
     
 }
 
 - (IBAction)nextButton:(id)sender {
-    [self PostJson];
+    [self fetchOptimizedRoute];
 }
 
--(void)PostJson {
-
-    __block NSMutableDictionary *resultsDictionary;
+-(void)fetchOptimizedRoute {
     
-    NSArray *startCoordinates = @[[NSNumber numberWithDouble:self.startLocation.coordinate.longitude],[NSNumber numberWithDouble:self.startLocation.coordinate.latitude]];
+    NSArray *startCoordinates = @[[NSNumber numberWithDouble:self.startLocation.coordinates.longitude],[NSNumber numberWithDouble:self.startLocation.coordinates.latitude]];
     NSArray *userArray = @[@{@"start_location":startCoordinates, @"end_location": startCoordinates}];
     
     NSMutableArray *locationsArray = [NSMutableArray array];
@@ -67,12 +70,13 @@
         [request setHTTPBody:jsonData];
          __block NSError *error1 = [[NSError alloc] init];
 
-
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if ([data length]>0 && error == nil) {
-                resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-                NSLog(@"resultsDictionary is %@",resultsDictionary);
+                NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+                NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
+                
+                
 
             } else if ([data length]==0 && error ==nil) {
                 NSLog(@" download data is null");
@@ -82,6 +86,62 @@
         }];
         [task resume];
     }
+}
+
+- (NSArray *) orderDestinationswithResults: (NSDictionary *) resultsDictionary {
+    NSArray *legs = resultsDictionary[@"features"][0][@"properties"][@"legs"];
+    NSArray *waypoints = resultsDictionary[@"features"][0][@"properties"][@"waypoints"];
+    
+    NSMutableArray *orderedArrayOfDestinations = [NSMutableArray arrayWithArray:self.arrayOfDestinations];
+    [orderedArrayOfDestinations insertObject:self.startLocation atIndex:0];
+    [orderedArrayOfDestinations addObject:self.endLocation];
+    
+    NSDate *currentTime = self.startTime;
+    
+    for (int i = 0; i < self.arrayOfDestinations.count+1; i++){
+        Destination *dest;
+        if (i == 0){
+            dest = self.startLocation;
+        } else {
+            int waypointIndex = [legs[i][@"from_waypoint_index"] intValue];
+            NSString *destId = waypoints[waypointIndex][@"actions"][0][@"job_id"];
+            dest = [self.dictOfDestinations objectForKey:destId];
+        }
+        dest.distanceToNextDestination = [NSNumber numberWithInt:[legs[i][@"distance"] intValue]];
+        dest.timeToNextDestination = [NSNumber numberWithInt:[legs[i][@"time"] intValue]];
+        
+        dest.time = currentTime;
+        currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
+        currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination intValue]];
+        [dest saveInBackground];
+        [orderedArrayOfDestinations setObject:dest atIndexedSubscript:i];
+    }
+    
+    self.endLocation.time = currentTime;
+    [self.endLocation saveInBackground];
+    
+    NSLog(@"%@", orderedArrayOfDestinations);
+    return orderedArrayOfDestinations;
+}
+
+- (void) createTripWithDestinations: (NSArray *)destinationsArray {
+    Trip *newTrip = [Trip new];
+    newTrip.name = self.name;
+    newTrip.tripDescription = self.tripDescription;
+    newTrip.owner = [PFUser currentUser];
+    newTrip.region = [PFGeoPoint geoPointWithLatitude:self.region.coordinate.latitude longitude:self.region.coordinate.longitude];
+    newTrip.startLocation = [PFGeoPoint geoPointWithLatitude:self.startLocation.coordinates.latitude longitude:self.startLocation.coordinates.longitude];
+    newTrip.endLocation = [PFGeoPoint geoPointWithLatitude:self.endLocation.coordinates.latitude longitude:self.endLocation.coordinates.longitude];;
+    newTrip.startTime = self.startTime;
+    newTrip.destinations = destinationsArray;
+    
+    [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
+        if (!error){
+
+        } else {
+            NSLog(@"error: %@", error.localizedDescription);
+        }
+    }];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -118,7 +178,9 @@
     
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
+            dest.duration = @3600;
             [self.arrayOfDestinations addObject:dest];
+            [self.dictOfDestinations setObject:dest forKey:dest.objectId];
             [self.collectionView reloadData];
         } else {
             NSLog(@"error: %@", error.localizedDescription);

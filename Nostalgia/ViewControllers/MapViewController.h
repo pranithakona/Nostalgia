@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Trip.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MapViewController : UIViewController
+
+@property (strong, nonatomic) Trip *trip;
 
 @end
 

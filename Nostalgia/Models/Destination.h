@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *placeID;
 @property (strong, nonatomic) PFGeoPoint *coordinates;
 @property (strong, nonatomic) NSDate * time;
-@property (nonatomic) int order;
+@property (strong, nonatomic) NSNumber * timeToNextDestination;
+@property (strong, nonatomic) NSNumber * distanceToNextDestination;
+@property (strong, nonatomic) NSNumber * duration;
 @property (nonatomic) BOOL isFixed;
 
 + (void) postDestination: (GMSPlace *)place withCompletion: (void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
