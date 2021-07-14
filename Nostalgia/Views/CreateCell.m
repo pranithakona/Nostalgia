@@ -17,7 +17,6 @@
 - (IBAction)changeFixed:(id)sender {
     if (self.fixedSwitch.isOn){
         self.timeLabel.hidden = false;
-        self.destination.isFixed = true;
     } else {
         self.timeLabel.hidden = false;
     }

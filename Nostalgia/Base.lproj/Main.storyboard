@@ -3,6 +3,7 @@
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -180,12 +181,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uqt-gV-mZ0">
-                                <rect key="frame" x="182" y="386" width="196" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhi-Rg-LxQ">
                                 <rect key="frame" x="16" y="250" width="45" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -214,18 +209,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1r-9b-Y2P">
-                                <rect key="frame" x="182" y="331" width="196" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1r-9b-Y2P">
+                                <rect key="frame" x="182" y="335" width="196" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-170" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="medium"/>
+                                </state>
                                 <connections>
                                     <action selector="changeRegion:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="xzH-yh-xVa"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srh-wC-R8o">
-                                <rect key="frame" x="182" y="428" width="196" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srh-wC-R8o">
+                                <rect key="frame" x="182" y="433" width="196" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-170" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="medium"/>
+                                </state>
                                 <connections>
                                     <action selector="changeStartLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="fWt-wK-ujw"/>
                                 </connections>
@@ -250,12 +251,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-E8-81C">
-                                <rect key="frame" x="182" y="466" width="196" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-E8-81C">
+                                <rect key="frame" x="182" y="470" width="196" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-170" maxY="0.0"/>
+                                <state key="normal" image="magnifyingglass" catalog="system"/>
                                 <connections>
                                     <action selector="changeStartLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="aaU-Jr-9dc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGQ-ck-LwK">
+                                <rect key="frame" x="182" y="392" width="196" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-170" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="calendar" catalog="system" symbolScale="medium"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeStartLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="A55-0c-vTR"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -283,7 +296,6 @@
                         <outlet property="nameField" destination="kEz-mz-H62" id="7cc-XY-GWq"/>
                         <outlet property="regionButton" destination="d1r-9b-Y2P" id="vOS-fq-DFf"/>
                         <outlet property="startLocationButton" destination="srh-wC-R8o" id="z88-bQ-6pw"/>
-                        <outlet property="startTimeLabel" destination="Uqt-gV-mZ0" id="hdM-cd-2lx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w2K-yF-W4o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -333,33 +345,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zgP-8V-rw7">
-                                                    <rect key="frame" x="321" y="188" width="49" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="onTintColor" systemColor="systemBlueColor"/>
-                                                    <connections>
-                                                        <action selector="changeFixed:" destination="dzT-wc-xJr" eventType="valueChanged" id="qef-8e-qbX"/>
-                                                    </connections>
-                                                </switch>
                                                 <textField hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Time" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ed0-LS-hgL">
                                                     <rect key="frame" x="17" y="188" width="196" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fixed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONP-8n-RRE">
-                                                    <rect key="frame" x="321" y="153" width="41" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                         <size key="customSize" width="390" height="240"/>
                                         <connections>
-                                            <outlet property="fixedSwitch" destination="zgP-8V-rw7" id="ShQ-r9-ghu"/>
                                             <outlet property="nameLabel" destination="TaM-Ug-wi5" id="ZsR-7H-F4N"/>
                                             <outlet property="timeLabel" destination="Ed0-LS-hgL" id="kxl-AS-m5J"/>
                                         </connections>
@@ -439,18 +435,17 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hvo-fD-awh"/>
+        <segue reference="kou-UW-MdG"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

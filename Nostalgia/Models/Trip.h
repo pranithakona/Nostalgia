@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *destinations;
 @property (strong, nonatomic) NSDate * _Nullable startTime;
 @property (strong, nonatomic) NSDate * _Nullable endtime;
+@property (strong, nonatomic) NSString *encodedPolyline;
 
 + (void) postTrip: (Trip *)trip withCompletion: (void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion;
 

@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSMutableDictionary *dictOfDestinations;
+@property (strong, nonatomic) NSString *encodedPolyline;
 
 
 @end
@@ -47,51 +48,50 @@
     [self fetchOptimizedRoute];
 }
 
--(void)fetchOptimizedRoute {
+- (void)fetchOptimizedRoute {
     [self.activityIndicator startAnimating];
-    NSArray *startCoordinates = @[[NSNumber numberWithDouble:self.startLocation.coordinates.longitude],[NSNumber numberWithDouble:self.startLocation.coordinates.latitude]];
-    NSArray *userArray = @[@{@"start_location":startCoordinates, @"end_location": startCoordinates}];
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *key= [dict objectForKey: @"API_Key"];
     
-    NSMutableArray *locationsArray = [NSMutableArray array];
+    NSString *destinationsString = @"";
     for (Destination *dest in self.arrayOfDestinations){
-        NSArray *coordinates = @[[NSNumber numberWithDouble:dest.coordinates.longitude],[NSNumber numberWithDouble:dest.coordinates.latitude]];
-        NSDictionary *locationDict = @{ @"location" : coordinates, @"duration" : @3600, @"id" : dest.objectId};
-        [locationsArray addObject:locationDict];
+        destinationsString = [destinationsString stringByAppendingString: [NSString stringWithFormat:@"|place_id:%@", dest.placeID]];
     }
-
-    NSDictionary *bodyDictionary = @{@"mode" : @"drive", @"agents": userArray, @"jobs": locationsArray};
     
-    if ([NSJSONSerialization isValidJSONObject:bodyDictionary]) {
-        NSError* error;
-        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:bodyDictionary options:NSJSONWritingPrettyPrinted error: &error];
-        NSURL* url = [NSURL URLWithString:@"https://api.geoapify.com/v1/routeplanner?apiKey=e4a9731275b64f91b0f45802e73d284e"];
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-        [request setHTTPMethod:@"POST"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:jsonData];
-         __block NSError *error1 = [[NSError alloc] init];
+    NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:true%@&key=%@",
+       self.startLocation.placeID, self.startLocation.placeID, destinationsString, key];
+    
+    NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSLog(@"%@",  urlString);
+    NSLog(@"%@", destinationsString);
 
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            if ([data length]>0 && error == nil) {
-                NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-                
-                NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
-                [self createTripWithDestinations:orderedArrayOfDestinations];
-                
-            } else if ([data length]==0 && error ==nil) {
-                NSLog(@" download data is null");
-            } else if( error!=nil) {
-                NSLog(@" error is %@",error);
-            }
-        }];
-        [task resume];
-    }
+    NSURL* url = [NSURL URLWithString:encodedString];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+
+     __block NSError *error1 = [[NSError alloc] init];
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if ([data length]>0 && error == nil) {
+            NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+            NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
+            [self createTripWithDestinations:orderedArrayOfDestinations];
+
+        } else if ([data length]==0 && error ==nil) {
+            NSLog(@" download data is null");
+        } else if( error!=nil) {
+            NSLog(@" error is %@",error);
+        }
+    }];
+    [task resume];
+    
 }
 
 - (NSArray *) orderDestinationswithResults: (NSDictionary *) resultsDictionary {
-    NSArray *legs = resultsDictionary[@"features"][0][@"properties"][@"legs"];
-    NSArray *waypoints = resultsDictionary[@"features"][0][@"properties"][@"waypoints"];
+    NSArray *legs = resultsDictionary[@"routes"][0][@"legs"];
+    NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
+    self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
     
     NSMutableArray *orderedArrayOfDestinations = [NSMutableArray arrayWithArray:self.arrayOfDestinations];
     [orderedArrayOfDestinations insertObject:self.startLocation atIndex:0];
@@ -99,17 +99,16 @@
     
     NSDate *currentTime = self.startTime;
     
-    for (int i = 0; i < self.arrayOfDestinations.count+1; i++){
+    for (int i = 0; i < waypoints.count; i++){
         Destination *dest;
         if (i == 0){
             dest = self.startLocation;
         } else {
-            int waypointIndex = [legs[i][@"from_waypoint_index"] intValue];
-            NSString *destId = waypoints[waypointIndex][@"actions"][0][@"job_id"];
-            dest = [self.dictOfDestinations objectForKey:destId];
+            int waypointIndex = [waypoints[i-1] intValue];
+            dest = self.arrayOfDestinations[waypointIndex];
         }
-        dest.distanceToNextDestination = [NSNumber numberWithInt:[legs[i][@"distance"] intValue]];
-        dest.timeToNextDestination = [NSNumber numberWithInt:[legs[i][@"time"] intValue]];
+        dest.distanceToNextDestination = legs[i][@"distance"][@"text"];
+        dest.timeToNextDestination = [NSNumber numberWithLong:[legs[i][@"duration"][@"value"] longValue]];
         
         dest.time = currentTime;
         currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
@@ -135,6 +134,7 @@
     newTrip.endLocation = self.endLocation;
     newTrip.startTime = self.startTime;
     newTrip.destinations = destinationsArray;
+    newTrip.encodedPolyline = self.encodedPolyline;
     
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
@@ -181,6 +181,7 @@
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
             dest.duration = @3600;
+            [dest saveInBackground];
             [self.arrayOfDestinations addObject:dest];
             [self.dictOfDestinations setObject:dest forKey:dest.objectId];
             [self.collectionView reloadData];

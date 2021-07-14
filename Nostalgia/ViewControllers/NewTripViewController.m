@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) GMSPlace *startLocation;
 @property (strong, nonatomic) GMSPlace *endLocation;
+
 @end
 
 @implementation NewTripViewController
@@ -30,7 +31,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    //[datePicker setPreferredDatePickerStyle: UIDatePickerStyleInline];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     
     self.startTimeLabel.inputView = datePicker;
@@ -107,7 +107,7 @@ didFailAutocompleteWithError:(NSError *)error {
 
 // User canceled the operation.
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
-[self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // Turn the network activity indicator on and off again.

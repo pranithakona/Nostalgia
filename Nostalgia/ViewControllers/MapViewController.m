@@ -30,6 +30,11 @@
         marker.map = mapView;
     }
     
+    GMSPath *path = [GMSPath pathFromEncodedPath:self.trip.encodedPolyline];
+    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+    polyline.map = mapView;
+    
+    
 }
 
 /*
