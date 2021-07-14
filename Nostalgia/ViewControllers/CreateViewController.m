@@ -10,16 +10,17 @@
 #import "Trip.h"
 #import "CreateCell.h"
 #import "DateTools.h"
+#import "MaterialButtons.h"
 @import Parse;
 
-@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
-@property (strong, nonatomic) NSMutableDictionary *dictOfDestinations;
 @property (strong, nonatomic) NSString *encodedPolyline;
+
 
 
 @end
@@ -37,11 +38,10 @@
     layout.minimumLineSpacing = 5;
     layout.minimumInteritemSpacing = 5;
     CGFloat itemWidth = self.collectionView.frame.size.width;
-    layout.itemSize = CGSizeMake(itemWidth, 100);
+    layout.itemSize = CGSizeMake(itemWidth, 150);
     
     self.arrayOfDestinations = [NSMutableArray array];
-    self.dictOfDestinations = [NSMutableDictionary dictionary];
-    
+
 }
 
 - (IBAction)nextButton:(id)sender {
@@ -60,7 +60,7 @@
     }
     
     NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:true%@&key=%@",
-       self.startLocation.placeID, self.startLocation.placeID, destinationsString, key];
+       self.startLocation.placeID, self.endLocation.placeID, destinationsString, key];
     
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSLog(@"%@",  urlString);
@@ -146,19 +146,6 @@
     }];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.arrayOfDestinations.count;
-}
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CreateCell" forIndexPath:indexPath];
-    
-    Destination *dest = self.arrayOfDestinations[indexPath.item];
-    [cell setCellWithDestination:dest];
-    
-    return cell;
-}
-
 - (IBAction)addLocation:(id)sender {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
     acController.delegate = self;
@@ -178,13 +165,14 @@
     didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
     
+    [self.activityIndicator startAnimating];
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
             dest.duration = @3600;
             [dest saveInBackground];
             [self.arrayOfDestinations addObject:dest];
-            [self.dictOfDestinations setObject:dest forKey:dest.objectId];
             [self.collectionView reloadData];
+            [self.activityIndicator stopAnimating];
         } else {
             NSLog(@"error: %@", error.localizedDescription);
         }
@@ -213,6 +201,26 @@ didFailAutocompleteWithError:(NSError *)error {
 
 - (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+- (void)deleteCell:(Destination *)dest {
+    [self.arrayOfDestinations removeObject:dest];
+    [self.collectionView reloadData];
+    [dest deleteInBackground];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.arrayOfDestinations.count;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CreateCell" forIndexPath:indexPath];
+    cell.delegate = self;
+    
+    Destination *dest = self.arrayOfDestinations[indexPath.item];
+    [cell setCellWithDestination:dest];
+    
+    return cell;
 }
 
 #pragma mark - Navigation

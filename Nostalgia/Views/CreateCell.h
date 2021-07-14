@@ -10,14 +10,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CreateCellDelegate
+
+- (void)deleteCell:(Destination *)dest;
+
+@end
 
 @interface CreateCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *fixedSwitch;
-@property (weak, nonatomic) IBOutlet UITextField *timeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *durationField;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (strong, nonatomic) UIDatePicker *datePicker;
 
 @property (strong, nonatomic) Destination *destination;
+@property (weak, nonatomic) id<CreateCellDelegate> delegate;
 
 - (void)setCellWithDestination: (Destination *) destination;
 
