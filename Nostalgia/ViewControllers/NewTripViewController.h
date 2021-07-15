@@ -6,10 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Trip.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NewTripViewController : UIViewController
+
+@property (strong, nonatomic) Trip *trip;
+@property (nonatomic) BOOL isNewTrip;
 
 @end
 

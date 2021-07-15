@@ -8,6 +8,7 @@
 #import "HomeViewController.h"
 #import "LoginViewController.h"
 #import "MapViewController.h"
+#import "NewTripViewController.h"
 #import "SceneDelegate.h"
 #import "Trip.h"
 #import "DateTools.h"
@@ -113,6 +114,10 @@
     if ([segue.identifier isEqualToString:@"tripDetailsSegue"]){
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
+        mapViewController.isNewTrip = false;
+    } else if ([segue.identifier isEqualToString:@"newTripSegue"]){
+        NewTripViewController *newTripViewController = [segue destinationViewController];
+        newTripViewController.isNewTrip = true;
     }
 }
 

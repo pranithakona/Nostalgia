@@ -42,37 +42,88 @@
     self.startTime = self.datePicker.date;
     
     self.nextButton.enabled = [self requiredFields];
+    
+    if (!self.isNewTrip) {
+        self.nameField.text = self.trip.name;
+        self.descriptionField.text = self.trip.tripDescription;
+        [self.regionButton setTitle:self.trip.region forState:UIControlStateNormal];
+        self.datePicker.date = self.startTime;
+        [self.startLocationButton setTitle:self.trip.startLocation.name forState:UIControlStateNormal];
+        [self.endLocationButton setTitle:self.trip.endLocation.name forState:UIControlStateNormal];
+        self.nextButton.hidden = true;
+    }
 }
 
 - (BOOL)requiredFields {
-    //return ![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation;
+    //return (![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation) || (![self.nameField.text isEqualToString:@""] && !self.isNewTrip);
     return true;
 }
 
 - (void)dateChanged:(UIDatePicker *) datePicker {
     self.startTime = datePicker.date;
     self.nextButton.enabled = [self requiredFields];
+    if (!self.isNewTrip){
+        self.trip.startTime = self.startTime;
+        [self.trip saveInBackground];
+    }
 }
 
 - (IBAction)nameChanged:(id)sender {
     self.nextButton.enabled = [self requiredFields];
+    
+}
+
+- (IBAction)nameEditingEnded:(id)sender {
+    if (!self.isNewTrip){
+        self.trip.name = self.nameField.text;
+        [self.trip saveInBackground];
+    }
 }
 
 - (IBAction)changeRegion:(id)sender {
     [self createPlacesViewControllerWithFilter:kGMSPlacesAutocompleteTypeFilterRegion];
     self.nextButton.enabled = [self requiredFields];
+    if (!self.isNewTrip) {
+        self.trip.region = self.region.name;
+        self.trip.region = self.region.placeID;
+        [self.trip saveInBackground];
+    }
 }
 
 - (IBAction)changeStartLocation:(id)sender {
     self.isEditingStartLocation = true;
     [self createPlacesViewControllerWithFilter:kGMSPlacesAutocompleteTypeFilterNoFilter];
     self.nextButton.enabled = [self requiredFields];
+    
+    if (!self.isNewTrip) {
+        [self.trip.startLocation deleteInBackground];
+        [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+            if (!error){
+                self.trip.startLocation = dest;
+            } else {
+                NSLog(@"error: %@", error.localizedDescription);
+            }
+        }];
+        [self.trip saveInBackground];
+    }
 }
 
 - (IBAction)changeEndLocation:(id)sender {
     self.isEditingStartLocation = false;
     [self createPlacesViewControllerWithFilter:kGMSPlacesAutocompleteTypeFilterNoFilter];
     self.nextButton.enabled = [self requiredFields];
+    
+    if (!self.isNewTrip) {
+        [self.trip.endLocation deleteInBackground];
+        [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+            if (!error){
+                self.trip.endLocation = dest;
+            } else {
+                NSLog(@"error: %@", error.localizedDescription);
+            }
+        }];
+        [self.trip saveInBackground];
+    }
 }
 
 - (void)createPlacesViewControllerWithFilter: (GMSPlacesAutocompleteTypeFilter) type {
@@ -134,27 +185,29 @@ didFailAutocompleteWithError:(NSError *)error {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     CreateViewController *createViewController = [segue destinationViewController];
-    
-    [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
-        if (!error){
-            createViewController.startLocation = dest;
-        } else {
-            NSLog(@"error: %@", error.localizedDescription);
-        }
-    }];
-    
-    [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) { 
-        if (!error){
-            createViewController.endLocation = dest;
-        } else {
-            NSLog(@"error: %@", error.localizedDescription);
-        }
-    }];
-    
-    createViewController.name = self.nameField.text;
-    createViewController.tripDescription = self.descriptionField.text;
-    createViewController.region = self.region;
-    createViewController.startTime = self.startTime;
+    if (self.isNewTrip) {
+        [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+            if (!error){
+                createViewController.startLocation = dest;
+            } else {
+                NSLog(@"error: %@", error.localizedDescription);
+            }
+        }];
+        
+        [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
+            if (!error){
+                createViewController.endLocation = dest;
+            } else {
+                NSLog(@"error: %@", error.localizedDescription);
+            }
+        }];
+        
+        createViewController.name = self.nameField.text;
+        createViewController.tripDescription = self.descriptionField.text;
+        createViewController.region = self.region;
+        createViewController.startTime = self.startTime;
+        createViewController.isNewTrip = true;
+    } 
 }
 
 @end

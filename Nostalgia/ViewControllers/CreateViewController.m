@@ -6,24 +6,24 @@
 //
 
 #import "CreateViewController.h"
+#import "NewTripViewController.h"
 #import "MapViewController.h"
-#import "SharingViewController.h"
+#import "ShareViewController.h"
 #import "Trip.h"
 #import "CreateCell.h"
 #import "DateTools.h"
 #import "MaterialButtons.h"
 @import Parse;
 
-@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate, SharingViewControllerDelegate>
+@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate, ShareViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *arrayOfSharedUsers;
-
-
 
 @end
 
@@ -43,7 +43,21 @@
     layout.itemSize = CGSizeMake(itemWidth, 150);
     
     self.arrayOfDestinations = [NSMutableArray array];
+    self.arrayOfSharedUsers = [NSArray array];
+    
+    if (!self.isNewTrip){
+        self.arrayOfDestinations = [NSMutableArray arrayWithArray: self.trip.destinations];
+        [self.arrayOfDestinations removeObjectAtIndex:0];
+        [self.arrayOfDestinations removeLastObject];
+        self.arrayOfSharedUsers = self.trip.users;
+        UIBarButtonItem *detailsButton = [[UIBarButtonItem alloc] initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(detailsButton)];
+        [self.navigationItem setLeftBarButtonItem:detailsButton];
+    }
 
+}
+
+- (void)detailsButton {
+    [self performSegueWithIdentifier:@"editDetailsSegue" sender:self.trip];
 }
 
 - (IBAction)nextButton:(id)sender {
@@ -61,8 +75,6 @@
        self.startLocation.placeID, self.endLocation.placeID, destinationsString, key];
     
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSLog(@"%@",  urlString);
-    NSLog(@"%@", destinationsString);
 
     NSURL* url = [NSURL URLWithString:encodedString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
@@ -74,7 +86,12 @@
         if ([data length]>0 && error == nil) {
             NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
             NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
-            [self createTripWithDestinations:orderedArrayOfDestinations];
+            
+            if (self.isNewTrip){
+                [self createTripWithDestinations:orderedArrayOfDestinations];
+            } else {
+                [self editTripWithDestinations:orderedArrayOfDestinations];
+            }
 
         } else if ([data length]==0 && error ==nil) {
             NSLog(@" download data is null");
@@ -126,7 +143,8 @@
     newTrip.name = self.name;
     newTrip.tripDescription = self.tripDescription;
     newTrip.owner = [PFUser currentUser];
-    newTrip.region = self.region.placeID;
+    newTrip.region = self.region.name;
+    newTrip.regionID = self.region.placeID;
     newTrip.startLocation = self.startLocation;
     newTrip.endLocation = self.endLocation;
     newTrip.startTime = self.startTime;
@@ -156,16 +174,27 @@
     }];
 }
 
-- (IBAction)addUsers:(id)sender {
-    SharingViewController *shareController = [[SharingViewController alloc] init];
-    shareController.delegate = self;
-    shareController.arrayOfSharedUsers = self.arrayOfDestinations;
-
-    [self presentViewController:shareController animated:YES completion:nil];
+- (void) editTripWithDestinations: (NSArray *)destinationsArray {
+    self.trip.destinations = destinationsArray;
+    self.trip.encodedPolyline = self.encodedPolyline;
+    
+    for (PFUser *user in self.arrayOfSharedUsers){
+        if (![self.trip.users containsObject:user]){
+            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
+            [userTrips addObject:self.trip];
+            user[@"trips"] = userTrips;
+            [user saveInBackground];
+        }
+    }
+    self.trip.users = self.arrayOfSharedUsers;
+    
+    [self.trip saveInBackground];
+    [self.activityIndicator stopAnimating];
+    [self performSegueWithIdentifier:@"mapSegue" sender:self.trip];
     
 }
 
-- (void) didAddUsers:(NSArray *)users{
+- (void)didAddUsers:(NSArray *)users {
     self.arrayOfSharedUsers = users;
 }
 
@@ -202,7 +231,6 @@
         }
     }];
         
-    
     NSLog(@"Place name %@", place.name);
     NSLog(@"Place ID %@", place.placeID);
     NSLog(@"Place attributions %@", place.attributions.string);
@@ -253,6 +281,15 @@ didFailAutocompleteWithError:(NSError *)error {
     if ([segue.identifier isEqualToString: @"mapSegue"]){
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
+        mapViewController.isNewTrip = true;
+    } else if ([segue.identifier isEqualToString: @"shareSegue"]){
+        ShareViewController *shareViewController = [segue destinationViewController];
+        shareViewController.delegate = self;
+        shareViewController.arrayOfSharedUsers = [self.arrayOfSharedUsers mutableCopy];
+    } else if ([segue.identifier isEqualToString: @"editDetailsSegue"]){
+        NewTripViewController *newTripViewController = [segue destinationViewController];
+        newTripViewController.isNewTrip = false;
+        newTripViewController.trip = sender;
     }
 }
 

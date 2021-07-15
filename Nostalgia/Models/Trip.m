@@ -7,18 +7,20 @@
 
 #import "Trip.h"
 
-@implementation Trip
+@implementation Trip 
 
 @dynamic name;
 @dynamic tripDescription;
 @dynamic owner;
 @dynamic users;
 @dynamic region;
+@dynamic regionID;
 @dynamic startLocation;
 @dynamic endLocation;
 @dynamic destinations;
 @dynamic startTime;
 @dynamic endtime;
+@dynamic encodedPolyline;
 
 + (nonnull NSString *)parseClassName {
     return @"Trip";

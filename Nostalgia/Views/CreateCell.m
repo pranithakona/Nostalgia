@@ -20,6 +20,13 @@
     
     CGSize datePickerSize = [self.datePicker sizeThatFits:CGSizeZero];
     self.datePicker.frame = CGRectMake(10,100, datePickerSize.width, datePickerSize.height);
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components: NSCalendarUnitYear| NSCalendarUnitMonth| NSCalendarUnitDay fromDate:self.datePicker.date];
+    [components setHour:1];
+    [components setMinute:0];
+    self.datePicker.date = [calendar dateFromComponents:components];
+    
     [self.contentView addSubview:self.datePicker];
     
 }
@@ -39,6 +46,17 @@
 - (void)setCellWithDestination:(Destination *) destination {
     self.destination = destination;
     self.nameLabel.text = destination.name;
+    
+    if (destination.duration){
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components: NSCalendarUnitYear| NSCalendarUnitMonth| NSCalendarUnitDay fromDate:self.datePicker.date];
+        int hours = [destination.duration intValue]/3600;
+        int minutes = ([destination.duration intValue]%3600)/60;
+        
+        [components setHour:hours];
+        [components setMinute:minutes];
+        self.datePicker.date = [calendar dateFromComponents:components];
+    }
 }
 
 

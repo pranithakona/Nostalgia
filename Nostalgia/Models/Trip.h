@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) PFUser *owner;
 @property (strong, nonatomic) NSArray * _Nullable users;
 @property (strong, nonatomic) NSString *region;
+@property (strong, nonatomic) NSString *regionID;
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSArray *destinations;

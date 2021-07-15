@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Destination.h"
+#import "Trip.h"
 @import GooglePlaces;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
+@property (strong, nonatomic) Trip *trip;
+@property (nonatomic) BOOL isNewTrip;
 
 @end
 

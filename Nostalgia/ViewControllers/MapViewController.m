@@ -7,6 +7,7 @@
 
 #import "MapViewController.h"
 #import "MapItineraryHeaderView.h"
+#import "CreateViewController.h"
 #import "ItineraryCell.h"
 #import "DateTools.h"
 @import GoogleMaps;
@@ -15,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *mapBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @end
 
@@ -27,6 +29,8 @@
     self.collectionView.dataSource = self;
     
     [self.trip.startLocation fetchIfNeeded];
+    [self.trip.endLocation fetchIfNeeded];
+    
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
     
     GMSMapView *mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
@@ -44,6 +48,8 @@
     GMSPath *path = [GMSPath pathFromEncodedPath:self.trip.encodedPolyline];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
     polyline.map = mapView;
+    
+    self.editButton.hidden = self.isNewTrip;
     
 }
 
@@ -90,14 +96,17 @@
     
     return cell;
 }
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"editDestinationsSegue"]){
+        CreateViewController *createViewController = [segue destinationViewController];
+        createViewController.isNewTrip = false;
+        createViewController.trip = self.trip; 
+    }
+    
 }
-*/
+
 
 @end

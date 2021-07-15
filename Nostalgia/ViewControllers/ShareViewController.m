@@ -5,11 +5,11 @@
 //  Created by Pranitha Reddy Kona on 7/14/21.
 //
 
-#import "SharingViewController.h"
+#import "ShareViewController.h"
 #import "ShareCell.h"
 @import Parse;
 
-@interface SharingViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface ShareViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation SharingViewController
+@implementation ShareViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,7 +46,7 @@
 }
 
 -(void)fetchUsers {
-    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     query.limit = 20;
     [query includeKey:@"username"];
     [query includeKey:@"name"];
@@ -58,6 +58,7 @@
             self.filteredArrayOfUsers = self.arrayOfUsers;
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
+            NSLog(@"%@",users);
             NSLog(@"Successfully loaded users");
         } else {
             NSLog(@"error: %@", error.localizedDescription);
@@ -116,7 +117,11 @@
     PFUser *user = self.filteredArrayOfUsers[indexPath.row];
     [self.arrayOfSharedUsers addObject:user];
     self.sharedWithView.hidden = false;
-    self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString:[NSString stringWithFormat:@", %@", user[@"name"]]];
+    if ([self.sharedUsersLabel.text isEqualToString:@""]){
+        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString: user[@"name"]];
+    } else {
+        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString:[NSString stringWithFormat:@", %@", user[@"name"]]];
+    }
 }
 
 /*
