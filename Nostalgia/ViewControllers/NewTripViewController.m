@@ -18,8 +18,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *startLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton *endLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
-@property (strong, nonatomic) UIDatePicker *datePicker;
+
 @property (strong, nonatomic) GMSPlace *region;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) GMSPlace *startLocation;
@@ -32,13 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.datePicker = [[UIDatePicker alloc] init];
-    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    [self.datePicker addTarget:self action:@selector(dateChanged:) forControlEvents: UIControlEventValueChanged];
-    
-    CGSize datePickerSize = [self.datePicker sizeThatFits:CGSizeZero];
-    self.datePicker.frame = CGRectMake(180,390, datePickerSize.width, datePickerSize.height);
-    [self.view addSubview:self.datePicker];
+
     self.startTime = self.datePicker.date;
     
     self.nextButton.enabled = [self requiredFields];
@@ -59,8 +54,8 @@
     return true;
 }
 
-- (void)dateChanged:(UIDatePicker *) datePicker {
-    self.startTime = datePicker.date;
+- (IBAction)dateChanged:(id)sender {
+    self.startTime = self.datePicker.date;
     self.nextButton.enabled = [self requiredFields];
     if (!self.isNewTrip){
         self.trip.startTime = self.startTime;

@@ -21,6 +21,7 @@
 @dynamic startTime;
 @dynamic endtime;
 @dynamic encodedPolyline;
+@dynamic isOptimized;
 
 + (nonnull NSString *)parseClassName {
     return @"Trip";

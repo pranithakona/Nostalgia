@@ -232,9 +232,9 @@
         <!--New Trip View Controller-->
         <scene sceneID="HVG-sP-yf2">
             <objects>
-                <viewController id="2gI-Q7-Etb" customClass="NewTripViewController" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="2gI-Q7-Etb" customClass="NewTripViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AQu-XK-CJl">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kEz-mz-H62">
@@ -330,6 +330,13 @@
                                     <action selector="changeEndLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="0WB-xp-KjZ"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="BC9-Xu-aBb">
+                                <rect key="frame" x="182" y="368" width="208" height="57"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="dateChanged:" destination="2gI-Q7-Etb" eventType="valueChanged" id="9QX-iR-gKd"/>
+                                </connections>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="F4n-bQ-LSV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -348,6 +355,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="BC9-Xu-aBb" id="qFz-j0-Fcz"/>
                         <outlet property="descriptionField" destination="TEn-kV-1S0" id="5yY-mS-duO"/>
                         <outlet property="endLocationButton" destination="ceu-E8-81C" id="lfc-dX-rvN"/>
                         <outlet property="nameField" destination="kEz-mz-H62" id="7cc-XY-GWq"/>
@@ -358,18 +366,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w2K-yF-W4o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1900" y="852"/>
+            <point key="canvasLocation" x="1900" y="851.65876777251185"/>
         </scene>
         <!--Create View Controller-->
         <scene sceneID="oDf-TH-hkn">
             <objects>
-                <viewController id="4PE-La-PCA" customClass="CreateViewController" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="4PE-La-PCA" customClass="CreateViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZcP-eS-k45">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oqS-Nh-tC9">
-                                <rect key="frame" x="0.0" y="88" width="390" height="673"/>
+                                <rect key="frame" x="0.0" y="120" width="390" height="641"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iC4-0l-lOL">
@@ -379,7 +387,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="I9t-NM-8wr">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="673"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="641"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="color" systemColor="linkColor"/>
                                 </activityIndicatorView>
@@ -392,7 +400,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TaM-Ug-wi5">
-                                                    <rect key="frame" x="17" y="26" width="267" height="21"/>
+                                                    <rect key="frame" x="33" y="26" width="267" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -406,13 +414,75 @@
                                                         <action selector="didDelete:" destination="dzT-wc-xJr" eventType="touchUpInside" id="Jf7-yf-TJx"/>
                                                     </connections>
                                                 </button>
+                                                <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="inline" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mj-Pz-DVS">
+                                                    <rect key="frame" x="33" y="55" width="83" height="54"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="648021625.82899499">
+                                                        <!--2021-07-15 06:00:25 +0000-->
+                                                    </date>
+                                                    <locale key="locale" localeIdentifier="en_GB"/>
+                                                    <connections>
+                                                        <action selector="durationChanged:" destination="dzT-wc-xJr" eventType="valueChanged" id="48w-EJ-Nfa"/>
+                                                    </connections>
+                                                </datePicker>
+                                                <datePicker hidden="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="vlh-zS-6Ch">
+                                                    <rect key="frame" x="154" y="55" width="84" height="54"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="durationChanged:" destination="dzT-wc-xJr" eventType="valueChanged" id="Ven-3b-cAO"/>
+                                                        <action selector="endTimeChanged:" destination="dzT-wc-xJr" eventType="valueChanged" id="Csb-6G-hsn"/>
+                                                    </connections>
+                                                </datePicker>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zbj-Xw-qCg">
+                                                    <rect key="frame" x="33" y="116" width="66" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="End" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpL-Z8-ess">
+                                                    <rect key="frame" x="154" y="116" width="30" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <datePicker hidden="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="a9o-MU-f5i">
+                                                    <rect key="frame" x="33" y="55" width="84" height="54"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="durationChanged:" destination="dzT-wc-xJr" eventType="valueChanged" id="FvG-kr-JHK"/>
+                                                        <action selector="startTimeChanged:" destination="dzT-wc-xJr" eventType="valueChanged" id="bSf-dw-IKr"/>
+                                                    </connections>
+                                                </datePicker>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gby-tv-mZQ">
+                                                    <rect key="frame" x="33" y="116" width="38" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IuC-x1-w5A">
+                                                    <rect key="frame" x="8" y="65" width="17" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                                         <size key="customSize" width="390" height="150"/>
                                         <connections>
                                             <outlet property="deleteButton" destination="MXF-Af-7fb" id="oBI-bV-nsn"/>
+                                            <outlet property="durationDatePicker" destination="5mj-Pz-DVS" id="VDt-Os-Be6"/>
+                                            <outlet property="durationLabel" destination="zbj-Xw-qCg" id="oR1-OU-HJ1"/>
+                                            <outlet property="endDatePicker" destination="vlh-zS-6Ch" id="h60-l0-zTQ"/>
+                                            <outlet property="endLabel" destination="tpL-Z8-ess" id="KcN-8f-F9K"/>
                                             <outlet property="nameLabel" destination="TaM-Ug-wi5" id="ZsR-7H-F4N"/>
+                                            <outlet property="orderLabel" destination="IuC-x1-w5A" id="u37-pw-2p6"/>
+                                            <outlet property="startDatePicker" destination="a9o-MU-f5i" id="Xim-DL-hux"/>
+                                            <outlet property="startLabel" destination="gby-tv-mZQ" id="iNa-GJ-o2k"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -441,6 +511,17 @@
                                     <segue destination="tgR-4K-KWu" kind="presentation" identifier="shareSegue" id="FNA-WX-g0L"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="naY-Xe-XQh">
+                                <rect key="frame" x="0.0" y="89" width="390" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Optimize Route"/>
+                                    <segment title="Plan Route"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changeRouteType:" destination="4PE-La-PCA" eventType="valueChanged" id="IeZ-q2-QJY"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0Un-LW-zpr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -452,7 +533,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Next"/>
                                 <connections>
-                                    <action selector="nextButton:" destination="4PE-La-PCA" eventType="touchUpInside" id="15j-Ym-YuU"/>
+                                    <action selector="fetchRoute:" destination="4PE-La-PCA" eventType="touchUpInside" id="15j-Ym-YuU"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -460,13 +541,14 @@
                     <connections>
                         <outlet property="activityIndicator" destination="I9t-NM-8wr" id="fwb-di-64a"/>
                         <outlet property="collectionView" destination="oqS-Nh-tC9" id="XzH-Ez-JPX"/>
+                        <outlet property="routeTypeControl" destination="naY-Xe-XQh" id="c2X-HR-sks"/>
                         <segue destination="PKX-Fl-3b0" kind="show" identifier="mapSegue" id="LuD-Pa-Jo0"/>
                         <segue destination="2gI-Q7-Etb" kind="show" identifier="editDetailsSegue" id="4TJ-r0-JLT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fOg-OF-InZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2634" y="852"/>
+            <point key="canvasLocation" x="2633.8461538461538" y="851.65876777251185"/>
         </scene>
         <!--Share View Controller-->
         <scene sceneID="baQ-Fk-Xln">
@@ -763,7 +845,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="LuD-Pa-Jo0"/>
-        <segue reference="MVD-K8-oSW"/>
+        <segue reference="nG8-Bd-dZ0"/>
         <segue reference="4TJ-r0-JLT"/>
         <segue reference="Hvo-fD-awh"/>
     </inferredMetricsTieBreakers>

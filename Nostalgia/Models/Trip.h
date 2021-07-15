@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSDate * _Nullable startTime;
 @property (strong, nonatomic) NSDate * _Nullable endtime;
 @property (strong, nonatomic) NSString *encodedPolyline;
+@property (nonatomic) BOOL isOptimized;
 
 + (void) postTrip: (Trip *)trip withCompletion: (void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion;
 

@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *routeTypeControl;
 
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
@@ -50,17 +51,24 @@
         [self.arrayOfDestinations removeObjectAtIndex:0];
         [self.arrayOfDestinations removeLastObject];
         self.arrayOfSharedUsers = self.trip.users;
-        UIBarButtonItem *detailsButton = [[UIBarButtonItem alloc] initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(detailsButton)];
+        UIBarButtonItem *detailsButton = [[UIBarButtonItem alloc] initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(fetchDetails)];
         [self.navigationItem setLeftBarButtonItem:detailsButton];
+        if (!self.trip.isOptimized) {
+            [self.routeTypeControl setSelectedSegmentIndex:1];
+        }
     }
 
 }
 
-- (void)detailsButton {
+- (IBAction)changeRouteType:(id)sender {
+    [self.collectionView reloadData];
+}
+
+- (void)fetchDetails {
     [self performSegueWithIdentifier:@"editDetailsSegue" sender:self.trip];
 }
 
-- (IBAction)nextButton:(id)sender {
+- (IBAction)fetchRoute:(id)sender {
     [self.activityIndicator startAnimating];
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
@@ -71,8 +79,10 @@
         destinationsString = [destinationsString stringByAppendingString: [NSString stringWithFormat:@"|place_id:%@", dest.placeID]];
     }
     
-    NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:true%@&key=%@",
-       self.startLocation.placeID, self.endLocation.placeID, destinationsString, key];
+    NSString *optimizationString = self.routeTypeControl.selectedSegmentIndex == 0 ? @"true" : @"false";
+    
+    NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:%@%@&key=%@",
+       self.startLocation.placeID, self.endLocation.placeID, optimizationString, destinationsString, key];
     
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 
@@ -151,6 +161,7 @@
     newTrip.destinations = destinationsArray;
     newTrip.encodedPolyline = self.encodedPolyline;
     newTrip.users = self.arrayOfSharedUsers;
+    newTrip.isOptimized = self.routeTypeControl.selectedSegmentIndex == 0;
     
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
@@ -231,9 +242,6 @@
         }
     }];
         
-    NSLog(@"Place name %@", place.name);
-    NSLog(@"Place ID %@", place.placeID);
-    NSLog(@"Place attributions %@", place.attributions.string);
 }
 
 - (void)viewController:(GMSAutocompleteViewController *)viewController
@@ -272,6 +280,24 @@ didFailAutocompleteWithError:(NSError *)error {
     Destination *dest = self.arrayOfDestinations[indexPath.item];
     [cell setCellWithDestination:dest];
     
+    if (self.routeTypeControl.selectedSegmentIndex == 0) {
+        cell.durationLabel.hidden = false;
+        cell.durationDatePicker.hidden = false;
+        cell.startLabel.hidden = true;
+        cell.startDatePicker.hidden = true;
+        cell.endLabel.hidden = true;
+        cell.endDatePicker.hidden = true;
+        cell.orderLabel.hidden = true;
+    } else {
+        cell.durationLabel.hidden = true;
+        cell.durationDatePicker.hidden = true;
+        cell.startLabel.hidden = false;
+        cell.startDatePicker.hidden = false;
+        cell.endLabel.hidden = false;
+        cell.endDatePicker.hidden = false;
+        cell.orderLabel.hidden = false;
+        cell.orderLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
+    }
     return cell;
 }
 

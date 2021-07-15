@@ -19,9 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CreateCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UITextField *durationField;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (strong, nonatomic) UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *durationDatePicker;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startDatePicker;
+@property (weak, nonatomic) IBOutlet UILabel *startLabel;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endDatePicker;
+@property (weak, nonatomic) IBOutlet UILabel *endLabel;
+@property (weak, nonatomic) IBOutlet UILabel *orderLabel;
 
 @property (strong, nonatomic) Destination *destination;
 @property (weak, nonatomic) id<CreateCellDelegate> delegate;
