@@ -99,6 +99,8 @@
     
     Trip *trip = data[indexPath.item];
     cell.nameLabel.text = trip.name;
+    cell.descriptionLabel.text = trip.tripDescription;
+    cell.dateLabel.text = [trip.startTime formattedDateWithStyle:NSDateFormatterMediumStyle];
     
     [cell setNeedsLayout];
     [cell layoutIfNeeded];

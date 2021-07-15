@@ -15,16 +15,17 @@
 #import "MaterialButtons.h"
 @import Parse;
 
-@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate, ShareViewControllerDelegate>
+@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CreateCellDelegate, ShareViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *routeTypeControl;
-
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *dragGestureRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *arrayOfSharedUsers;
+
 
 @end
 
@@ -57,7 +58,31 @@
             [self.routeTypeControl setSelectedSegmentIndex:1];
         }
     }
+}
 
+- (IBAction)handleDrag:(id)sender {
+    switch (self.dragGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:{;
+            NSIndexPath *targetIndexPath = [self.collectionView indexPathForItemAtPoint:[self.dragGestureRecognizer locationInView:self.collectionView]];
+            if (!targetIndexPath) {
+                return;
+            }
+            [self.collectionView beginInteractiveMovementForItemAtIndexPath:targetIndexPath];
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            [self.collectionView updateInteractiveMovementTargetPosition:[self.dragGestureRecognizer locationInView:self.collectionView]];
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            [self.collectionView endInteractiveMovement];
+            break;
+        }
+        default: {
+            [self.collectionView cancelInteractiveMovement];;
+            break;
+        }
+    }
 }
 
 - (IBAction)changeRouteType:(id)sender {
@@ -299,6 +324,21 @@ didFailAutocompleteWithError:(NSError *)error {
         cell.orderLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     }
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat itemWidth = self.collectionView.frame.size.width;
+    return CGSizeMake(itemWidth, 150);
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+    return self.routeTypeControl.selectedSegmentIndex == 1;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    Destination *dest = self.arrayOfDestinations[sourceIndexPath.item];
+    [self.arrayOfDestinations removeObjectAtIndex:sourceIndexPath.item];
+    [self.arrayOfDestinations insertObject:dest atIndex:destinationIndexPath.item];
 }
 
 #pragma mark - Navigation
