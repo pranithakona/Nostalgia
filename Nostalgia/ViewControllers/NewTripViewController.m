@@ -45,7 +45,7 @@
 }
 
 - (BOOL)requiredFields {
-    //return ![self.nameField.text isEqual:@""] && self.startTime && self.region && self.startLocation && self.endLocation;
+    //return ![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation;
     return true;
 }
 

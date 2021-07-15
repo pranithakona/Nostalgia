@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *tripDescription;
 @property (strong, nonatomic) PFUser *owner;
 @property (strong, nonatomic) NSArray * _Nullable users;
-@property (strong, nonatomic) PFGeoPoint *region;
+@property (strong, nonatomic) NSString *region;
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSArray *destinations;

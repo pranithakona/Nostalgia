@@ -28,14 +28,15 @@
     newUser.username = self.usernameField.text;
     newUser.email = self.emailField.text;
     newUser.password = self.passwordField.text;
-    newUser[@"name"]= self.usernameField.text;
+    newUser[@"name"] = self.usernameField.text;
+    newUser[@"trips"] = [NSMutableArray array];
    
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
             NSLog(@"User registered successfully");
-            //[self performSegueWithIdentifier:@"signupSegue" sender:nil];
+            [self performSegueWithIdentifier:@"signupSegue" sender:nil];
         }
     }];
 }

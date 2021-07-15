@@ -7,19 +7,21 @@
 
 #import "CreateViewController.h"
 #import "MapViewController.h"
+#import "SharingViewController.h"
 #import "Trip.h"
 #import "CreateCell.h"
 #import "DateTools.h"
 #import "MaterialButtons.h"
 @import Parse;
 
-@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate>
+@interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CreateCellDelegate, SharingViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSString *encodedPolyline;
+@property (strong, nonatomic) NSArray *arrayOfSharedUsers;
 
 
 
@@ -45,10 +47,6 @@
 }
 
 - (IBAction)nextButton:(id)sender {
-    [self fetchOptimizedRoute];
-}
-
-- (void)fetchOptimizedRoute {
     [self.activityIndicator startAnimating];
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
@@ -85,7 +83,6 @@
         }
     }];
     [task resume];
-    
 }
 
 - (NSArray *) orderDestinationswithResults: (NSDictionary *) resultsDictionary {
@@ -99,7 +96,7 @@
     
     NSDate *currentTime = self.startTime;
     
-    for (int i = 0; i < waypoints.count; i++){
+    for (int i = 0; i < waypoints.count + 1; i++){
         Destination *dest;
         if (i == 0){
             dest = self.startLocation;
@@ -129,15 +126,28 @@
     newTrip.name = self.name;
     newTrip.tripDescription = self.tripDescription;
     newTrip.owner = [PFUser currentUser];
-    newTrip.region = [PFGeoPoint geoPointWithLatitude:self.region.coordinate.latitude longitude:self.region.coordinate.longitude];
+    newTrip.region = self.region.placeID;
     newTrip.startLocation = self.startLocation;
     newTrip.endLocation = self.endLocation;
     newTrip.startTime = self.startTime;
     newTrip.destinations = destinationsArray;
     newTrip.encodedPolyline = self.encodedPolyline;
+    newTrip.users = self.arrayOfSharedUsers;
     
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
+            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:[PFUser currentUser][@"trips"]];
+            [userTrips addObject:trip];
+            [PFUser currentUser][@"trips"] = userTrips;
+            [[PFUser currentUser] saveInBackground];
+            
+            for (PFUser *user in trip.users){
+                NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
+                [userTrips addObject:trip];
+                user[@"trips"] = userTrips;
+                [user saveInBackground];
+            }
+            
             [self.activityIndicator stopAnimating];
             [self performSegueWithIdentifier:@"mapSegue" sender:trip];
         } else {
@@ -145,6 +155,20 @@
         }
     }];
 }
+
+- (IBAction)addUsers:(id)sender {
+    SharingViewController *shareController = [[SharingViewController alloc] init];
+    shareController.delegate = self;
+    shareController.arrayOfSharedUsers = self.arrayOfDestinations;
+
+    [self presentViewController:shareController animated:YES completion:nil];
+    
+}
+
+- (void) didAddUsers:(NSArray *)users{
+    self.arrayOfSharedUsers = users;
+}
+
 
 - (IBAction)addLocation:(id)sender {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
@@ -192,7 +216,7 @@ didFailAutocompleteWithError:(NSError *)error {
 }
 
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
-[self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didRequestAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
@@ -226,7 +250,7 @@ didFailAutocompleteWithError:(NSError *)error {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqual: @"mapSegue"]){
+    if ([segue.identifier isEqualToString: @"mapSegue"]){
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
     }
