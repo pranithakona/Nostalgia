@@ -141,18 +141,16 @@
     NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
     self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
     
-    NSMutableArray *orderedArrayOfDestinations = [NSMutableArray arrayWithArray:self.arrayOfDestinations];
-    [orderedArrayOfDestinations insertObject:self.startLocation atIndex:0];
-    [orderedArrayOfDestinations addObject:self.endLocation];
-    
     //reorder destinations array based on optimized order for route
+    NSMutableArray *orderedArrayOfDestinations = [NSMutableArray array];
+    [orderedArrayOfDestinations addObject:self.startLocation];
     if (self.routeTypeControl.selectedSegmentIndex == 0){
         for (int i = 0; i < waypoints.count; i++) {
             int waypointIndex = [waypoints[i] intValue];
-            Destination *dest = self.arrayOfDestinations[waypointIndex];
-            [orderedArrayOfDestinations setObject:dest atIndexedSubscript:i];
+            [orderedArrayOfDestinations addObject:self.arrayOfDestinations[waypointIndex]];
         }
     }
+    [orderedArrayOfDestinations addObject:self.endLocation];
     
     //add distance/time to next destination and planned time of current destination
     NSDate *currentTime = self.startTime;
@@ -163,7 +161,7 @@
         
         dest.time = currentTime;
         currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
-        currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination intValue]];
+        currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination longValue]];
         [dest saveInBackground];
     }
     

@@ -101,12 +101,12 @@
     NSArray *correctOrder = @[vc.startLocation,vc.arrayOfDestinations[3],vc.arrayOfDestinations[1],vc.arrayOfDestinations[0],vc.arrayOfDestinations[2],vc.endLocation];
     
     NSMutableArray *correctDates = [NSMutableArray array];
-    NSDate *currentTime = [NSDate now];
+    NSDate *currentTime = vc.startTime;
     for (int i = 0; i < correctOrder.count; i++) {
         [correctDates addObject:currentTime];
         Destination *dest = correctOrder[i];
-        currentTime = [currentTime dateByAddingSeconds:dest.duration];
-        currentTime = [currentTime dateByAddingSeconds:dest.timeToNextDestination];
+        currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
+        currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination longValue]];
     }
     
     for (int i = 0; i < correctOrder.count; i++){
