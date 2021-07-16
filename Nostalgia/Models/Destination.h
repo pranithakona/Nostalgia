@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * distanceToNextDestination;
 @property (strong, nonatomic) NSNumber * duration;
 
-+ (void) postDestination: (GMSPlace *)place withCompletion: (void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
++ (void)postDestination:(GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
 
 @end
 

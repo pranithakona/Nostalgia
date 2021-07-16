@@ -19,12 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (IBAction)onSignup:(id)sender {
     PFUser *newUser = [PFUser user];
-
     newUser.username = self.usernameField.text;
     newUser.email = self.emailField.text;
     newUser.password = self.passwordField.text;
@@ -35,20 +33,9 @@
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            NSLog(@"User registered successfully");
             [self performSegueWithIdentifier:@"signupSegue" sender:nil];
         }
     }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

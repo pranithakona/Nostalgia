@@ -37,17 +37,33 @@
       mapView.myLocationEnabled = YES;
       [self.mapBaseView addSubview:mapView];
     
+    Destination *topMost = self.trip.startLocation;
+    Destination *bottomMost = self.trip.startLocation;
+    Destination *leftMost = self.trip.startLocation;
+    Destination *rightMost = self.trip.startLocation;
     for (Destination *dest in self.trip.destinations){
         [dest fetchIfNeeded];
         CLLocationCoordinate2D position = CLLocationCoordinate2DMake(dest.coordinates.latitude, dest.coordinates.longitude);
         GMSMarker *marker = [GMSMarker markerWithPosition:position];
         marker.title = dest.name;
         marker.map = mapView;
+        topMost = dest.coordinates.latitude > topMost.coordinates.latitude ? dest : topMost;
+        bottomMost = dest.coordinates.latitude < bottomMost.coordinates.latitude ? dest : bottomMost;
+        rightMost = dest.coordinates.longitude > rightMost.coordinates.longitude ? dest : rightMost;
+        leftMost = dest.coordinates.longitude < leftMost.coordinates.longitude ? dest : leftMost;
     }
     
     GMSPath *path = [GMSPath pathFromEncodedPath:self.trip.encodedPolyline];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
     polyline.map = mapView;
+    
+    GMSCoordinateBounds *bounds;
+    if ((rightMost.coordinates.longitude - leftMost.coordinates.longitude) > (topMost.coordinates.latitude - bottomMost.coordinates.latitude)) {
+        bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(rightMost.coordinates.latitude, rightMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(leftMost.coordinates.latitude, leftMost.coordinates.longitude)];
+    } else {
+        bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(topMost.coordinates.latitude, topMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(bottomMost.coordinates.latitude, bottomMost.coordinates.longitude)];
+    }
+    [mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
     
     self.editButton.hidden = self.isNewTrip;
     
@@ -65,9 +81,8 @@
     }];
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MapItineraryHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind: UICollectionElementKindSectionHeader withReuseIdentifier:@"MapItineraryHeaderView" forIndexPath:indexPath];
-    
     headerView.delegate = self;
     headerView.nameLabel.text = self.trip.name;
     headerView.dateLabel.text = [NSString stringWithFormat: @"%@", self.trip.startTime];
@@ -79,7 +94,6 @@
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     ItineraryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItineraryCell" forIndexPath:indexPath];
     Destination *dest = self.trip.destinations[indexPath.item];
     [dest fetchIfNeeded];
@@ -105,8 +119,6 @@
         createViewController.isNewTrip = false;
         createViewController.trip = self.trip; 
     }
-    
 }
-
 
 @end

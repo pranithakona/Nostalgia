@@ -13,7 +13,6 @@
 - (IBAction)durationChanged:(id)sender {
     NSDate *date = self.durationDatePicker.date;
     NSNumber *duration = [NSNumber numberWithLong:(date.hour * 3600 + date.minute * 60)];
-    
     self.destination.duration = duration;
     [self.destination saveInBackground];
 }
@@ -49,6 +48,5 @@
         self.durationDatePicker.date = [calendar dateFromComponents:components];
     }
 }
-
 
 @end

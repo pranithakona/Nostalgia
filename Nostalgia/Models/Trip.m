@@ -6,6 +6,7 @@
 //
 
 #import "Trip.h"
+#import "CreateViewController.h"
 
 @implementation Trip 
 
@@ -27,7 +28,7 @@
     return @"Trip";
 }
 
-+ (void) postTrip: (Trip *)trip withCompletion:(void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion {
++ (void)postTrip:(Trip *)trip withCompletion:(void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion {
     [trip saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded){
             completion(trip, error);

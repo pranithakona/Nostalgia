@@ -26,11 +26,9 @@
 @property (strong, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *arrayOfSharedUsers;
 
-
 @end
 
 @implementation CreateViewController
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -95,6 +93,7 @@
 
 - (IBAction)fetchRoute:(id)sender {
     [self.activityIndicator startAnimating];
+    
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *key= [dict objectForKey: @"API_Key"];
@@ -105,17 +104,13 @@
     }
     
     NSString *optimizationString = self.routeTypeControl.selectedSegmentIndex == 0 ? @"true" : @"false";
-    
     NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:%@%@&key=%@",
        self.startLocation.placeID, self.endLocation.placeID, optimizationString, destinationsString, key];
-    
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-
     NSURL* url = [NSURL URLWithString:encodedString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
 
      __block NSError *error1 = [[NSError alloc] init];
-
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([data length]>0 && error == nil) {
@@ -127,7 +122,6 @@
             } else {
                 [self editTripWithDestinations:orderedArrayOfDestinations];
             }
-
         } else if ([data length]==0 && error ==nil) {
             NSLog(@" download data is null");
         } else if( error!=nil) {
@@ -137,7 +131,7 @@
     [task resume];
 }
 
-- (NSArray *) orderDestinationswithResults: (NSDictionary *) resultsDictionary {
+- (NSArray *)orderDestinationswithResults:(NSDictionary *)resultsDictionary {
     NSArray *legs = resultsDictionary[@"routes"][0][@"legs"];
     NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
     self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
@@ -147,8 +141,7 @@
     [orderedArrayOfDestinations addObject:self.endLocation];
     
     NSDate *currentTime = self.startTime;
-    
-    for (int i = 0; i < waypoints.count + 1; i++){
+    for (int i = 0; i < waypoints.count + 1; i++) {
         Destination *dest;
         if (i == 0){
             dest = self.startLocation;
@@ -165,15 +158,13 @@
         [dest saveInBackground];
         [orderedArrayOfDestinations setObject:dest atIndexedSubscript:i];
     }
-    
     self.endLocation.time = currentTime;
     [self.endLocation saveInBackground];
     
-    NSLog(@"%@", orderedArrayOfDestinations);
     return orderedArrayOfDestinations;
 }
 
-- (void) createTripWithDestinations: (NSArray *)destinationsArray {
+- (void)createTripWithDestinations:(NSArray *)destinationsArray {
     Trip *newTrip = [Trip new];
     newTrip.name = self.name;
     newTrip.tripDescription = self.tripDescription;
@@ -195,7 +186,7 @@
             [PFUser currentUser][@"trips"] = userTrips;
             [[PFUser currentUser] saveInBackground];
             
-            for (PFUser *user in trip.users){
+            for (PFUser *user in trip.users) {
                 NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
                 [userTrips addObject:trip];
                 user[@"trips"] = userTrips;
@@ -210,7 +201,7 @@
     }];
 }
 
-- (void) editTripWithDestinations: (NSArray *)destinationsArray {
+- (void)editTripWithDestinations:(NSArray *)destinationsArray {
     self.trip.destinations = destinationsArray;
     self.trip.encodedPolyline = self.encodedPolyline;
     
@@ -223,17 +214,15 @@
         }
     }
     self.trip.users = self.arrayOfSharedUsers;
-    
     [self.trip saveInBackground];
+    
     [self.activityIndicator stopAnimating];
     [self performSegueWithIdentifier:@"mapSegue" sender:self.trip];
-    
 }
 
 - (void)didAddUsers:(NSArray *)users {
     self.arrayOfSharedUsers = users;
 }
-
 
 - (IBAction)addLocation:(id)sender {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
@@ -244,7 +233,6 @@
 
     GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
     filter.type = kGMSPlacesAutocompleteTypeFilterNoFilter;
-    //filter.locationBias = self.region;
     acController.autocompleteFilter = filter;
 
     [self presentViewController:acController animated:YES completion:nil];
@@ -253,7 +241,6 @@
 - (void)viewController:(GMSAutocompleteViewController *)viewController
     didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
-    
     [self.activityIndicator startAnimating];
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
@@ -266,13 +253,11 @@
             NSLog(@"error: %@", error.localizedDescription);
         }
     }];
-        
 }
 
 - (void)viewController:(GMSAutocompleteViewController *)viewController
 didFailAutocompleteWithError:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
-    // TODO: handle the error.
     NSLog(@"Error: %@", [error description]);
 }
 
@@ -306,21 +291,11 @@ didFailAutocompleteWithError:(NSError *)error {
     [cell setCellWithDestination:dest];
     
     if (self.routeTypeControl.selectedSegmentIndex == 0) {
-        cell.durationLabel.hidden = false;
-        cell.durationDatePicker.hidden = false;
-        cell.startLabel.hidden = true;
-        cell.startDatePicker.hidden = true;
-        cell.endLabel.hidden = true;
-        cell.endDatePicker.hidden = true;
-        cell.orderLabel.hidden = true;
+        cell.optimizeView.hidden = false;
+        cell.planView.hidden = true;
     } else {
-        cell.durationLabel.hidden = true;
-        cell.durationDatePicker.hidden = true;
-        cell.startLabel.hidden = false;
-        cell.startDatePicker.hidden = false;
-        cell.endLabel.hidden = false;
-        cell.endDatePicker.hidden = false;
-        cell.orderLabel.hidden = false;
+        cell.optimizeView.hidden = true;
+        cell.planView.hidden = false;
         cell.orderLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     }
     return cell;

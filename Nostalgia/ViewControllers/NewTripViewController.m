@@ -35,7 +35,6 @@
     [super viewDidLoad];
 
     self.startTime = self.datePicker.date;
-    
     self.nextButton.enabled = [self requiredFields];
     
     if (!self.isNewTrip) {
@@ -65,7 +64,6 @@
 
 - (IBAction)nameChanged:(id)sender {
     self.nextButton.enabled = [self requiredFields];
-    
 }
 
 - (IBAction)nameEditingEnded:(id)sender {
@@ -121,7 +119,7 @@
     }
 }
 
-- (void)createPlacesViewControllerWithFilter: (GMSPlacesAutocompleteTypeFilter) type {
+- (void)createPlacesViewControllerWithFilter:(GMSPlacesAutocompleteTypeFilter)type {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
     acController.delegate = self;
     
@@ -154,19 +152,15 @@
     self.nextButton.enabled = [self requiredFields];
 }
 
-- (void)viewController:(GMSAutocompleteViewController *)viewController
-didFailAutocompleteWithError:(NSError *)error {
+- (void)viewController:(GMSAutocompleteViewController *)viewController didFailAutocompleteWithError:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
-    // TODO: handle the error.
     NSLog(@"Error: %@", [error description]);
 }
 
-// User canceled the operation.
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// Turn the network activity indicator on and off again.
 - (void)didRequestAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
@@ -174,7 +168,6 @@ didFailAutocompleteWithError:(NSError *)error {
 - (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
-
 
 #pragma mark - Navigation
 

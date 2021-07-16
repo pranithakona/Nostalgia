@@ -21,7 +21,7 @@
     return @"Destination";
 }
 
-+ (void) postDestination: (GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion {
++ (void)postDestination:(GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion {
     Destination *newDest = [Destination new];
     newDest.name = place.name;
     newDest.placeID = place.placeID;

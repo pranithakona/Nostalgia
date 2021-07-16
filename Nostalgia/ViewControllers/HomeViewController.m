@@ -76,7 +76,7 @@
     }];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *data = [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips : self.pastTrips;
     Trip *trip = data[indexPath.item];
     [self performSegueWithIdentifier:@"tripDetailsSegue" sender:trip];
@@ -84,12 +84,10 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips.count : self.pastTrips.count;
-    
 }
 
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *data = [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips : self.pastTrips;
-    
     HomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeCell" forIndexPath:indexPath];
     
     if (cell == nil) {
@@ -108,9 +106,7 @@
     return cell;
 }
 
-
 #pragma mark - Navigation
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"tripDetailsSegue"]){
@@ -122,6 +118,5 @@
         newTripViewController.isNewTrip = true;
     }
 }
-
 
 @end

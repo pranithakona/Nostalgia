@@ -21,12 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIDatePicker *durationDatePicker;
-@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *startDatePicker;
-@property (weak, nonatomic) IBOutlet UILabel *startLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *endDatePicker;
-@property (weak, nonatomic) IBOutlet UILabel *endLabel;
 @property (weak, nonatomic) IBOutlet UILabel *orderLabel;
+@property (weak, nonatomic) IBOutlet UIView *planView;
+@property (weak, nonatomic) IBOutlet UIView *optimizeView;
 
 @property (strong, nonatomic) Destination *destination;
 @property (weak, nonatomic) id<CreateCellDelegate> delegate;

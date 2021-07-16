@@ -29,11 +29,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
-    
     [self.activityIndicator startAnimating];
     [self fetchUsers];
-    self.filteredArrayOfUsers = self.arrayOfUsers;
     
+    self.filteredArrayOfUsers = self.arrayOfUsers;
     if (self.arrayOfSharedUsers.count != 0){
         NSString *sharedUsers = @"";
         for (PFUser *user in self.arrayOfSharedUsers){
@@ -58,8 +57,6 @@
             self.filteredArrayOfUsers = self.arrayOfUsers;
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
-            NSLog(@"%@",users);
-            NSLog(@"Successfully loaded users");
         } else {
             NSLog(@"error: %@", error.localizedDescription);
         }
@@ -109,7 +106,6 @@
     PFUser *user = self.filteredArrayOfUsers[indexPath.row];
     cell.nameLabel.text = user[@"name"];
     cell.userNameLabel.text = user.username;
-    
     return cell;
 }
 
@@ -123,15 +119,5 @@
         self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString:[NSString stringWithFormat:@", %@", user[@"name"]]];
     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

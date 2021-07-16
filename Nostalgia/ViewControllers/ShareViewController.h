@@ -9,20 +9,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ShareViewControllerDelegate;
+@protocol ShareViewControllerDelegate
 
+- (void) didAddUsers:(NSArray *)users;
 
+@end
 
 @interface ShareViewController : UIViewController
 
 @property (strong, nonatomic) NSMutableArray *arrayOfSharedUsers;
 @property (weak, nonatomic) id<ShareViewControllerDelegate> delegate;
-
-@end
-
-@protocol ShareViewControllerDelegate
-
-- (void) didAddUsers:(NSArray *)users;
 
 @end
 
