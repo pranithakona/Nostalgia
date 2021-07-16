@@ -57,8 +57,6 @@
             self.filteredArrayOfUsers = self.arrayOfUsers;
             [self.tableView reloadData];
             [self.activityIndicator stopAnimating];
-        } else {
-            NSLog(@"error: %@", error.localizedDescription);
         }
     }];
 }

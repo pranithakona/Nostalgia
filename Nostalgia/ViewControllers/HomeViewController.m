@@ -10,12 +10,13 @@
 #import "MapViewController.h"
 #import "NewTripViewController.h"
 #import "SceneDelegate.h"
+#import "LocationManager.h"
 #import "Trip.h"
 #import "DateTools.h"
 #import "HomeCell.h"
 @import Parse;
 
-@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *futureCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *pastCollectionView;
@@ -23,6 +24,9 @@
 
 @property (strong, nonatomic) NSMutableArray *futureTrips;
 @property (strong, nonatomic) NSMutableArray *pastTrips;
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonnull) NSTimer *timer;
+@property (strong, nonatomic) NSMutableArray *realTimeLocations;
 
 @end
 
@@ -54,6 +58,7 @@
     self.futureTrips = [NSMutableArray array];
     self.pastTrips = [NSMutableArray array];
     
+    //sort user trips based on date
     [self.activityIndicator startAnimating];
     NSDate *now = [NSDate now];
     for (Trip *trip in [PFUser currentUser][@"trips"]){
@@ -65,6 +70,9 @@
         }
     }
     [self.activityIndicator stopAnimating];
+    
+    self.locationManager = [LocationManager shared];
+    self.locationManager.delegate = self;
 }
 
 - (IBAction)onLogout:(id)sender {
@@ -104,6 +112,10 @@
     [cell layoutIfNeeded];
     
     return cell;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    
 }
 
 #pragma mark - Navigation

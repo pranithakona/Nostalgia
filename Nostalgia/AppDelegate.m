@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LocationManager.h"
 @import Parse;
 @import GoogleMaps;
 @import GooglePlaces;
@@ -34,6 +35,9 @@
     
     [GMSServices provideAPIKey:key];
     [GMSPlacesClient provideAPIKey:key];
+    
+    CLLocationManager *locationManager = [LocationManager shared];
+    [locationManager requestAlwaysAuthorization];
 
     return YES;
 }

@@ -33,6 +33,7 @@
 		33C6418E269F97F400726C4E /* ItineraryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6418D269F97F400726C4E /* ItineraryCell.m */; };
 		33C64191269FA38600726C4E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64190269FA38600726C4E /* ShareViewController.m */; };
 		33C64194269FA71300726C4E /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64193269FA71300726C4E /* ShareCell.m */; };
+		33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6419E26A14A9B00726C4E /* LocationManager.m */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,9 @@
 		33C64190269FA38600726C4E /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		33C64192269FA71300726C4E /* ShareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareCell.h; sourceTree = "<group>"; };
 		33C64193269FA71300726C4E /* ShareCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareCell.m; sourceTree = "<group>"; };
+		33C6419D26A14A9B00726C4E /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		33C6419E26A14A9B00726C4E /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		33C641A826A2289600726C4E /* CreateViewController+Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CreateViewController+Tests.h"; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +181,8 @@
 				33C6415A269A6A6800726C4E /* ViewControllers */,
 				33C6415B269A6BEF00726C4E /* Views */,
 				33C6415C269A6BFC00726C4E /* Models */,
+				33C6419D26A14A9B00726C4E /* LocationManager.h */,
+				33C6419E26A14A9B00726C4E /* LocationManager.m */,
 				33C64125269A646E00726C4E /* AppDelegate.h */,
 				33C64126269A646E00726C4E /* AppDelegate.m */,
 				33C64128269A646E00726C4E /* SceneDelegate.h */,
@@ -194,6 +200,7 @@
 		33C64140269A646F00726C4E /* NostalgiaTests */ = {
 			isa = PBXGroup;
 			children = (
+				33C641A826A2289600726C4E /* CreateViewController+Tests.h */,
 				33C64141269A646F00726C4E /* NostalgiaTests.m */,
 				33C64143269A646F00726C4E /* Info.plist */,
 			);
@@ -212,20 +219,20 @@
 		33C6415A269A6A6800726C4E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				33C64166269A7D5D00726C4E /* HomeViewController.h */,
-				33C64167269A7D5D00726C4E /* HomeViewController.m */,
 				33C64160269A6DBB00726C4E /* LoginViewController.h */,
 				33C64161269A6DBB00726C4E /* LoginViewController.m */,
 				33C64163269A6E1F00726C4E /* SignUpViewController.h */,
 				33C64164269A6E1F00726C4E /* SignUpViewController.m */,
-				33C6416C269A891C00726C4E /* MapViewController.h */,
-				33C6416D269A891C00726C4E /* MapViewController.m */,
-				33C6416F269A8B7400726C4E /* CreateViewController.h */,
-				33C64170269A8B7400726C4E /* CreateViewController.m */,
+				33C64166269A7D5D00726C4E /* HomeViewController.h */,
+				33C64167269A7D5D00726C4E /* HomeViewController.m */,
 				33C6417A269CF76B00726C4E /* NewTripViewController.h */,
 				33C6417B269CF76B00726C4E /* NewTripViewController.m */,
+				33C6416F269A8B7400726C4E /* CreateViewController.h */,
+				33C64170269A8B7400726C4E /* CreateViewController.m */,
 				33C6418F269FA38600726C4E /* ShareViewController.h */,
 				33C64190269FA38600726C4E /* ShareViewController.m */,
+				33C6416C269A891C00726C4E /* MapViewController.h */,
+				33C6416D269A891C00726C4E /* MapViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -559,6 +566,7 @@
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
 				33C64189269F81E000726C4E /* MapItineraryHeaderView.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
+				33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */,
 				33C6417F269E1B5700726C4E /* Trip.m in Sources */,
 				33C6417C269CF76B00726C4E /* NewTripViewController.m in Sources */,
 				33C64191269FA38600726C4E /* ShareViewController.m in Sources */,

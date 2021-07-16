@@ -803,7 +803,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nXq-hW-iW5">
-                                            <rect key="frame" x="16" y="50" width="36" height="21"/>
+                                            <rect key="frame" x="16" y="50" width="279" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -842,7 +842,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ABw-r5-XBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3372" y="852"/>
+            <point key="canvasLocation" x="3370.7692307692305" y="851.65876777251185"/>
         </scene>
         <!--Home-->
         <scene sceneID="goU-3B-2F8">

@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSArray *destinations;
+@property (strong, nonatomic) NSArray *realTimeCoordinates;
 @property (strong, nonatomic) NSDate * _Nullable startTime;
 @property (strong, nonatomic) NSDate * _Nullable endtime;
 @property (strong, nonatomic) NSString *encodedPolyline;

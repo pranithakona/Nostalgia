@@ -93,8 +93,6 @@
         [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
                 self.trip.startLocation = dest;
-            } else {
-                NSLog(@"error: %@", error.localizedDescription);
             }
         }];
         [self.trip saveInBackground];
@@ -111,8 +109,6 @@
         [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
                 self.trip.endLocation = dest;
-            } else {
-                NSLog(@"error: %@", error.localizedDescription);
             }
         }];
         [self.trip saveInBackground];
@@ -154,7 +150,6 @@
 
 - (void)viewController:(GMSAutocompleteViewController *)viewController didFailAutocompleteWithError:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Error: %@", [error description]);
 }
 
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
@@ -176,17 +171,15 @@
     if (self.isNewTrip) {
         [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
+                dest.duration = @0;
+                [dest saveInBackground];
                 createViewController.startLocation = dest;
-            } else {
-                NSLog(@"error: %@", error.localizedDescription);
             }
         }];
         
         [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
                 createViewController.endLocation = dest;
-            } else {
-                NSLog(@"error: %@", error.localizedDescription);
             }
         }];
         

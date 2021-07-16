@@ -19,6 +19,7 @@
 @dynamic startLocation;
 @dynamic endLocation;
 @dynamic destinations;
+@dynamic realTimeCoordinates;
 @dynamic startTime;
 @dynamic endtime;
 @dynamic encodedPolyline;
@@ -29,6 +30,10 @@
 }
 
 + (void)postTrip:(Trip *)trip withCompletion:(void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion {
+    if (!trip) {
+        completion (nil, nil);
+        return;
+    }
     [trip saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded){
             completion(trip, error);

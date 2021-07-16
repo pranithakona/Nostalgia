@@ -26,7 +26,7 @@
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
-            NSLog(@"User log in failed: %@", error.localizedDescription);
+            //handle error
         } else {
             [self performSegueWithIdentifier:@"loginSegue" sender:nil];
         }

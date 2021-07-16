@@ -45,6 +45,7 @@
     self.arrayOfDestinations = [NSMutableArray array];
     self.arrayOfSharedUsers = [NSArray array];
     
+    //is editing an existing trip
     if (!self.isNewTrip){
         self.arrayOfDestinations = [NSMutableArray arrayWithArray: self.trip.destinations];
         [self.arrayOfDestinations removeObjectAtIndex:0];
@@ -93,7 +94,9 @@
 
 - (IBAction)fetchRoute:(id)sender {
     [self.activityIndicator startAnimating];
+    BOOL isOptimized = self.routeTypeControl.selectedSegmentIndex == 0;
     
+    //create api endpoint based on waypoints in trip
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *key= [dict objectForKey: @"API_Key"];
@@ -103,7 +106,8 @@
         destinationsString = [destinationsString stringByAppendingString: [NSString stringWithFormat:@"|place_id:%@", dest.placeID]];
     }
     
-    NSString *optimizationString = self.routeTypeControl.selectedSegmentIndex == 0 ? @"true" : @"false";
+    //optimized or planned route
+    NSString *optimizationString = isOptimized ? @"true" : @"false";
     NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:%@%@&key=%@",
        self.startLocation.placeID, self.endLocation.placeID, optimizationString, destinationsString, key];
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -115,23 +119,24 @@
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([data length]>0 && error == nil) {
             NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
-            NSArray *orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
+            NSMutableArray *orderedArrayOfDestinations;
+            //optimize route
+            orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
             
             if (self.isNewTrip){
                 [self createTripWithDestinations:orderedArrayOfDestinations];
             } else {
                 [self editTripWithDestinations:orderedArrayOfDestinations];
             }
-        } else if ([data length]==0 && error ==nil) {
-            NSLog(@" download data is null");
-        } else if( error!=nil) {
-            NSLog(@" error is %@",error);
         }
     }];
     [task resume];
 }
 
-- (NSArray *)orderDestinationswithResults:(NSDictionary *)resultsDictionary {
+- (NSMutableArray *)orderDestinationswithResults:(NSDictionary *)resultsDictionary {
+    if (!resultsDictionary){
+        return nil;
+    }
     NSArray *legs = resultsDictionary[@"routes"][0][@"legs"];
     NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
     self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
@@ -140,15 +145,19 @@
     [orderedArrayOfDestinations insertObject:self.startLocation atIndex:0];
     [orderedArrayOfDestinations addObject:self.endLocation];
     
-    NSDate *currentTime = self.startTime;
-    for (int i = 0; i < waypoints.count + 1; i++) {
-        Destination *dest;
-        if (i == 0){
-            dest = self.startLocation;
-        } else {
-            int waypointIndex = [waypoints[i-1] intValue];
-            dest = self.arrayOfDestinations[waypointIndex];
+    //reorder destinations array based on optimized order for route
+    if (self.routeTypeControl.selectedSegmentIndex == 0){
+        for (int i = 0; i < waypoints.count; i++) {
+            int waypointIndex = [waypoints[i] intValue];
+            Destination *dest = self.arrayOfDestinations[waypointIndex];
+            [orderedArrayOfDestinations setObject:dest atIndexedSubscript:i];
         }
+    }
+    
+    //add distance/time to next destination and planned time of current destination
+    NSDate *currentTime = self.startTime;
+    for (int i = 0; i < orderedArrayOfDestinations.count - 1; i++) {
+        Destination *dest = orderedArrayOfDestinations[i];
         dest.distanceToNextDestination = legs[i][@"distance"][@"text"];
         dest.timeToNextDestination = [NSNumber numberWithLong:[legs[i][@"duration"][@"value"] longValue]];
         
@@ -156,8 +165,8 @@
         currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
         currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination intValue]];
         [dest saveInBackground];
-        [orderedArrayOfDestinations setObject:dest atIndexedSubscript:i];
     }
+    
     self.endLocation.time = currentTime;
     [self.endLocation saveInBackground];
     
@@ -186,6 +195,7 @@
             [PFUser currentUser][@"trips"] = userTrips;
             [[PFUser currentUser] saveInBackground];
             
+            //give all shared users access to trip
             for (PFUser *user in trip.users) {
                 NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
                 [userTrips addObject:trip];
@@ -195,8 +205,6 @@
             
             [self.activityIndicator stopAnimating];
             [self performSegueWithIdentifier:@"mapSegue" sender:trip];
-        } else {
-            NSLog(@"error: %@", error.localizedDescription);
         }
     }];
 }
@@ -205,6 +213,7 @@
     self.trip.destinations = destinationsArray;
     self.trip.encodedPolyline = self.encodedPolyline;
     
+    //add new users to trip
     for (PFUser *user in self.arrayOfSharedUsers){
         if (![self.trip.users containsObject:user]){
             NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
@@ -244,13 +253,9 @@
     [self.activityIndicator startAnimating];
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
-            dest.duration = @3600;
-            [dest saveInBackground];
             [self.arrayOfDestinations addObject:dest];
             [self.collectionView reloadData];
             [self.activityIndicator stopAnimating];
-        } else {
-            NSLog(@"error: %@", error.localizedDescription);
         }
     }];
 }
@@ -258,7 +263,6 @@
 - (void)viewController:(GMSAutocompleteViewController *)viewController
 didFailAutocompleteWithError:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"Error: %@", [error description]);
 }
 
 - (void)wasCancelled:(GMSAutocompleteViewController *)viewController {
@@ -290,12 +294,13 @@ didFailAutocompleteWithError:(NSError *)error {
     Destination *dest = self.arrayOfDestinations[indexPath.item];
     [cell setCellWithDestination:dest];
     
+    //switch between optimized and planned views
     if (self.routeTypeControl.selectedSegmentIndex == 0) {
-        cell.optimizeView.hidden = false;
-        cell.planView.hidden = true;
-    } else {
         cell.optimizeView.hidden = true;
         cell.planView.hidden = false;
+    } else {
+        cell.optimizeView.hidden = false;
+        cell.planView.hidden = true;
         cell.orderLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     }
     return cell;

@@ -37,11 +37,14 @@
       mapView.myLocationEnabled = YES;
       [self.mapBaseView addSubview:mapView];
     
+    NSLog(@"%@",self.trip.destinations);
+    
+    //make markers for map and find outermmost points of trip to set camera view on map
     Destination *topMost = self.trip.startLocation;
     Destination *bottomMost = self.trip.startLocation;
     Destination *leftMost = self.trip.startLocation;
     Destination *rightMost = self.trip.startLocation;
-    for (Destination *dest in self.trip.destinations){
+    for (Destination *dest in self.trip.destinations) {
         [dest fetchIfNeeded];
         CLLocationCoordinate2D position = CLLocationCoordinate2DMake(dest.coordinates.latitude, dest.coordinates.longitude);
         GMSMarker *marker = [GMSMarker markerWithPosition:position];
@@ -66,7 +69,6 @@
     [mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
     
     self.editButton.hidden = self.isNewTrip;
-    
 }
 
 - (void)didExpandItinerary {
@@ -102,7 +104,7 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
-    NSDate *date = self.trip.startTime;
+    NSDate *date = dest.time;
     formatter.dateStyle = NSDateFormatterNoStyle;
     formatter.timeStyle = NSDateFormatterShortStyle;
     NSString *dateString = [formatter stringFromDate:date];
