@@ -104,9 +104,10 @@
     NSDate *currentTime = vc.startTime;
     for (int i = 0; i < correctOrder.count; i++) {
         [correctDates addObject:currentTime];
-        Destination *dest = correctOrder[i];
-        currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
-        currentTime = [currentTime dateByAddingSeconds:[dest.timeToNextDestination longValue]];
+        if (i!=0){
+            currentTime = [currentTime dateByAddingSeconds:3600];
+        }
+        currentTime = [currentTime dateByAddingSeconds:i*60];
     }
     
     for (int i = 0; i < correctOrder.count; i++){

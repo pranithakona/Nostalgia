@@ -179,6 +179,8 @@
         
         [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
+                dest.duration = @0;
+                [dest saveInBackground];
                 createViewController.endLocation = dest;
             }
         }];
