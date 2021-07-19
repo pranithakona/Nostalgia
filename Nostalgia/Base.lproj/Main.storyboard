@@ -145,7 +145,7 @@
         <!--Home View Controller-->
         <scene sceneID="2hp-qx-hpp">
             <objects>
-                <viewController id="AS3-wt-gCp" customClass="HomeViewController" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="AS3-wt-gCp" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wIA-lO-qXT">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +184,7 @@
                                 <rect key="frame" x="0.0" y="453" width="390" height="255"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U3g-Mx-jFJ">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U3g-Mx-jFJ">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -828,9 +828,6 @@
                                 <rect key="frame" x="288" y="7" width="86" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit"/>
-                                <connections>
-                                    <segue destination="4PE-La-PCA" kind="show" identifier="editDestinationsSegue" id="nG8-Bd-dZ0"/>
-                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -838,6 +835,8 @@
                         <outlet property="collectionView" destination="Djq-lE-N0m" id="Mdz-ko-nzv"/>
                         <outlet property="editButton" destination="zFa-bd-wo3" id="Ykq-Lw-uLP"/>
                         <outlet property="mapBaseView" destination="OoX-h1-P8G" id="fDD-v3-aSX"/>
+                        <segue destination="4PE-La-PCA" kind="show" identifier="editDestinationsSegue" id="aCK-oC-lz5"/>
+                        <segue destination="AS3-wt-gCp" kind="show" identifier="endCreateSegue" id="Aob-4E-UeD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ABw-r5-XBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -867,9 +866,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LuD-Pa-Jo0"/>
-        <segue reference="nG8-Bd-dZ0"/>
-        <segue reference="4TJ-r0-JLT"/>
+        <segue reference="ZeL-0z-YgB"/>
+        <segue reference="MVD-K8-oSW"/>
+        <segue reference="8bE-7q-QJG"/>
+        <segue reference="Aob-4E-UeD"/>
         <segue reference="Hvo-fD-awh"/>
     </inferredMetricsTieBreakers>
     <resources>

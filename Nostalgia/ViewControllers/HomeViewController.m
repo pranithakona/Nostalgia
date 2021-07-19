@@ -10,10 +10,10 @@
 #import "MapViewController.h"
 #import "NewTripViewController.h"
 #import "SceneDelegate.h"
-#import "LocationManager.h"
 #import "Trip.h"
 #import "DateTools.h"
 #import "HomeCell.h"
+#import "LocationManager.h"
 @import Parse;
 
 @interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
@@ -25,8 +25,8 @@
 @property (strong, nonatomic) NSMutableArray *futureTrips;
 @property (strong, nonatomic) NSMutableArray *pastTrips;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonnull) NSTimer *timer;
 @property (strong, nonatomic) NSMutableArray *realTimeLocations;
+@property (strong, nonatomic) Trip *newestTrip;
 
 @end
 
@@ -34,6 +34,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.locationManager = [LocationManager shared];
+    self.locationManager.delegate = self;
+    self.realTimeLocations = [NSMutableArray array];
     
     self.futureCollectionView.delegate = self;
     self.futureCollectionView.dataSource = self;
@@ -71,8 +75,18 @@
     }
     [self.activityIndicator stopAnimating];
     
-    self.locationManager = [LocationManager shared];
-    self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
+}
+
+- (void)didCreateTrip:(Trip *)trip {
+    [self.futureTrips addObject:trip];
+    [self.futureCollectionView reloadData];
+    self.newestTrip = trip;
+    
+    if (CLLocationManager.locationServicesEnabled){
+        NSTimer *timer = [[NSTimer alloc] initWithFireDate:trip.startTime interval:0 target:self selector:@selector(startLocationUpdates) userInfo:nil repeats:false];
+        [NSRunLoop.mainRunLoop addTimer:timer forMode:NSDefaultRunLoopMode];
+    }
 }
 
 - (IBAction)onLogout:(id)sender {
@@ -115,7 +129,81 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    NSLog(@"location update");
+    for (CLLocation *location in locations){
+        if (location.horizontalAccuracy < 20 && fabs([location.timestamp timeIntervalSinceNow]) < 10) {
+            [self.realTimeLocations addObject:location];
+        }
+    }
+}
+
+- (void)startLocationUpdates {
+    self.locationManager.activityType = CLActivityTypeAutomotiveNavigation;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = 100;
+    self.locationManager.allowsBackgroundLocationUpdates = true;
+    [self.locationManager startUpdatingLocation];
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    NSLog(@"location is updating starting now");
     
+    
+    [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:120];
+   // [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:[self.newestTrip.endLocation.time timeIntervalSinceDate:self.newestTrip.startTime]];
+}
+
+- (void)saveRouteWithTrip:(Trip *)trip  {
+    NSLog(@"location is stopping updates now");
+    NSMutableArray *tripLocations = [NSMutableArray array];
+    for (CLLocation *location in self.realTimeLocations){
+        [tripLocations addObject:@[[NSNumber numberWithDouble: location.coordinate.latitude], [NSNumber numberWithDouble: location.coordinate.longitude], location.timestamp]];
+    }
+    [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopMonitoringSignificantLocationChanges];
+    
+    [self snapToRoadsWithCoordinates:tripLocations];
+}
+
+- (void)snapToRoadsWithCoordinates:(NSArray *)coordinates {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *key= [dict objectForKey: @"API_Key"];
+    
+    NSString *coords = @"";
+    for (NSArray *coordinate in coordinates) {
+        coords = [coords stringByAppendingString:[NSString stringWithFormat:@"|%f,%f",[coordinate[0] doubleValue],[coordinate[1] doubleValue]]];
+    }
+    coords = [coords substringFromIndex:1];
+    
+    NSString *urlString = [NSString stringWithFormat: @"https://roads.googleapis.com/v1/snapToRoads?path=%@&interpolate=true&key=%@",coords,key];
+    NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURL* url = [NSURL URLWithString:encodedString];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+
+     __block NSError *error1 = [[NSError alloc] init];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if ([data length]>0 && error == nil) {
+            NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+            NSMutableArray *tripLocations = [NSMutableArray array];
+            
+            NSArray *points = resultsDictionary[@"snappedPoints"];
+            for (NSDictionary *point in points){
+                NSDictionary *location = point[@"location"];
+                NSMutableArray *coordinate = [@[[NSNumber numberWithDouble:[location[@"latitude"] doubleValue]],[NSNumber numberWithDouble:[location[@"longitude"] doubleValue]], point[@"placeId"]] mutableCopy];
+                if (point[@"originalIndex"]){
+                    [coordinate addObject:coordinates[[point[@"originalIndex"] intValue]]];
+                }
+                [tripLocations addObject:coordinate];
+            }
+            
+            NSLog(@"trip locations : %@", tripLocations);
+            self.newestTrip.realTimeCoordinates = tripLocations;
+            [self.newestTrip saveInBackground];
+        } else {
+            NSLog(@"error: %@", error);
+        }
+    }];
+    [task resume];
 }
 
 #pragma mark - Navigation

@@ -25,7 +25,7 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Uses current location for place autocomplete and real-time location tracking</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

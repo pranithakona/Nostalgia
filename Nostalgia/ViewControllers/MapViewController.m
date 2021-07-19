@@ -7,7 +7,9 @@
 
 #import "MapViewController.h"
 #import "MapItineraryHeaderView.h"
+#import "HomeViewController.h"
 #import "CreateViewController.h"
+#import "LocationManager.h"
 #import "ItineraryCell.h"
 #import "DateTools.h"
 @import GoogleMaps;
@@ -31,13 +33,22 @@
     [self.trip.startLocation fetchIfNeeded];
     [self.trip.endLocation fetchIfNeeded];
     
+    if (self.isNewTrip) {
+        [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
+        [self.editButton removeTarget:self action:@selector(didPressEdit) forControlEvents:UIControlEventTouchUpInside];
+        [self.editButton addTarget:self action:@selector(didPressDone) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.editButton removeTarget:self action:@selector(didPressDone) forControlEvents:UIControlEventTouchUpInside];
+        [self.editButton addTarget:self action:@selector(didPressEdit) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
     
     GMSMapView *mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
       mapView.myLocationEnabled = YES;
       [self.mapBaseView addSubview:mapView];
-    
-    NSLog(@"%@",self.trip.destinations);
     
     //make markers for map and find outermmost points of trip to set camera view on map
     Destination *topMost = self.trip.startLocation;
@@ -58,6 +69,8 @@
     
     GMSPath *path = [GMSPath pathFromEncodedPath:self.trip.encodedPolyline];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+    polyline.strokeWidth = 3;
+    polyline.strokeColor = [UIColor blueColor];
     polyline.map = mapView;
     
     GMSCoordinateBounds *bounds;
@@ -68,7 +81,25 @@
     }
     [mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
     
-    self.editButton.hidden = self.isNewTrip;
+    if (self.trip.realTimeCoordinates && self.trip.realTimeCoordinates.count > 0){
+        GMSMutablePath *path = [GMSMutablePath path];
+        for (NSArray *coordinate in self.trip.realTimeCoordinates){
+            [path addCoordinate:CLLocationCoordinate2DMake([coordinate[0] doubleValue],[coordinate[1] doubleValue])];
+        }
+        GMSPolyline *polyline2 = [GMSPolyline polylineWithPath:path];
+        polyline.strokeWidth = 3;
+        polyline2.strokeColor = [UIColor redColor];
+        polyline2.map = mapView;
+    }
+    
+}
+
+- (void)didPressEdit {
+    [self performSegueWithIdentifier:@"editDestinationsSegue" sender:self];
+}
+
+- (void)didPressDone {
+    [self performSegueWithIdentifier:@"endCreateSegue" sender:self];
 }
 
 - (void)didExpandItinerary {
@@ -120,6 +151,9 @@
         CreateViewController *createViewController = [segue destinationViewController];
         createViewController.isNewTrip = false;
         createViewController.trip = self.trip; 
+    } else if ([segue.identifier isEqualToString:@"endCreateSegue"]){
+        HomeViewController *homeViewController = [segue destinationViewController];
+        [homeViewController didCreateTrip:self.trip];
     }
 }
 

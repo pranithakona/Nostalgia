@@ -46,6 +46,8 @@
         [self.endLocationButton setTitle:self.trip.endLocation.name forState:UIControlStateNormal];
         self.nextButton.hidden = true;
     }
+    
+    self.datePicker.minimumDate = [NSDate now];
 }
 
 - (BOOL)requiredFields {
@@ -54,6 +56,7 @@
 }
 
 - (IBAction)dateChanged:(id)sender {
+    self.datePicker.minimumDate = [NSDate now];
     self.startTime = self.datePicker.date;
     self.nextButton.enabled = [self requiredFields];
     if (!self.isNewTrip){

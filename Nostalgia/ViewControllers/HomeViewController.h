@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Trip.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeViewController : UIViewController
+
+- (void)didCreateTrip:(Trip *)trip;
 
 @end
 
