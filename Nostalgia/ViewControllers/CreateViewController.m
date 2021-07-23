@@ -23,8 +23,10 @@
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *dragGestureRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
-@property (strong, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *arrayOfSharedUsers;
+@property (nonatomic, copy) NSString *encodedPolyline;
+@property (strong, nonatomic) NSArray *bounds;
+
 
 @end
 
@@ -115,18 +117,20 @@
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
 
      __block NSError *error1 = [[NSError alloc] init];
+    __weak typeof(self) weakSelf = self;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([data length]>0 && error == nil) {
             NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
             NSMutableArray *orderedArrayOfDestinations;
             //optimize route
-            orderedArrayOfDestinations = [self orderDestinationswithResults:resultsDictionary];
+            orderedArrayOfDestinations = [weakSelf orderDestinationswithResults:resultsDictionary];
             
-            if (self.isNewTrip){
-                [self createTripWithDestinations:orderedArrayOfDestinations];
+            //create new trip or update existing one
+            if (weakSelf.isNewTrip){
+                [weakSelf createTripWithDestinations:orderedArrayOfDestinations];
             } else {
-                [self editTripWithDestinations:orderedArrayOfDestinations];
+                [weakSelf editTripWithDestinations:orderedArrayOfDestinations];
             }
         }
     }];
@@ -139,7 +143,9 @@
     }
     NSArray *legs = resultsDictionary[@"routes"][0][@"legs"];
     NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
+    NSDictionary *bounds = resultsDictionary[@"routes"][0][@"bounds"];
     self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
+    self.bounds = @[[NSNumber numberWithDouble:[bounds[@"northeast"][@"lat"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"northeast"][@"lng"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"southwest"][@"lat"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"southwest"][@"lng"] doubleValue]]];
     
     //reorder destinations array based on optimized order for route
     NSMutableArray *orderedArrayOfDestinations = [NSMutableArray array];
@@ -249,6 +255,8 @@
     didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.activityIndicator startAnimating];
+    
+    //add new location to destinations array and save as a destination 
     [Destination postDestination:place withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
         if (!error){
             [self.arrayOfDestinations addObject:dest];

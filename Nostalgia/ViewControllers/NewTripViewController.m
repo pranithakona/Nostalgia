@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) GMSPlace *startLocation;
 @property (strong, nonatomic) GMSPlace *endLocation;
-@property (nonatomic) BOOL isEditingStartLocation;
+@property (nonatomic, assign) BOOL isEditingStartLocation;
 
 @end
 
@@ -37,6 +37,7 @@
     self.startTime = self.datePicker.date;
     self.nextButton.enabled = [self requiredFields];
     
+    //set fields with existing descriptions if is an existing trip
     if (!self.isNewTrip) {
         self.nameField.text = self.trip.name;
         self.descriptionField.text = self.trip.tripDescription;
@@ -51,6 +52,7 @@
 }
 
 - (BOOL)requiredFields {
+    //commented out for testing purposes
     //return (![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation) || (![self.nameField.text isEqualToString:@""] && !self.isNewTrip);
     return true;
 }
@@ -171,6 +173,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     CreateViewController *createViewController = [segue destinationViewController];
+    //save start and end locations as new destinations and pass trip info to next screen
     if (self.isNewTrip) {
         [Destination postDestination:self.startLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){

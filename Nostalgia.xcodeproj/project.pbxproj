@@ -34,6 +34,7 @@
 		33C64191269FA38600726C4E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64190269FA38600726C4E /* ShareViewController.m */; };
 		33C64194269FA71300726C4E /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64193269FA71300726C4E /* ShareCell.m */; };
 		33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6419E26A14A9B00726C4E /* LocationManager.m */; };
+		33C641AE26AB6B2B00726C4E /* NSDate+NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +109,8 @@
 		33C6419D26A14A9B00726C4E /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		33C6419E26A14A9B00726C4E /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		33C641A826A2289600726C4E /* CreateViewController+Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CreateViewController+Tests.h"; sourceTree = "<group>"; };
+		33C641AC26AB6B2B00726C4E /* NSDate+NSDateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+NSDateHelper.h"; sourceTree = "<group>"; };
+		33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NSDateHelper.m"; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +196,8 @@
 				33C64133269A646F00726C4E /* LaunchScreen.storyboard */,
 				33C64136269A646F00726C4E /* Info.plist */,
 				33C64137269A646F00726C4E /* main.m */,
+				33C641AC26AB6B2B00726C4E /* NSDate+NSDateHelper.h */,
+				33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */,
 			);
 			path = Nostalgia;
 			sourceTree = "<group>";
@@ -560,6 +565,7 @@
 				33C64194269FA71300726C4E /* ShareCell.m in Sources */,
 				33C6416E269A891C00726C4E /* MapViewController.m in Sources */,
 				33C64138269A646F00726C4E /* main.m in Sources */,
+				33C641AE26AB6B2B00726C4E /* NSDate+NSDateHelper.m in Sources */,
 				33C64176269BCA6100726C4E /* Destination.m in Sources */,
 				33C64182269F471400726C4E /* HomeCell.m in Sources */,
 				33C64171269A8B7400726C4E /* CreateViewController.m in Sources */,

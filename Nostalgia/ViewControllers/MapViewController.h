@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MapViewController : UIViewController
 
 @property (strong, nonatomic) Trip *trip;
-@property (nonatomic) BOOL isNewTrip;
+@property (nonatomic, assign) BOOL isNewTrip;
 
 @end
 

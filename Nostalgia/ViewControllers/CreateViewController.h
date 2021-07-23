@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CreateViewController : UIViewController
 
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *tripDescription;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *tripDescription;
 @property (strong, nonatomic) GMSPlace *region;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) Destination *startLocation;

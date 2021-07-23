@@ -7,6 +7,7 @@
 
 #import "Trip.h"
 #import "CreateViewController.h"
+#import <Parse/Parse.h>
 
 @implementation Trip 
 
@@ -21,17 +22,19 @@
 @dynamic destinations;
 @dynamic realTimeCoordinates;
 @dynamic startTime;
-@dynamic endtime;
 @dynamic encodedPolyline;
+@dynamic bounds;
 @dynamic isOptimized;
 
 + (nonnull NSString *)parseClassName {
     return @"Trip";
 }
 
-+ (void)postTrip:(Trip *)trip withCompletion:(void (^)(Trip * _Nullable trip, NSError * _Nullable error))completion {
++ (void)postTrip:(Trip *)trip withCompletion:(tripCompletion)completion {
     if (!trip) {
-        completion (nil, nil);
+        if (!completion){
+            completion (nil, nil);
+        }
         return;
     }
     [trip saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

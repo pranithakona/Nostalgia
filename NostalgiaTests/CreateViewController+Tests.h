@@ -10,8 +10,8 @@
 
 @interface CreateViewController (Tests)
 
-@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *routeTypeControl;
+@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSDate *startTime;

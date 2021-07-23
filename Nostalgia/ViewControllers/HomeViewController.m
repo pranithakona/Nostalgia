@@ -79,6 +79,7 @@
 }
 
 - (void)didCreateTrip:(Trip *)trip {
+    //sets timer for new trips
     [self.futureTrips addObject:trip];
     [self.futureCollectionView reloadData];
     self.newestTrip = trip;
@@ -129,7 +130,6 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    NSLog(@"location update");
     for (CLLocation *location in locations){
         if (location.horizontalAccuracy < 20 && fabs([location.timestamp timeIntervalSinceNow]) < 10) {
             [self.realTimeLocations addObject:location];
@@ -144,15 +144,13 @@
     self.locationManager.allowsBackgroundLocationUpdates = true;
     [self.locationManager startUpdatingLocation];
     [self.locationManager startMonitoringSignificantLocationChanges];
-    NSLog(@"location is updating starting now");
     
-    
+    //commented out for testing purposes
     [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:120];
    // [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:[self.newestTrip.endLocation.time timeIntervalSinceDate:self.newestTrip.startTime]];
 }
 
-- (void)saveRouteWithTrip:(Trip *)trip  {
-    NSLog(@"location is stopping updates now");
+- (void)saveRouteWithTrip:(Trip *)trip {
     NSMutableArray *tripLocations = [NSMutableArray array];
     for (CLLocation *location in self.realTimeLocations){
         [tripLocations addObject:@[[NSNumber numberWithDouble: location.coordinate.latitude], [NSNumber numberWithDouble: location.coordinate.longitude], location.timestamp]];
@@ -164,6 +162,7 @@
 }
 
 - (void)snapToRoadsWithCoordinates:(NSArray *)coordinates {
+    //calls Google Roads API to snap coordinates to exact roads traveled
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *key= [dict objectForKey: @"API_Key"];
@@ -180,27 +179,26 @@
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
 
      __block NSError *error1 = [[NSError alloc] init];
+    __weak typeof(self) weakSelf = self;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([data length]>0 && error == nil) {
             NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
             NSMutableArray *tripLocations = [NSMutableArray array];
             
+            //save coordinates, placeID, and time for each point on trip
             NSArray *points = resultsDictionary[@"snappedPoints"];
             for (NSDictionary *point in points){
                 NSDictionary *location = point[@"location"];
                 NSMutableArray *coordinate = [@[[NSNumber numberWithDouble:[location[@"latitude"] doubleValue]],[NSNumber numberWithDouble:[location[@"longitude"] doubleValue]], point[@"placeId"]] mutableCopy];
                 if (point[@"originalIndex"]){
-                    [coordinate addObject:coordinates[[point[@"originalIndex"] intValue]]];
+                    [coordinate addObject:coordinates[[point[@"originalIndex"] intValue]][2]];
                 }
                 [tripLocations addObject:coordinate];
             }
             
-            NSLog(@"trip locations : %@", tripLocations);
-            self.newestTrip.realTimeCoordinates = tripLocations;
-            [self.newestTrip saveInBackground];
-        } else {
-            NSLog(@"error: %@", error);
+            weakSelf.newestTrip.realTimeCoordinates = tripLocations;
+            [weakSelf.newestTrip saveInBackground];
         }
     }];
     [task resume];

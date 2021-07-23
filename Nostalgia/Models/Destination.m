@@ -23,7 +23,9 @@
 
 + (void)postDestination:(GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion {
     if (!place) {
-        completion(nil, nil);
+        if (completion){
+            completion(nil, nil);
+        }
         return;
     }
     Destination *newDest = [Destination new];
