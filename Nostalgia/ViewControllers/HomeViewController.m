@@ -75,6 +75,15 @@
     }
     [self.activityIndicator stopAnimating];
     
+    //schedule route tracking for each future trip
+    for (Trip *trip in self.futureTrips) {
+        NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (CLLocationManager.locationServicesEnabled){
+                [self startLocationUpdates];
+            }
+        });
+    }
     [self.locationManager requestWhenInUseAuthorization];
 }
 
@@ -84,10 +93,12 @@
     [self.futureCollectionView reloadData];
     self.newestTrip = trip;
     
-    if (CLLocationManager.locationServicesEnabled){
-        NSTimer *timer = [[NSTimer alloc] initWithFireDate:trip.startTime interval:0 target:self selector:@selector(startLocationUpdates) userInfo:nil repeats:false];
-        [NSRunLoop.mainRunLoop addTimer:timer forMode:NSDefaultRunLoopMode];
-    }
+    NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (CLLocationManager.locationServicesEnabled){
+            [self startLocationUpdates];
+        }
+    });
 }
 
 - (IBAction)onLogout:(id)sender {
