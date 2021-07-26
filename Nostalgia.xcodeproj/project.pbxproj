@@ -35,6 +35,10 @@
 		33C64194269FA71300726C4E /* ShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64193269FA71300726C4E /* ShareCell.m */; };
 		33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6419E26A14A9B00726C4E /* LocationManager.m */; };
 		33C641AE26AB6B2B00726C4E /* NSDate+NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */; };
+		33C641B126AF260500726C4E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C641B026AF260500726C4E /* ProfileViewController.m */; };
+		33DAE98726AF3087006094C3 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE98626AF3087006094C3 /* SearchViewController.m */; };
+		33DAE98E26AF519C006094C3 /* HomeCollectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE98C26AF519C006094C3 /* HomeCollectionHeader.m */; };
+		33DAE99126AF52EE006094C3 /* HomeCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DAE99026AF52EE006094C3 /* HomeCollectionHeader.xib */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +115,13 @@
 		33C641A826A2289600726C4E /* CreateViewController+Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CreateViewController+Tests.h"; sourceTree = "<group>"; };
 		33C641AC26AB6B2B00726C4E /* NSDate+NSDateHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+NSDateHelper.h"; sourceTree = "<group>"; };
 		33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NSDateHelper.m"; sourceTree = "<group>"; };
+		33C641AF26AF260500726C4E /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		33C641B026AF260500726C4E /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		33DAE98526AF3087006094C3 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		33DAE98626AF3087006094C3 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		33DAE98B26AF519C006094C3 /* HomeCollectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCollectionHeader.h; sourceTree = "<group>"; };
+		33DAE98C26AF519C006094C3 /* HomeCollectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeCollectionHeader.m; sourceTree = "<group>"; };
+		33DAE99026AF52EE006094C3 /* HomeCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollectionHeader.xib; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +249,10 @@
 				33C64190269FA38600726C4E /* ShareViewController.m */,
 				33C6416C269A891C00726C4E /* MapViewController.h */,
 				33C6416D269A891C00726C4E /* MapViewController.m */,
+				33C641AF26AF260500726C4E /* ProfileViewController.h */,
+				33C641B026AF260500726C4E /* ProfileViewController.m */,
+				33DAE98526AF3087006094C3 /* SearchViewController.h */,
+				33DAE98626AF3087006094C3 /* SearchViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -245,6 +260,9 @@
 		33C6415B269A6BEF00726C4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				33DAE98B26AF519C006094C3 /* HomeCollectionHeader.h */,
+				33DAE98C26AF519C006094C3 /* HomeCollectionHeader.m */,
+				33DAE99026AF52EE006094C3 /* HomeCollectionHeader.xib */,
 				33C64177269BEAD000726C4E /* CreateCell.h */,
 				33C64178269BEAD000726C4E /* CreateCell.m */,
 				33C64180269F471400726C4E /* HomeCell.h */,
@@ -394,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33C64135269A646F00726C4E /* LaunchScreen.storyboard in Resources */,
+				33DAE99126AF52EE006094C3 /* HomeCollectionHeader.xib in Resources */,
 				33C64132269A646F00726C4E /* Assets.xcassets in Resources */,
 				33C64130269A646E00726C4E /* Main.storyboard in Resources */,
 				33C64184269F520700726C4E /* HomeCell.xib in Resources */,
@@ -562,6 +581,7 @@
 				33C64127269A646E00726C4E /* AppDelegate.m in Sources */,
 				33C6418E269F97F400726C4E /* ItineraryCell.m in Sources */,
 				33C64165269A6E1F00726C4E /* SignUpViewController.m in Sources */,
+				33DAE98E26AF519C006094C3 /* HomeCollectionHeader.m in Sources */,
 				33C64194269FA71300726C4E /* ShareCell.m in Sources */,
 				33C6416E269A891C00726C4E /* MapViewController.m in Sources */,
 				33C64138269A646F00726C4E /* main.m in Sources */,
@@ -572,7 +592,9 @@
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
 				33C64189269F81E000726C4E /* MapItineraryHeaderView.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
+				33DAE98726AF3087006094C3 /* SearchViewController.m in Sources */,
 				33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */,
+				33C641B126AF260500726C4E /* ProfileViewController.m in Sources */,
 				33C6417F269E1B5700726C4E /* Trip.m in Sources */,
 				33C6417C269CF76B00726C4E /* NewTripViewController.m in Sources */,
 				33C64191269FA38600726C4E /* ShareViewController.m in Sources */,

@@ -246,6 +246,9 @@
 
     GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
     filter.type = kGMSPlacesAutocompleteTypeFilterNoFilter;
+    CLLocationCoordinate2D northEast = CLLocationCoordinate2DMake(self.region.coordinate.latitude - 0.5, self.region.coordinate.longitude + 0.5);
+    CLLocationCoordinate2D southWest = CLLocationCoordinate2DMake(self.region.coordinate.latitude + 0.5, self.region.coordinate.longitude - 0.5);
+    filter.locationBias = GMSPlaceRectangularLocationOption(northEast, southWest);
     acController.autocompleteFilter = filter;
 
     [self presentViewController:acController animated:YES completion:nil];

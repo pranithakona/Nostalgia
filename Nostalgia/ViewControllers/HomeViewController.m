@@ -14,12 +14,12 @@
 #import "DateTools.h"
 #import "HomeCell.h"
 #import "LocationManager.h"
+#import "HomeCollectionHeader.h"
 @import Parse;
 
-@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
+@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *futureCollectionView;
-@property (weak, nonatomic) IBOutlet UICollectionView *pastCollectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSMutableArray *futureTrips;
@@ -39,25 +39,16 @@
     self.locationManager.delegate = self;
     self.realTimeLocations = [NSMutableArray array];
     
-    self.futureCollectionView.delegate = self;
-    self.futureCollectionView.dataSource = self;
-    self.pastCollectionView.delegate = self;
-    self.pastCollectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    [self.collectionView registerNib:[UINib nibWithNibName:@"HomeCollectionHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HomeCollectionHeader"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"HomeCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCell"];
     
-    [self.futureCollectionView registerNib:[UINib nibWithNibName:@"HomeCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCell"];
-    [self.pastCollectionView registerNib:[UINib nibWithNibName:@"HomeCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCell"];
-    
-    UICollectionViewFlowLayout *layout = [self.futureCollectionView collectionViewLayout];
-    layout.minimumLineSpacing = 5;
-    layout.minimumInteritemSpacing = 5;
-    CGFloat itemHeight = self.futureCollectionView.frame.size.height;
-    layout.itemSize = CGSizeMake(itemHeight, itemHeight);
-    
-    UICollectionViewFlowLayout *layout2 = [self.pastCollectionView collectionViewLayout];
-    layout2.minimumLineSpacing = 5;
-    layout2.minimumInteritemSpacing = 5;
-    CGFloat itemHeight2 = self.pastCollectionView.frame.size.height;
-    layout2.itemSize = CGSizeMake(itemHeight2, itemHeight2);
+    self.collectionView.collectionViewLayout = [self generateLayout];
+//    layout.minimumLineSpacing = 5;
+//    layout.minimumInteritemSpacing = 5;
+//    CGFloat itemHeight = self.futureCollectionView.frame.size.height;
+//    layout.itemSize = CGSizeMake(itemHeight, itemHeight);
     
     self.futureTrips = [NSMutableArray array];
     self.pastTrips = [NSMutableArray array];
@@ -90,7 +81,7 @@
 - (void)didCreateTrip:(Trip *)trip {
     //sets timer for new trips
     [self.futureTrips addObject:trip];
-    [self.futureCollectionView reloadData];
+    [self.collectionView reloadData];
     self.newestTrip = trip;
     
     NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
@@ -101,13 +92,48 @@
     });
 }
 
-- (IBAction)onLogout:(id)sender {
-    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        SceneDelegate *sceneDelegate = (SceneDelegate *)[UIApplication sharedApplication].connectedScenes.allObjects[0].delegate;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *openingViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        sceneDelegate.window.rootViewController = openingViewController;
+- (UICollectionViewLayout *) generateLayout {
+    static int EDGE_INSETS = 5;
+    static int SECTION_HEADER_HEIGHT = 44;
+    
+    UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
+        
+        //item
+        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1]];
+        
+        NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
+        item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
+        
+        //group
+        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:0.4]];
+        
+        NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
+        group.contentInsets = NSDirectionalEdgeInsetsMake(EDGE_INSETS, EDGE_INSETS, EDGE_INSETS, EDGE_INSETS);
+        
+        //section
+        NSCollectionLayoutSection *sectionLayout = [NSCollectionLayoutSection sectionWithGroup:group];
+        
+        NSCollectionLayoutSize *headerSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension estimatedDimension:SECTION_HEADER_HEIGHT]];
+        
+        NSCollectionLayoutBoundarySupplementaryItem *sectionHeader = [NSCollectionLayoutBoundarySupplementaryItem boundarySupplementaryItemWithLayoutSize:headerSize elementKind:UICollectionElementKindSectionHeader alignment:NSRectAlignmentTop];
+        
+        sectionLayout.boundarySupplementaryItems = @[sectionHeader];
+        sectionLayout.orthogonalScrollingBehavior = UICollectionLayoutSectionOrthogonalScrollingBehaviorContinuous;
+        
+        return sectionLayout;
     }];
+    
+    return layout;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    HomeCollectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HomeCollectionHeader" forIndexPath:indexPath];
+    headerView.nameLabel.text = indexPath.section == 0 ? @"Upcoming" : @"Past";
+    return headerView;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,11 +143,11 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips.count : self.pastTrips.count;
+    return section == 0 ? self.futureTrips.count : self.pastTrips.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *data = [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips : self.pastTrips;
+    NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
     HomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeCell" forIndexPath:indexPath];
     
     if (cell == nil) {
