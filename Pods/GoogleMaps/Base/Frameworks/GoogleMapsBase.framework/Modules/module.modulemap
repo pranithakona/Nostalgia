@@ -4,7 +4,6 @@ framework module GoogleMapsBase {
   module * { export * }
   link "z"
   link framework "CoreFoundation"
-  link framework "CoreGraphics"
   link framework "CoreLocation"
   link framework "CoreTelephony"
   link framework "CoreText"

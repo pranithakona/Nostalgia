@@ -1,12 +1,13 @@
 PODS:
   - Bolts/Tasks (1.9.1)
   - DateTools (2.0.0)
-  - GoogleMaps (5.1.0):
-    - GoogleMaps/Maps (= 5.1.0)
-  - GoogleMaps/Base (5.1.0)
-  - GoogleMaps/Maps (5.1.0):
+  - GoogleMaps (3.10.0-beta1):
+    - GoogleMaps/Maps (= 3.10.0-beta1)
+  - GoogleMaps/Base (3.10.0-beta1)
+  - GoogleMaps/Maps (3.10.0-beta1):
     - GoogleMaps/Base
-  - GooglePlaces (5.0.0)
+  - GooglePlaces (3.10.0-beta1):
+    - GoogleMaps/Base (= 3.10.0-beta1)
   - MaterialComponents/AnimationTiming (124.2.0)
   - MaterialComponents/Availability (124.2.0)
   - MaterialComponents/Buttons (124.2.0):
@@ -64,8 +65,8 @@ PODS:
 
 DEPENDENCIES:
   - DateTools
-  - GoogleMaps
-  - GooglePlaces
+  - GoogleMaps (= 3.10.0-beta1)
+  - GooglePlaces (= 3.10.0-beta1)
   - MaterialComponents/Buttons
   - Parse
 
@@ -83,13 +84,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
-  GoogleMaps: 086ae1dab659eaa7339bdb30fc88e2f44e7c597c
-  GooglePlaces: 5d87ca13ed98b7a937e0d8bc7026f718c7263271
+  GoogleMaps: 17598f733b70288939758dad9bafd7dfeab3c1dc
+  GooglePlaces: 5de0ebadf18689d16bacd6b4a65f30c319678ffd
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
   MDFTextAccessibility: f4bb4cc2194286651b59a215fdeaa0e05dc90ba5
   Parse: 081fb8755c3000fd11df817eec235def233d0af3
 
-PODFILE CHECKSUM: f1b0d5ebc10a05bb7d624a3f2b6feccf37f8b9be
+PODFILE CHECKSUM: fc71b55536da133ee4119595ab4831e08d11f85b
 
 COCOAPODS: 1.10.1

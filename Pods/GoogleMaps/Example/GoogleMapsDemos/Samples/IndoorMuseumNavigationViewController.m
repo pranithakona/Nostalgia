@@ -15,8 +15,6 @@
 
 #import "GoogleMapsDemos/Samples/IndoorMuseumNavigationViewController.h"
 
-#import <GoogleMaps/GoogleMaps.h>
-
 @implementation IndoorMuseumNavigationViewController {
   GMSMapView *_mapView;
   NSArray *_exhibits;     // Array of JSON exhibit data.

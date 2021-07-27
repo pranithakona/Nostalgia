@@ -44,7 +44,7 @@
     }
 }
 
--(void)fetchUsers {
+- (void)fetchUsers {
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     query.limit = 20;
     [query includeKey:@"username"];

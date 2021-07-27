@@ -18,7 +18,7 @@
 @interface Samples : NSObject
 + (NSArray *)loadSections;
 + (NSArray *)loadDemos;
-+ (NSDictionary *)newDemo:(Class)viewControllerClass
++ (NSDictionary *)newDemo:(Class) class
                 withTitle:(NSString *)title
            andDescription:(NSString *)description;
 @end

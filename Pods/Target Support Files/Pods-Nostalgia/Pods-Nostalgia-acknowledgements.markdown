@@ -60,11 +60,11 @@ SOFTWARE.
 
 ## GoogleMaps
 
-Copyright 2021 Google
+Copyright 2020 Google
 
 ## GooglePlaces
 
-Copyright 2021 Google
+Copyright 2020 Google
 
 ## MDFInternationalization
 

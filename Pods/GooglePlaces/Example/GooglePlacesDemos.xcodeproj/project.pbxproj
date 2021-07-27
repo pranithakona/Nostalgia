@@ -17,9 +17,9 @@
 		52C261A89C8177D081F0D666 /* DemoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C753B6637575A8CD81C699 /* DemoListViewController.m */; };
 		52FA2C79BAE0253BF65AD4DA /* AutocompleteBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E6E2A1285D9A0BEBDCD503 /* AutocompleteBaseViewController.m */; };
 		68FD32D0AB7DA54A0617E79C /* DemoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2203BCCE0CFC3DC4F38B30 /* DemoData.m */; };
+		7DF1A5BA0B155A6414638BC6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97ADBE3D50D731A88C24F3F0 /* UIKit.framework */; };
 		893AFDBC37BAD181B89DBE05 /* AutocompletePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEA89ED8C397E73E2E9730 /* AutocompletePushViewController.m */; };
 		8C59A77A235FCAEEE2D7E6CB /* AutocompleteModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1502E6F1A86B1773138153B /* AutocompleteModalViewController.m */; };
-		A2EE0081C3FF6E60DA48008E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97ADBE3D50D731A88C24F3F0 /* UIKit.framework */; };
 		A3D84E176FACD02AA9FAC18C /* BaseDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3D4BD9841268F97FD23E770 /* BaseDemoViewController.m */; };
 		BDCD4957C53C15747F136768 /* AutocompleteWithCustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = FC03FEE150596E9432F612DF /* AutocompleteWithCustomColors.m */; };
 		C31E5320A5DBA3B92410CC12 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D344C64A66F10D55590797E /* Localizable.strings */; };
@@ -106,21 +106,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2EE0081C3FF6E60DA48008E /* UIKit.framework in Frameworks */,
+				7DF1A5BA0B155A6414638BC6 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		50B93CAB6D1F1E17540F6E78 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				97ADBE3D50D731A88C24F3F0 /* UIKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5451EE1805656445BDA54845 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				6474F6E51B1B62FD7E19E38F /* Source */,
-				50B93CAB6D1F1E17540F6E78 /* Frameworks */,
+				AB0178922FA6ECEABB9EFFE7 /* Frameworks */,
 				87ED31F365F5BCA83FBDE8E8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -182,6 +174,14 @@
 				16C539680ABA55CA7AFC3002 /* GooglePlacesDemos.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AB0178922FA6ECEABB9EFFE7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97ADBE3D50D731A88C24F3F0 /* UIKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D21615D02D1F3EB36750BF21 /* Samples */ = {
@@ -240,6 +240,7 @@
 		B0EA45FFFB815F6F5A3E1BDD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 			};
 			buildConfigurationList = 63964CA36C9733EFF27C66CD /* Build configuration list for PBXProject "GooglePlacesDemos" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -254,15 +255,15 @@
 				da,
 				de,
 				el,
-				en_AU,
-				en_GB,
-				en_IN,
+				"en-AU",
+				"en-GB",
+				"en-IN",
 				es,
-				es_419,
-				es_MX,
+				"es-419",
+				"es-MX",
 				fi,
 				fr,
-				fr_CA,
+				"fr-CA",
 				he,
 				hi,
 				hr,
@@ -276,8 +277,8 @@
 				nl,
 				pl,
 				pt,
-				pt_BR,
-				pt_PT,
+				"pt-BR",
+				"pt-PT",
 				ro,
 				ru,
 				sk,
@@ -286,9 +287,9 @@
 				tr,
 				uk,
 				vi,
-				zh_CN,
-				zh_HK,
-				zh_TW,
+				"zh-Hans",
+				"zh-HK",
+				"zh-Hant",
 			);
 			mainGroup = 7C4A8D45D6D1B907A8C0521E;
 			projectDirPath = "";
@@ -408,12 +409,11 @@
 		C88A918BB441623AA489A34D /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphonesimulator*]" = x86_64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ./GooglePlacesDemos/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					.,
 					"$(SDKROOT)/System/Library/Frameworks",

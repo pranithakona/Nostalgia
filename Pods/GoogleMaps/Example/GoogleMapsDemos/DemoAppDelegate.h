@@ -19,6 +19,5 @@
 
 @property(nonatomic) UIWindow *window;
 @property(nonatomic) UISplitViewController *splitViewController;
-@property(nonatomic) id servicesHandle;
 
 @end
