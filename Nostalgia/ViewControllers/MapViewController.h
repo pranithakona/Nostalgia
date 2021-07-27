@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) Trip *trip;
 @property (nonatomic, assign) BOOL isNewTrip;
+@property (nonatomic, assign) BOOL isOwnTrip;
 
 @end
 

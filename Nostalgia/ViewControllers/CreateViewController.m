@@ -337,6 +337,7 @@ didFailAutocompleteWithError:(NSError *)error {
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = true;
+        mapViewController.isOwnTrip = true;
     } else if ([segue.identifier isEqualToString: @"shareSegue"]){
         ShareViewController *shareViewController = [segue destinationViewController];
         shareViewController.delegate = self;

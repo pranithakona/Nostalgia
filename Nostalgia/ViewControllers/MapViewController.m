@@ -33,9 +33,13 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
+    [self.trip fetchIfNeeded];
     [self.trip.startLocation fetchIfNeeded];
     [self.trip.endLocation fetchIfNeeded];
     
+    //change actions based on type of trip
+    self.editButton.hidden = !self.isOwnTrip;
+    self.navigationController.navigationBarHidden = false;
     if (self.isNewTrip) {
         [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
         [self.editButton removeTarget:self action:@selector(didPressEdit) forControlEvents:UIControlEventTouchUpInside];
@@ -50,8 +54,8 @@
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
     
     self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
-      self.mapView.myLocationEnabled = YES;
-      [self.mapBaseView addSubview:self.mapView];
+    self.mapView.myLocationEnabled = YES;
+    [self.mapBaseView addSubview:self.mapView];
     
     //make markers for map and find outermmost points of trip to set camera view on map
     Destination *topMost = self.trip.startLocation;

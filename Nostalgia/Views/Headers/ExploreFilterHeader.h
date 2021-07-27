@@ -9,7 +9,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ExploreFilterHeaderDelegate
+
+- (void)filterByType:(NSString *)type;
+
+@end
+
 @interface ExploreFilterHeader : UICollectionReusableView
+
+@property (weak, nonatomic) id<ExploreFilterHeaderDelegate>delegate;
 
 @end
 

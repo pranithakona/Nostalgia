@@ -9,4 +9,21 @@
 
 @implementation ExploreFilterHeader
 
+- (IBAction)filterByFood:(id)sender {
+    [self.delegate filterByType:@"food"];
+}
+
+- (IBAction)filterByShop:(id)sender {
+    [self.delegate filterByType:@"shop"];
+}
+
+- (IBAction)filterByFun:(id)sender {
+    [self.delegate filterByType:@"fun"];
+}
+
+- (IBAction)filterByAttractions:(id)sender {
+    [self.delegate filterByType:@"sightseeing"];
+}
+
+
 @end

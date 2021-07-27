@@ -9,12 +9,13 @@
 #import "ExploreCell.h"
 #import "ExploreFilterHeader.h"
 #import "HomeCollectionHeader.h"
+#import "MapViewController.h"
 #import "Trip.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import <Parse/Parse.h>
 
-@interface SearchViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface SearchViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ExploreFilterHeaderDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -22,9 +23,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
 @property (weak, nonatomic) IBOutlet UIButton *collapseButton;
 
-@property (strong, nonatomic) GMSMapView *mapView;
+
 @property (strong, nonatomic) NSArray *photosArray;
 @property (strong, nonatomic) NSArray *itinerariesArray;
+@property (strong, nonatomic) NSArray *placesArray;
+@property (strong, nonatomic) GMSMapView *mapView;
+@property (strong, nonatomic) GMSPlace *currentRegion;
+@property (strong, nonatomic) GMSMarker *infoMarker;
 @property (strong, nonatomic) GMSPlacesClient *placesClient;
 
 @end
@@ -33,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBarHidden = true;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -46,11 +53,16 @@
     GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:@"5c25f377317d20b8"];
     self.mapView = [GMSMapView mapWithFrame:self.view.frame mapID:mapID camera:camera];
     self.mapView.myLocationEnabled = YES;
+    self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
     [self.view insertSubview:self.buttonView aboveSubview:self.mapView];
     [self.view insertSubview:self.detailsView aboveSubview:self.mapView];
     
     self.placesClient = [GMSPlacesClient sharedClient];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = true;
 }
 
 - (void)fetchItinerariesForRegion:(NSString *)placeID {
@@ -68,6 +80,35 @@
     }];
 }
 
+- (void)fetchPlacesForRegion:(CLLocationCoordinate2D)coordinate withType:(NSString *)type {
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *key= [dict objectForKey: @"API_Key"];
+    
+    NSString *keywordString = type != nil ? [NSString stringWithFormat:@"&keyword=%@",type] : @"";
+    NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=1500%@&key=%@",coordinate.latitude,coordinate.longitude, keywordString, key];
+    NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURL* url = [NSURL URLWithString:encodedString];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+
+     __block NSError *error1 = [[NSError alloc] init];
+    __weak typeof(self) weakSelf = self;
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if ([data length]>0 && error == nil) {
+            typeof(self) strongSelf = weakSelf;
+            NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+            strongSelf.placesArray = resultsDictionary[@"results"];
+            [strongSelf.collectionView reloadData];
+        }
+    }];
+    [task resume];
+}
+
+- (void)filterByType:(NSString *)type {
+    [self fetchPlacesForRegion:self.currentRegion.coordinate withType:type];
+}
+
 - (UICollectionViewLayout *) generateLayout {
     static int EDGE_INSETS = 5;
     
@@ -76,13 +117,12 @@
         int SECTION_HEADER_HEIGHT = section == 1 ? 100 : 45;
         
         //item
-        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1]];
+        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1.0]];
         
         NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
-        //item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //group
-        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension absoluteDimension:250]];
+        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension absoluteDimension:250] heightDimension:[NSCollectionLayoutDimension absoluteDimension:200]];
         
         NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
         group.contentInsets = NSDirectionalEdgeInsetsMake(EDGE_INSETS, EDGE_INSETS, EDGE_INSETS, EDGE_INSETS);
@@ -111,7 +151,7 @@
     if (section == 0) {
         return MIN(self.photosArray.count, 20);
     } else if (section == 1) {
-        return MIN(self.itinerariesArray.count, 20);
+        return MIN(self.placesArray.count, 20);
     } else if (section == 2) {
         return MIN(self.itinerariesArray.count, 20);
     }
@@ -125,6 +165,7 @@
         return header;
     } else if (indexPath.section == 1) {
         ExploreFilterHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ExploreFilterHeader" forIndexPath:indexPath];
+        header.delegate = self;
         return header;
     } else if (indexPath.section == 2) {
         HomeCollectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HomeCollectionHeader" forIndexPath:indexPath];
@@ -136,6 +177,8 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ExploreCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ExploreCell" forIndexPath:indexPath];
+    cell.backgroundImageView.image = nil;
+    cell.nameLabel.hidden = false;
     
     if (indexPath.section == 0) {
         GMSPlacePhotoMetadata *photoMetadata = self.photosArray[indexPath.item];
@@ -146,12 +189,36 @@
         }];
         cell.nameLabel.hidden = true;
     } else if (indexPath.section == 1) {
+        NSDictionary *place = self.placesArray[indexPath.item];
+        cell.nameLabel.text = place[@"name"];
         
     } else if (indexPath.section == 2) {
         Trip *trip = self.itinerariesArray[indexPath.item];
         cell.nameLabel.text = trip.name;
     }
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        
+    } else if (indexPath.section == 1) {
+        [self didCollapseDetails:self];
+        NSDictionary *place = self.placesArray[indexPath.item];
+        CLLocationCoordinate2D location = CLLocationCoordinate2DMake([place[@"geometry"][@"location"][@"lat"] doubleValue], [place[@"geometry"][@"location"][@"lng"] doubleValue]);
+        self.infoMarker = [GMSMarker markerWithPosition:location];
+        self.infoMarker.title = place[@"name"];
+        self.infoMarker.opacity = 0;
+        CGPoint pos = self.infoMarker.infoWindowAnchor;
+        pos.y = 1;
+        self.infoMarker.infoWindowAnchor = pos;
+        self.infoMarker.map = self.mapView;
+        self.mapView.selectedMarker = self.infoMarker;
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:15];
+        [self.mapView setCamera:camera];
+    } else if (indexPath.section == 2) {
+        [self performSegueWithIdentifier:@"existingItinerarySegue" sender:self.itinerariesArray[indexPath.item]];
+    }
 }
 
 - (IBAction)didExpandDetails:(id)sender {
@@ -163,7 +230,7 @@
     self.buttonView.hidden = true;
 }
 
-- (IBAction)didCollpseDetails:(id)sender {
+- (IBAction)didCollapseDetails:(id)sender {
     [UIView animateWithDuration:0.5 animations:^{
         self.detailsView.transform = CGAffineTransformMakeTranslation(0, 40);
     }];
@@ -190,7 +257,9 @@
     didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
 
+    self.currentRegion = place;
     [self fetchItinerariesForRegion:place.placeID];
+    [self fetchPlacesForRegion:place.coordinate withType:nil];
     self.photosArray = [NSArray arrayWithArray:place.photos];
     self.nameLabel.text = place.name;
     
@@ -215,14 +284,28 @@ didFailAutocompleteWithError:(NSError *)error {
 - (void)didUpdateAutocompletePredictions:(GMSAutocompleteViewController *)viewController {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
-/*
+
+- (void)mapView:(GMSMapView *)mapView didTapPOIWithPlaceID:(NSString *)placeID name:(NSString *)name location:(CLLocationCoordinate2D)location {
+    self.infoMarker = [GMSMarker markerWithPosition:location];
+    self.infoMarker.title = name;
+    self.infoMarker.opacity = 0;
+    CGPoint pos = self.infoMarker.infoWindowAnchor;
+    pos.y = 1;
+    self.infoMarker.infoWindowAnchor = pos;
+    self.infoMarker.map = mapView;
+    mapView.selectedMarker = self.infoMarker;
+}
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"existingItinerarySegue"]) {
+        MapViewController *mapViewController = [segue destinationViewController];
+        mapViewController.trip = sender;
+        mapViewController.isOwnTrip = false;
+        mapViewController.isNewTrip = false;
+    }
 }
-*/
+
 
 @end

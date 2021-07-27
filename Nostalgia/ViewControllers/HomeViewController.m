@@ -248,6 +248,7 @@
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = false;
+        mapViewController.isOwnTrip = true;
     } else if ([segue.identifier isEqualToString:@"newTripSegue"]){
         NewTripViewController *newTripViewController = [segue destinationViewController];
         newTripViewController.isNewTrip = true;
