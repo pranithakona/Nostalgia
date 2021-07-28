@@ -22,10 +22,10 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (strong, nonatomic) NSMutableArray *futureTrips;
-@property (strong, nonatomic) NSMutableArray *pastTrips;
+@property (strong, nonatomic) NSMutableArray<Trip *> *futureTrips;
+@property (strong, nonatomic) NSMutableArray<Trip *> *pastTrips;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSMutableArray *realTimeLocations;
+@property (strong, nonatomic) NSMutableArray<CLLocation *> *realTimeLocations;
 
 @end
 

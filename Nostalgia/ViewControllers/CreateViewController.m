@@ -22,10 +22,10 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *routeTypeControl;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *dragGestureRecognizer;
 
-@property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
-@property (strong, nonatomic) NSArray *arrayOfSharedUsers;
+@property (strong, nonatomic) NSMutableArray<Destination *> *arrayOfDestinations;
+@property (strong, nonatomic) NSArray<PFUser *> *arrayOfSharedUsers;
 @property (copy, nonatomic) NSString *encodedPolyline;
-@property (strong, nonatomic) NSArray *bounds;
+@property (strong, nonatomic) NSArray<NSNumber *> *bounds;
 
 @end
 
@@ -73,7 +73,7 @@
     //create api endpoint based on waypoints in trip
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    NSString *key= [dict objectForKey: @"API_Key"];
+    const NSString *key= [dict objectForKey: @"API_Key"];
     
     NSString *destinationsString = @"";
     for (Destination *dest in self.arrayOfDestinations){

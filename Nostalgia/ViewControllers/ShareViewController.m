@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIView *sharedWithView;
 @property (weak, nonatomic) IBOutlet UILabel *sharedUsersLabel;
 
-@property (strong, nonatomic) NSArray *arrayOfUsers;
-@property (strong, nonatomic) NSArray *filteredArrayOfUsers;
+@property (strong, nonatomic) NSArray<PFUser *> *arrayOfUsers;
+@property (strong, nonatomic) NSArray<PFUser *> *filteredArrayOfUsers;
 
 @end
 

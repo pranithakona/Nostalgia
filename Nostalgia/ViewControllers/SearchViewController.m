@@ -24,9 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
 @property (weak, nonatomic) IBOutlet UIButton *collapseButton;
 
-@property (strong, nonatomic) NSArray *photosArray;
-@property (strong, nonatomic) NSArray *itinerariesArray;
-@property (strong, nonatomic) NSArray *placesArray;
+@property (strong, nonatomic) NSArray<GMSPlacePhotoMetadata *> *photosArray;
+@property (strong, nonatomic) NSArray<Trip *> *itinerariesArray;
+@property (strong, nonatomic) NSArray<NSDictionary *> *placesArray;
 @property (strong, nonatomic) GMSMapView *mapView;
 @property (strong, nonatomic) GMSPlace *currentRegion;
 @property (strong, nonatomic) GMSMarker *infoMarker;
