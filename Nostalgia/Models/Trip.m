@@ -25,6 +25,7 @@
 @dynamic encodedPolyline;
 @dynamic bounds;
 @dynamic isOptimized;
+@dynamic photos;
 
 + (nonnull NSString *)parseClassName {
     return @"Trip";

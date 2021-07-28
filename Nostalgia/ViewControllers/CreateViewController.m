@@ -13,7 +13,7 @@
 #import "CreateCell.h"
 #import "DateTools.h"
 #import "MaterialButtons.h"
-@import Parse;
+#import <Parse/Parse.h>
 
 @interface CreateViewController () <GMSAutocompleteViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CreateCellDelegate, ShareViewControllerDelegate>
 
@@ -24,9 +24,8 @@
 
 @property (strong, nonatomic) NSMutableArray *arrayOfDestinations;
 @property (strong, nonatomic) NSArray *arrayOfSharedUsers;
-@property (nonatomic, copy) NSString *encodedPolyline;
+@property (copy, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *bounds;
-
 
 @end
 
@@ -61,38 +60,11 @@
     }
 }
 
-- (IBAction)handleDrag:(id)sender {
-    switch (self.dragGestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:{;
-            NSIndexPath *targetIndexPath = [self.collectionView indexPathForItemAtPoint:[self.dragGestureRecognizer locationInView:self.collectionView]];
-            if (!targetIndexPath) {
-                return;
-            }
-            [self.collectionView beginInteractiveMovementForItemAtIndexPath:targetIndexPath];
-            break;
-        }
-        case UIGestureRecognizerStateChanged: {
-            [self.collectionView updateInteractiveMovementTargetPosition:[self.dragGestureRecognizer locationInView:self.collectionView]];
-            break;
-        }
-        case UIGestureRecognizerStateEnded: {
-            [self.collectionView endInteractiveMovement];
-            break;
-        }
-        default: {
-            [self.collectionView cancelInteractiveMovement];;
-            break;
-        }
-    }
-}
-
-- (IBAction)changeRouteType:(id)sender {
-    [self.collectionView reloadData];
-}
-
 - (void)fetchDetails {
     [self performSegueWithIdentifier:@"editDetailsSegue" sender:self.trip];
 }
+
+# pragma mark - Create Route
 
 - (IBAction)fetchRoute:(id)sender {
     [self.activityIndicator startAnimating];
@@ -145,7 +117,7 @@
     NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
     NSDictionary *bounds = resultsDictionary[@"routes"][0][@"bounds"];
     self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
-    self.bounds = @[[NSNumber numberWithDouble:[bounds[@"northeast"][@"lat"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"northeast"][@"lng"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"southwest"][@"lat"] doubleValue]],[NSNumber numberWithDouble:[bounds[@"southwest"][@"lng"] doubleValue]]];
+    self.bounds = @[@([bounds[@"northeast"][@"lat"] doubleValue]),@([bounds[@"northeast"][@"lng"]doubleValue]), @([bounds[@"southwest"][@"lat"] doubleValue]),@([bounds[@"southwest"][@"lng"] doubleValue])];
     
     //reorder destinations array based on optimized order for route
     NSMutableArray *orderedArrayOfDestinations = [NSMutableArray array];
@@ -237,6 +209,8 @@
     self.arrayOfSharedUsers = users;
 }
 
+#pragma mark - Google Places
+
 - (IBAction)addLocation:(id)sender {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
     acController.delegate = self;
@@ -286,10 +260,41 @@ didFailAutocompleteWithError:(NSError *)error {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
+#pragma mark - Collection View
+
+- (IBAction)changeRouteType:(id)sender {
+    [self.collectionView reloadData];
+}
+
 - (void)deleteCell:(Destination *)dest {
     [self.arrayOfDestinations removeObject:dest];
     [self.collectionView reloadData];
     [dest deleteInBackground];
+}
+
+- (IBAction)handleDrag:(id)sender {
+    switch (self.dragGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:{;
+            NSIndexPath *targetIndexPath = [self.collectionView indexPathForItemAtPoint:[self.dragGestureRecognizer locationInView:self.collectionView]];
+            if (!targetIndexPath) {
+                return;
+            }
+            [self.collectionView beginInteractiveMovementForItemAtIndexPath:targetIndexPath];
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            [self.collectionView updateInteractiveMovementTargetPosition:[self.dragGestureRecognizer locationInView:self.collectionView]];
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            [self.collectionView endInteractiveMovement];
+            break;
+        }
+        default: {
+            [self.collectionView cancelInteractiveMovement];;
+            break;
+        }
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -337,7 +342,7 @@ didFailAutocompleteWithError:(NSError *)error {
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = true;
-        mapViewController.isOwnTrip = true;
+        mapViewController.canEditTrip = true;
     } else if ([segue.identifier isEqualToString: @"shareSegue"]){
         ShareViewController *shareViewController = [segue destinationViewController];
         shareViewController.delegate = self;

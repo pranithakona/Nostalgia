@@ -8,7 +8,7 @@
 #import "NewTripViewController.h"
 #import "CreateViewController.h"
 #import "Destination.h"
-@import GooglePlaces;
+#import <GooglePlaces/GooglePlaces.h>
 
 @interface NewTripViewController () <GMSAutocompleteViewControllerDelegate> 
 
@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) GMSPlace *startLocation;
 @property (strong, nonatomic) GMSPlace *endLocation;
-@property (nonatomic, assign) BOOL isEditingStartLocation;
+@property (assign, nonatomic) BOOL isEditingStartLocation;
 
 @end
 
@@ -119,6 +119,8 @@
         [self.trip saveInBackground];
     }
 }
+
+#pragma mark - Google Places
 
 - (void)createPlacesViewControllerWithFilter:(GMSPlacesAutocompleteTypeFilter)type {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];

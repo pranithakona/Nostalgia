@@ -332,11 +332,47 @@
                         <outlet property="expandButton" destination="aaM-OA-zoC" id="y2t-K5-VSf"/>
                         <outlet property="nameLabel" destination="C6K-mg-zaL" id="950-o5-9ze"/>
                         <segue destination="PKX-Fl-3b0" kind="show" identifier="existingItinerarySegue" id="uYJ-25-8dC"/>
+                        <segue destination="XoM-wW-R2V" kind="presentation" identifier="photoSegue" id="N4V-om-QFz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kMj-ct-w3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2634" y="-579"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="cSg-gh-55v">
+            <objects>
+                <viewController id="XoM-wW-R2V" customClass="PhotoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0NE-rV-bgC">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sFR-zw-DEx">
+                                <rect key="frame" x="34" y="331" width="323" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="KSf-VM-6pA"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="I8C-ot-Ahd" appends="YES" id="VK2-Bq-lH3"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="XXH-Rt-fGJ"/>
+                    <connections>
+                        <outlet property="photoImageView" destination="sFR-zw-DEx" id="sm7-s4-81D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jJ5-cL-cn0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="I8C-ot-Ahd">
+                    <connections>
+                        <action selector="didDismiss:" destination="XoM-wW-R2V" id="f5J-dw-1yJ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="3370.7692307692305" y="-579.38388625592415"/>
         </scene>
         <!--New Trip View Controller-->
         <scene sceneID="HVG-sP-yf2">
@@ -933,10 +969,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="REG-Da-l2G">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Ihg-P8-jqj">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="zFa-bd-wo3">
-                                <rect key="frame" x="288" y="7" width="86" height="30"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zFa-bd-wo3">
+                                <rect key="frame" x="340" y="11" width="34" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Edit"/>
+                                <state key="normal" image="ellipsis" catalog="system"/>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -950,7 +986,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ABw-r5-XBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3442" y="852"/>
+            <point key="canvasLocation" x="3371" y="852"/>
         </scene>
         <!--Home-->
         <scene sceneID="goU-3B-2F8">
@@ -1003,6 +1039,7 @@
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="chevron.up" catalog="system" width="128" height="72"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>

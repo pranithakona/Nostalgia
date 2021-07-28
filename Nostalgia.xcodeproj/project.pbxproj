@@ -43,6 +43,7 @@
 		33DAE99626AF6FBE006094C3 /* ExploreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DAE99426AF6FBE006094C3 /* ExploreCell.xib */; };
 		33DAE99926AF7993006094C3 /* ExploreFilterHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE99826AF7993006094C3 /* ExploreFilterHeader.m */; };
 		33DAE99B26AF79B4006094C3 /* ExploreFilterHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DAE99A26AF79B4006094C3 /* ExploreFilterHeader.xib */; };
+		33DAE9A026B0A4D1006094C3 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +133,8 @@
 		33DAE99726AF7993006094C3 /* ExploreFilterHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExploreFilterHeader.h; sourceTree = "<group>"; };
 		33DAE99826AF7993006094C3 /* ExploreFilterHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExploreFilterHeader.m; sourceTree = "<group>"; };
 		33DAE99A26AF79B4006094C3 /* ExploreFilterHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreFilterHeader.xib; sourceTree = "<group>"; };
+		33DAE99E26B0A4D1006094C3 /* PhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,6 +266,8 @@
 				33C641B026AF260500726C4E /* ProfileViewController.m */,
 				33DAE98526AF3087006094C3 /* SearchViewController.h */,
 				33DAE98626AF3087006094C3 /* SearchViewController.m */,
+				33DAE99E26B0A4D1006094C3 /* PhotoViewController.h */,
+				33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -636,6 +641,7 @@
 				33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */,
 				33DAE99526AF6FBE006094C3 /* ExploreCell.m in Sources */,
 				33C64179269BEAD000726C4E /* CreateCell.m in Sources */,
+				33DAE9A026B0A4D1006094C3 /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

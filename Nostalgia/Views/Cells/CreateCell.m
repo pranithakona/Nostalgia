@@ -12,7 +12,7 @@
 
 - (IBAction)durationChanged:(id)sender {
     NSDate *date = self.durationDatePicker.date;
-    NSNumber *duration = [NSNumber numberWithLong:(date.hour * 3600 + date.minute * 60)];
+    NSNumber *duration = @(date.hour * 3600 + date.minute * 60);
     self.destination.duration = duration;
     [self.destination saveInBackground];
 }
@@ -20,12 +20,12 @@
 - (IBAction)startTimeChanged:(id)sender {
     self.destination.time = self.startDatePicker.date;
     self.endDatePicker.minimumDate = self.startDatePicker.date;
-    self.destination.duration = [NSNumber numberWithDouble:[self.endDatePicker.date secondsFrom:self.startDatePicker.date]];
+    self.destination.duration = @([self.endDatePicker.date secondsFrom:self.startDatePicker.date]);
     [self.destination saveInBackground];
 }
 
 - (IBAction)endTimeChanged:(id)sender {
-    self.destination.duration = [NSNumber numberWithDouble:[self.endDatePicker.date secondsFrom:self.startDatePicker.date]];
+    self.destination.duration = @([self.endDatePicker.date secondsFrom:self.startDatePicker.date]);
     [self.destination saveInBackground];
 }
 

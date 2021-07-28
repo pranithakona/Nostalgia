@@ -10,6 +10,7 @@
 #import "ExploreFilterHeader.h"
 #import "HomeCollectionHeader.h"
 #import "MapViewController.h"
+#import "PhotoViewController.h"
 #import "Trip.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
@@ -22,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
 @property (weak, nonatomic) IBOutlet UIButton *collapseButton;
-
 
 @property (strong, nonatomic) NSArray *photosArray;
 @property (strong, nonatomic) NSArray *itinerariesArray;
@@ -38,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.placesClient = [GMSPlacesClient sharedClient];
     
     self.navigationController.navigationBarHidden = true;
     
@@ -57,8 +59,6 @@
     [self.view addSubview:self.mapView];
     [self.view insertSubview:self.buttonView aboveSubview:self.mapView];
     [self.view insertSubview:self.detailsView aboveSubview:self.mapView];
-    
-    self.placesClient = [GMSPlacesClient sharedClient];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,6 +81,7 @@
 }
 
 - (void)fetchPlacesForRegion:(CLLocationCoordinate2D)coordinate withType:(NSString *)type {
+    //if type is nil, get all nearby places, otherwise filter by type of place
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *key= [dict objectForKey: @"API_Key"];
@@ -109,7 +110,9 @@
     [self fetchPlacesForRegion:self.currentRegion.coordinate withType:type];
 }
 
-- (UICollectionViewLayout *) generateLayout {
+#pragma mark - Collection View
+
+- (UICollectionViewLayout *)generateLayout {
     static int EDGE_INSETS = 5;
     
     UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
@@ -181,6 +184,7 @@
     cell.nameLabel.hidden = false;
     
     if (indexPath.section == 0) {
+        //place photos
         GMSPlacePhotoMetadata *photoMetadata = self.photosArray[indexPath.item];
         [self.placesClient loadPlacePhoto:photoMetadata callback:^(UIImage * _Nullable photo, NSError * _Nullable error) {
             if (error == nil) {
@@ -189,10 +193,12 @@
         }];
         cell.nameLabel.hidden = true;
     } else if (indexPath.section == 1) {
+        //explore places
         NSDictionary *place = self.placesArray[indexPath.item];
         cell.nameLabel.text = place[@"name"];
         
     } else if (indexPath.section == 2) {
+        //existing itineraries
         Trip *trip = self.itinerariesArray[indexPath.item];
         cell.nameLabel.text = trip.name;
     }
@@ -201,8 +207,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        
+        //open photo
+        [self performSegueWithIdentifier:@"photoSegue" sender:self.photosArray[indexPath.item]];
     } else if (indexPath.section == 1) {
+        //show location details on icon view on map
         [self didCollapseDetails:self];
         NSDictionary *place = self.placesArray[indexPath.item];
         CLLocationCoordinate2D location = CLLocationCoordinate2DMake([place[@"geometry"][@"location"][@"lat"] doubleValue], [place[@"geometry"][@"location"][@"lng"] doubleValue]);
@@ -217,6 +225,7 @@
         GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:15];
         [self.mapView setCamera:camera];
     } else if (indexPath.section == 2) {
+        //open trip on map view
         [self performSegueWithIdentifier:@"existingItinerarySegue" sender:self.itinerariesArray[indexPath.item]];
     }
 }
@@ -239,6 +248,8 @@
     self.buttonView.hidden = false;
 }
 
+#pragma mark - GoogleMaps/GooglePlaces
+
 - (IBAction)searchCity:(id)sender {
     GMSAutocompleteViewController *acController = [[GMSAutocompleteViewController alloc] init];
     acController.delegate = self;
@@ -253,8 +264,7 @@
     [self presentViewController:acController animated:YES completion:nil];
 }
 
-- (void)viewController:(GMSAutocompleteViewController *)viewController
-    didAutocompleteWithPlace:(GMSPlace *)place {
+- (void)viewController:(GMSAutocompleteViewController *)viewController didAutocompleteWithPlace:(GMSPlace *)place {
     [self dismissViewControllerAnimated:YES completion:nil];
 
     self.currentRegion = place;
@@ -268,8 +278,7 @@
     self.detailsView.hidden = false;
 }
 
-- (void)viewController:(GMSAutocompleteViewController *)viewController
-didFailAutocompleteWithError:(NSError *)error {
+- (void)viewController:(GMSAutocompleteViewController *)viewController didFailAutocompleteWithError:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -302,8 +311,11 @@ didFailAutocompleteWithError:(NSError *)error {
     if ([segue.identifier isEqualToString:@"existingItinerarySegue"]) {
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
-        mapViewController.isOwnTrip = false;
+        mapViewController.canEditTrip = false;
         mapViewController.isNewTrip = false;
+    } else if ([segue.identifier isEqualToString:@"photoSegue"]) {
+        PhotoViewController *photoViewController = [segue destinationViewController];
+        photoViewController.photoMetaData = sender;
     }
 }
 

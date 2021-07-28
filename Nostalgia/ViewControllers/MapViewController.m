@@ -13,9 +13,10 @@
 #import "ItineraryCell.h"
 #import "DateTools.h"
 #import "NSDate+NSDateHelper.h"
-@import GoogleMaps;
+#import <GoogleMaps/GoogleMaps.h>
+#import <PhotosUI/PhotosUI.h>
 
-@interface MapViewController () <MapItineraryHeaderViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MapViewController () <MapItineraryHeaderViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, PHPickerViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *mapBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -37,18 +38,28 @@
     [self.trip.startLocation fetchIfNeeded];
     [self.trip.endLocation fetchIfNeeded];
     
-    //change actions based on type of trip
-    self.editButton.hidden = !self.isOwnTrip;
     self.navigationController.navigationBarHidden = false;
+    
+    //change actions based on type of trip
+    self.editButton.hidden = !self.canEditTrip;
     if (self.isNewTrip) {
         [self.editButton setTitle:@"Done" forState:UIControlStateNormal];
-        [self.editButton removeTarget:self action:@selector(didPressEdit) forControlEvents:UIControlEventTouchUpInside];
+        [self.editButton setImage:nil forState:UIControlStateNormal];
+        self.editButton.menu = nil;
+        self.editButton.showsMenuAsPrimaryAction = false;
         [self.editButton addTarget:self action:@selector(didPressDone) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
-        [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.editButton setTitle:@"" forState:UIControlStateNormal];
+        [self.editButton setImage:[UIImage systemImageNamed:@"ellipsis"] forState:UIControlStateNormal];
+        NSArray *menuActions = [NSArray arrayWithObjects:
+                          [UIAction actionWithTitle:@"Edit Trip" image:nil identifier:nil handler:^(UIAction* action){[self didPressEdit];}],
+                          [UIAction actionWithTitle:@"Add Photos" image:nil identifier:nil handler:^(UIAction* action){[self addImages];}],
+                          nil];
+        UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
+        self.editButton.menu = menu;
+        self.editButton.showsMenuAsPrimaryAction = true;
         [self.editButton removeTarget:self action:@selector(didPressDone) forControlEvents:UIControlEventTouchUpInside];
-        [self.editButton addTarget:self action:@selector(didPressEdit) forControlEvents:UIControlEventTouchUpInside];
     }
     
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
@@ -106,7 +117,117 @@
         GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
         polyline.map = self.mapView;
     }
+    
+    //map photos if trip has photos
+    if (self.trip.photos){
+        for (NSArray *photo in self.trip.photos){
+            [self mapPhoto:photo];
+        }
+    }
 }
+
+- (void)didPressEdit {
+    [self performSegueWithIdentifier:@"editDestinationsSegue" sender:self];
+}
+
+- (void)didPressDone {
+    [self performSegueWithIdentifier:@"endCreateSegue" sender:self];
+}
+
+#pragma mark - Photos
+
+- (void)addImages {
+    PHPickerConfiguration *config = [[PHPickerConfiguration alloc] initWithPhotoLibrary:[PHPhotoLibrary sharedPhotoLibrary]];
+    config.filter = [PHPickerFilter imagesFilter];
+    config.selectionLimit = 0;
+    
+    PHPickerViewController *pickerViewController = [[PHPickerViewController alloc] initWithConfiguration:config];
+    pickerViewController.delegate = self;
+    [self presentViewController:pickerViewController animated:YES completion:nil];
+}
+
+- (void)picker:(PHPickerViewController *)picker didFinishPicking:(NSArray<PHPickerResult *> *)results {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSMutableArray *viableResults = [NSMutableArray array];
+    NSMutableArray *photos = self.trip.photos ? [NSMutableArray arrayWithArray:self.trip.photos] : [NSMutableArray array];
+    
+    for (PHPickerResult *result in results) {
+        NSString *assetID = result.assetIdentifier;
+        PHFetchResult *assetResults = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetID] options:nil];
+        PHAsset *asset = assetResults.firstObject;
+        
+        //check if image has gps data
+        if (asset.location.coordinate.latitude != 0.0 && asset.location.coordinate.longitude != 0.0) {
+            [viableResults addObject:result];
+        }
+    }
+    for (PHPickerResult *result in viableResults){
+        NSString *assetID = result.assetIdentifier;
+        PHFetchResult *assetResults = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetID] options:nil];
+        PHAsset *asset = assetResults.firstObject;
+        
+        //get UIImage
+        [result.itemProvider loadObjectOfClass:[UIImage class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
+            if (error == nil && [object isKindOfClass:[UIImage class]]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIImage *resizedImage = [self resizeImage:object withSize:CGSizeMake(50, 50)];
+                    PFFileObject *imageFile = [self getPFFileFromImage:resizedImage];
+                    NSArray *photo =@[imageFile, @(asset.location.coordinate.latitude), @(asset.location.coordinate.longitude)];
+                    [photos addObject:photo];
+                    [self mapPhoto:photo];
+                    
+                    //only update database at end of loop
+                    if (photos.count == viableResults.count){
+                        self.trip.photos = photos;
+                        [self.trip saveInBackground];
+                    }
+                });
+            }
+        }];
+    }
+}
+
+- (void)mapPhoto:(NSArray *)photo {
+    CLLocationCoordinate2D position = CLLocationCoordinate2DMake([photo[1] doubleValue], [photo[2] doubleValue]);
+    GMSMarker *marker = [GMSMarker markerWithPosition:position];
+    
+    //getUIImage from file object
+    PFFileObject *imageFile = photo[0];
+    [imageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            marker.icon = [UIImage imageWithData:imageData];
+        }
+    }];
+    
+    marker.map = self.mapView;
+}
+
+- (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image {
+    if (!image) {
+        return nil;
+    }
+    NSData *imageData = UIImagePNGRepresentation(image);
+    if (!imageData) {
+        return nil;
+    }
+    return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizeImageView.image = image;
+    
+    UIGraphicsBeginImageContext(size);
+    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+#pragma mark - Route Comparison
 
 - (NSArray *)comparePolylines:(NSArray *)plannedTripCoordinates {
     NSMutableArray *combinedPolylineSegments = [NSMutableArray array];
@@ -242,19 +363,13 @@
              break;
 
          currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
-         NSArray *coordinate = @[[NSNumber numberWithDouble:((double)currentLat/ 100000.0)], [NSNumber numberWithDouble:((double)currentLng/ 100000.0)]];
+         NSArray *coordinate = @[@(currentLat/ 100000.0), @(currentLng/ 100000.0)];
          [points addObject:coordinate];
      }
     return points;
 }
 
-- (void)didPressEdit {
-    [self performSegueWithIdentifier:@"editDestinationsSegue" sender:self];
-}
-
-- (void)didPressDone {
-    [self performSegueWithIdentifier:@"endCreateSegue" sender:self];
-}
+#pragma mark - Collection View
 
 - (void)didExpandItinerary {
     [UIView animateWithDuration:0.5 animations:^{

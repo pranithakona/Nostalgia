@@ -15,7 +15,7 @@
 #import "HomeCell.h"
 #import "LocationManager.h"
 #import "HomeCollectionHeader.h"
-@import Parse;
+#import <Parse/Parse.h>
 
 @interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -26,7 +26,6 @@
 @property (strong, nonatomic) NSMutableArray *pastTrips;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSMutableArray *realTimeLocations;
-@property (strong, nonatomic) Trip *newestTrip;
 
 @end
 
@@ -45,10 +44,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"HomeCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCell"];
     
     self.collectionView.collectionViewLayout = [self generateLayout];
-//    layout.minimumLineSpacing = 5;
-//    layout.minimumInteritemSpacing = 5;
-//    CGFloat itemHeight = self.futureCollectionView.frame.size.height;
-//    layout.itemSize = CGSizeMake(itemHeight, itemHeight);
     
     self.futureTrips = [NSMutableArray array];
     self.pastTrips = [NSMutableArray array];
@@ -71,28 +66,16 @@
         NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (CLLocationManager.locationServicesEnabled){
-                [self startLocationUpdates];
+                [self startLocationUpdatesForTrip:trip];
             }
         });
     }
     [self.locationManager requestWhenInUseAuthorization];
 }
 
-- (void)didCreateTrip:(Trip *)trip {
-    //sets timer for new trips
-    [self.futureTrips addObject:trip];
-    [self.collectionView reloadData];
-    self.newestTrip = trip;
-    
-    NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (CLLocationManager.locationServicesEnabled){
-            [self startLocationUpdates];
-        }
-    });
-}
+#pragma mark - Collection View
 
-- (UICollectionViewLayout *) generateLayout {
+- (UICollectionViewLayout *)generateLayout {
     static int EDGE_INSETS = 5;
     static int SECTION_HEADER_HEIGHT = 44;
     
@@ -137,7 +120,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *data = [collectionView.restorationIdentifier isEqualToString: @"futureCollectionView"] ? self.futureTrips : self.pastTrips;
+    NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
     Trip *trip = data[indexPath.item];
     [self performSegueWithIdentifier:@"tripDetailsSegue" sender:trip];
 }
@@ -166,6 +149,21 @@
     return cell;
 }
 
+#pragma mark - Route Tracking
+
+- (void)didCreateTrip:(Trip *)trip {
+    //sets timer for new trips
+    [self.futureTrips addObject:trip];
+    [self.collectionView reloadData];
+    
+    NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (CLLocationManager.locationServicesEnabled){
+            [self startLocationUpdatesForTrip:trip];
+        }
+    });
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     for (CLLocation *location in locations){
         if (location.horizontalAccuracy < 20 && fabs([location.timestamp timeIntervalSinceNow]) < 10) {
@@ -174,7 +172,7 @@
     }
 }
 
-- (void)startLocationUpdates {
+- (void)startLocationUpdatesForTrip:(Trip *)trip {
     self.locationManager.activityType = CLActivityTypeAutomotiveNavigation;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.distanceFilter = 100;
@@ -183,22 +181,24 @@
     [self.locationManager startMonitoringSignificantLocationChanges];
     
     //commented out for testing purposes
-    [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:120];
-   // [self performSelector:@selector(saveRouteWithTrip:) withObject:self.newestTrip afterDelay:[self.newestTrip.endLocation.time timeIntervalSinceDate:self.newestTrip.startTime]];
+    NSTimeInterval timeInterval = 120; //trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self saveRouteWithTrip:trip];
+    });
 }
 
 - (void)saveRouteWithTrip:(Trip *)trip {
     NSMutableArray *tripLocations = [NSMutableArray array];
     for (CLLocation *location in self.realTimeLocations){
-        [tripLocations addObject:@[[NSNumber numberWithDouble: location.coordinate.latitude], [NSNumber numberWithDouble: location.coordinate.longitude], location.timestamp]];
+        [tripLocations addObject:@[@(location.coordinate.latitude), @(location.coordinate.longitude), location.timestamp]];
     }
     [self.locationManager stopUpdatingLocation];
     [self.locationManager stopMonitoringSignificantLocationChanges];
     
-    [self snapToRoadsWithCoordinates:tripLocations];
+    [self snapToRoadsWithCoordinates:tripLocations forTrip:trip];
 }
 
-- (void)snapToRoadsWithCoordinates:(NSArray *)coordinates {
+- (void)snapToRoadsWithCoordinates:(NSArray *)coordinates forTrip:(Trip *)trip {
     //calls Google Roads API to snap coordinates to exact roads traveled
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
@@ -216,7 +216,6 @@
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
 
      __block NSError *error1 = [[NSError alloc] init];
-    __weak typeof(self) weakSelf = self;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if ([data length]>0 && error == nil) {
@@ -227,15 +226,15 @@
             NSArray *points = resultsDictionary[@"snappedPoints"];
             for (NSDictionary *point in points){
                 NSDictionary *location = point[@"location"];
-                NSMutableArray *coordinate = [@[[NSNumber numberWithDouble:[location[@"latitude"] doubleValue]],[NSNumber numberWithDouble:[location[@"longitude"] doubleValue]], point[@"placeId"]] mutableCopy];
+                NSMutableArray *coordinate = [@[@([location[@"latitude"] doubleValue]),@([location[@"longitude"] doubleValue]), point[@"placeId"]] mutableCopy];
                 if (point[@"originalIndex"]){
                     [coordinate addObject:coordinates[[point[@"originalIndex"] intValue]][2]];
                 }
                 [tripLocations addObject:coordinate];
             }
             
-            weakSelf.newestTrip.realTimeCoordinates = tripLocations;
-            [weakSelf.newestTrip saveInBackground];
+            trip.realTimeCoordinates = tripLocations;
+            [trip saveInBackground];
         }
     }];
     [task resume];
@@ -248,7 +247,7 @@
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = false;
-        mapViewController.isOwnTrip = true;
+        mapViewController.canEditTrip = true;
     } else if ([segue.identifier isEqualToString:@"newTripSegue"]){
         NewTripViewController *newTripViewController = [segue destinationViewController];
         newTripViewController.isNewTrip = true;

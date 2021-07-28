@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ExploreFilterHeader : UICollectionReusableView
 
-@property (weak, nonatomic) id<ExploreFilterHeaderDelegate>delegate;
+@property (weak, nonatomic) id<ExploreFilterHeaderDelegate> delegate;
 
 @end
 

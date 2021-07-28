@@ -7,7 +7,7 @@
 
 #import "ShareViewController.h"
 #import "ShareCell.h"
-@import Parse;
+#import <Parse/Parse.h>
 
 @interface ShareViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

@@ -7,27 +7,28 @@
 
 
 #import "Destination.h"
-@import GooglePlaces;
+#import <GooglePlaces/GooglePlaces.h>
 @class PFUser;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Trip : PFObject <PFSubclassing>
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *tripDescription;
+@property (copy, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *tripDescription;
 @property (strong, nonatomic) PFUser *owner;
 @property (strong, nonatomic) NSArray * _Nullable users;
-@property (nonatomic, copy) NSString *region;
-@property (nonatomic, copy) NSString *regionID;
+@property (copy, nonatomic) NSString *region;
+@property (copy, nonatomic) NSString *regionID;
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) NSArray *destinations;
 @property (strong, nonatomic) NSArray *realTimeCoordinates;
+@property (strong, nonatomic) NSArray *photos;
 @property (strong, nonatomic) NSDate * _Nullable startTime;
-@property (nonatomic, copy) NSString *encodedPolyline;
+@property (copy, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *bounds;
-@property (nonatomic, assign) BOOL isOptimized;
+@property (assign, nonatomic) BOOL isOptimized;
 
 typedef void(^tripCompletion)(Trip * _Nullable, NSError * _Nullable);
 

@@ -86,7 +86,7 @@
     
     for (int i = 0; i < 5; i++ ){
         [legs addObject:@{@"distance":@{@"text": @""},
-                          @"duration":@{@"value": [NSNumber numberWithLong: i*60]}
+                          @"duration":@{@"value": @(i*60)}
         }];
     }
     
