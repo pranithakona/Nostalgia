@@ -11,6 +11,7 @@
 #import "CreateViewController.h"
 #import "LocationManager.h"
 #import "ItineraryCell.h"
+#import "DetailsViewController.h"
 #import "DateTools.h"
 #import "NSDate+NSDateHelper.h"
 #import <GoogleMaps/GoogleMaps.h>
@@ -175,6 +176,19 @@
                     NSArray *photo =@[imageFile, @(asset.location.coordinate.latitude), @(asset.location.coordinate.longitude)];
                     [photos addObject:photo];
                     [self mapPhoto:photo];
+                    
+                    double lat = asset.location.coordinate.latitude;
+                    double lng = asset.location.coordinate.longitude;
+                    for (Destination *dest in self.trip.destinations){
+                        if (lat >= dest.coordinates.latitude - 0.0006 && lat <= dest.coordinates.latitude + 0.0006 && lng >= dest.coordinates.longitude - 0.0006 && lng <= dest.coordinates.longitude + 0.0006){
+                            NSMutableArray *array = [NSMutableArray arrayWithArray:dest.photos];
+                            PFFileObject *file = [self getPFFileFromImage:object];
+                            [array addObject:file];
+                            dest.photos = array;
+                            [dest saveInBackground];
+                            break;
+                        }
+                    }
                     
                     //only update database at end of loop
                     if (photos.count == viableResults.count){
@@ -408,6 +422,10 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"detailsSegue" sender:self.trip.destinations[indexPath.item]];
+}
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -418,6 +436,9 @@
     } else if ([segue.identifier isEqualToString:@"endCreateSegue"]){
         HomeViewController *homeViewController = [segue destinationViewController];
         [homeViewController didCreateTrip:self.trip];
+    } else if ([segue.identifier isEqualToString:@"detailsSegue"]){
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.destination = sender;
     }
 }
 

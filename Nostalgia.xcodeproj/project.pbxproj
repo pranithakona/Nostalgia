@@ -44,6 +44,8 @@
 		33DAE99926AF7993006094C3 /* ExploreFilterHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE99826AF7993006094C3 /* ExploreFilterHeader.m */; };
 		33DAE99B26AF79B4006094C3 /* ExploreFilterHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DAE99A26AF79B4006094C3 /* ExploreFilterHeader.xib */; };
 		33DAE9A026B0A4D1006094C3 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */; };
+		33DAE9A326B219CE006094C3 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE9A226B219CE006094C3 /* DetailsViewController.m */; };
+		33DAE9A626B2552F006094C3 /* DestinationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE9A526B2552F006094C3 /* DestinationHeader.m */; };
 		80D163E66E80D57EA7D2C319 /* Pods_Nostalgia_NostalgiaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -135,6 +137,10 @@
 		33DAE99A26AF79B4006094C3 /* ExploreFilterHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreFilterHeader.xib; sourceTree = "<group>"; };
 		33DAE99E26B0A4D1006094C3 /* PhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		33DAE9A126B219CE006094C3 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		33DAE9A226B219CE006094C3 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		33DAE9A426B2552F006094C3 /* DestinationHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DestinationHeader.h; sourceTree = "<group>"; };
+		33DAE9A526B2552F006094C3 /* DestinationHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DestinationHeader.m; sourceTree = "<group>"; };
 		3C7BBEE28EF3D026BFC015D5 /* Pods-Nostalgia-NostalgiaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		577DD3D984EAE0E4B337A791 /* Pods-Nostalgia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.debug.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.debug.xcconfig"; sourceTree = "<group>"; };
 		AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,6 +274,8 @@
 				33DAE98626AF3087006094C3 /* SearchViewController.m */,
 				33DAE99E26B0A4D1006094C3 /* PhotoViewController.h */,
 				33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */,
+				33DAE9A126B219CE006094C3 /* DetailsViewController.h */,
+				33DAE9A226B219CE006094C3 /* DetailsViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -303,6 +311,8 @@
 				33DAE99026AF52EE006094C3 /* HomeCollectionHeader.xib */,
 				33C64187269F81E000726C4E /* MapItineraryHeaderView.h */,
 				33C64188269F81E000726C4E /* MapItineraryHeaderView.m */,
+				33DAE9A426B2552F006094C3 /* DestinationHeader.h */,
+				33DAE9A526B2552F006094C3 /* DestinationHeader.m */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -630,10 +640,12 @@
 				33C64182269F471400726C4E /* HomeCell.m in Sources */,
 				33C64171269A8B7400726C4E /* CreateViewController.m in Sources */,
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
+				33DAE9A626B2552F006094C3 /* DestinationHeader.m in Sources */,
 				33C64189269F81E000726C4E /* MapItineraryHeaderView.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
 				33DAE98726AF3087006094C3 /* SearchViewController.m in Sources */,
 				33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */,
+				33DAE9A326B219CE006094C3 /* DetailsViewController.m in Sources */,
 				33C641B126AF260500726C4E /* ProfileViewController.m in Sources */,
 				33C6417F269E1B5700726C4E /* Trip.m in Sources */,
 				33C6417C269CF76B00726C4E /* NewTripViewController.m in Sources */,

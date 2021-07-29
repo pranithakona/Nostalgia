@@ -34,6 +34,7 @@
     newDest.coordinates = [PFGeoPoint geoPointWithLatitude:place.coordinate.latitude longitude:place.coordinate.longitude];
     newDest.time = nil;
     newDest.duration = @3600;
+    newDest.photos = [NSArray array];
     
     [newDest saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded){

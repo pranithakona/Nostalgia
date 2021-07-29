@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber * timeToNextDestination;
 @property (copy, nonatomic) NSString * distanceToNextDestination;
 @property (strong, nonatomic) NSNumber * duration;
+@property (strong, nonatomic) NSArray *photos;
 
 + (void)postDestination:(GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;
 
