@@ -19,18 +19,21 @@
 @end
 
 @implementation ProfileViewController
+static const NSString *nameKey = @"name";
+static const NSString *sbName = @"Main";
+static const NSString *vcName = @"LoginViewController";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.nameLabel.text = [PFUser currentUser][@"name"];
+    self.nameLabel.text = [PFUser currentUser][nameKey];
     self.usernameLabel.text = [PFUser currentUser].username;
 }
 
 - (IBAction)onLogout:(id)sender {
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         SceneDelegate *sceneDelegate = (SceneDelegate *)[UIApplication sharedApplication].connectedScenes.allObjects[0].delegate;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *openingViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:sbName bundle:nil];
+        LoginViewController *openingViewController = [storyboard instantiateViewControllerWithIdentifier:vcName];
         sceneDelegate.window.rootViewController = openingViewController;
     }];
 }

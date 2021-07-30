@@ -51,7 +51,6 @@
     }
     
     self.datePicker.minimumDate = [NSDate now];
-    
 }
 
 - (BOOL)requiredFields {
@@ -68,9 +67,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
-    
     self.coverImageView.image = info[UIImagePickerControllerOriginalImage];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -224,7 +221,6 @@
                 createViewController.startLocation = dest;
             }
         }];
-        
         [Destination postDestination:self.endLocation withCompletion:^(Destination * _Nullable dest, NSError * _Nullable error) {
             if (!error){
                 dest.duration = @0;

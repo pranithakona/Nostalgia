@@ -30,6 +30,12 @@
 @end
 
 @implementation HomeViewController
+static const NSString *headerName = @"HomeCollectionHeader";
+static const NSString *cellName = @"HomeCell";
+static const NSString *tripSegue = @"tripDetailsSegue";
+static const NSString *newTripSegue = @"newTripSegue";
+static const NSString *dictKey = @"API_Key";
+static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?path=%@&interpolate=true&key=%@";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,9 +51,8 @@
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    [self.collectionView registerNib:[UINib nibWithNibName:@"HomeCollectionHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HomeCollectionHeader"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"HomeCell" bundle:nil] forCellWithReuseIdentifier:@"HomeCell"];
-    
+    [self.collectionView registerNib:[UINib nibWithNibName:headerName bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerName];
+    [self.collectionView registerNib:[UINib nibWithNibName:cellName bundle:nil] forCellWithReuseIdentifier:cellName];
     self.collectionView.collectionViewLayout = [self generateLayout];
     
     self.futureTrips = [NSMutableArray array];
@@ -80,37 +85,27 @@
 
 #pragma mark - Collection View
 
-- (UICollectionViewLayout *)generateLayout {
-    static int EDGE_INSETS = 5;
-    static int SECTION_HEADER_HEIGHT = 44;
-    
+- (UICollectionViewLayout *)generateLayout {    
     UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
-        
         //item
         NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1]];
-        
         NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
         item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //group
         NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:0.5] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:0.4]];
-        
         NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
-        group.contentInsets = NSDirectionalEdgeInsetsMake(EDGE_INSETS, EDGE_INSETS, EDGE_INSETS, EDGE_INSETS);
+        group.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //section
         NSCollectionLayoutSection *sectionLayout = [NSCollectionLayoutSection sectionWithGroup:group];
-        
-        NSCollectionLayoutSize *headerSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension estimatedDimension:SECTION_HEADER_HEIGHT]];
-        
+        NSCollectionLayoutSize *headerSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension estimatedDimension:44]];
         NSCollectionLayoutBoundarySupplementaryItem *sectionHeader = [NSCollectionLayoutBoundarySupplementaryItem boundarySupplementaryItemWithLayoutSize:headerSize elementKind:UICollectionElementKindSectionHeader alignment:NSRectAlignmentTop];
-        
         sectionLayout.boundarySupplementaryItems = @[sectionHeader];
         sectionLayout.orthogonalScrollingBehavior = UICollectionLayoutSectionOrthogonalScrollingBehaviorContinuous;
         
         return sectionLayout;
     }];
-    
     return layout;
 }
 
@@ -119,7 +114,7 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    HomeCollectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HomeCollectionHeader" forIndexPath:indexPath];
+    HomeCollectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerName forIndexPath:indexPath];
     headerView.nameLabel.text = indexPath.section == 0 ? @"Upcoming" : @"Past";
     return headerView;
 }
@@ -127,7 +122,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
     Trip *trip = data[indexPath.item];
-    [self performSegueWithIdentifier:@"tripDetailsSegue" sender:trip];
+    [self performSegueWithIdentifier:tripSegue sender:trip];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -136,12 +131,7 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
-    HomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeCell" forIndexPath:indexPath];
-    
-    if (cell == nil) {
-            NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"HomeCell" owner:self options:nil];
-            cell = [topLevelObjects objectAtIndex:0];
-    }
+    HomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
     
     Trip *trip = data[indexPath.item];
     cell.nameLabel.text = trip.name;
@@ -169,7 +159,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    for (CLLocation *location in locations){
+    for (CLLocation *location in locations) {
         if (location.horizontalAccuracy < 20 && fabs([location.timestamp timeIntervalSinceNow]) < 10) {
             [self.realTimeLocations addObject:location];
         }
@@ -209,7 +199,7 @@
     //calls Google Roads API to snap coordinates to exact roads traveled
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    NSString *key= [dict objectForKey: @"API_Key"];
+    NSString *key= [dict objectForKey:dictKey];
     
     NSString *coords = @"";
     for (NSArray *coordinate in coordinates) {
@@ -217,7 +207,7 @@
     }
     coords = [coords substringFromIndex:1];
     
-    NSString *urlString = [NSString stringWithFormat: @"https://roads.googleapis.com/v1/snapToRoads?path=%@&interpolate=true&key=%@",coords,key];
+    NSString *urlString = [NSString stringWithFormat: baseURL,coords,key];
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL* url = [NSURL URLWithString:encodedString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
@@ -242,7 +232,6 @@
             
             trip.realTimeCoordinates = tripLocations;
             trip.songs = [NSArray arrayWithArray:[SceneDelegate getCurrentTripSongs]];
-            NSLog(@"trip songs %@", trip.songs);
             [trip saveInBackground];
         }
     }];
@@ -252,12 +241,12 @@
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"tripDetailsSegue"]){
+    if ([segue.identifier isEqualToString:tripSegue]){
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = false;
         mapViewController.canEditTrip = true;
-    } else if ([segue.identifier isEqualToString:@"newTripSegue"]){
+    } else if ([segue.identifier isEqualToString:newTripSegue]){
         NewTripViewController *newTripViewController = [segue destinationViewController];
         newTripViewController.isNewTrip = true;
     }

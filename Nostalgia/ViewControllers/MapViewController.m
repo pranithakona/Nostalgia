@@ -29,6 +29,12 @@
 @end
 
 @implementation MapViewController
+static const NSString *destinationsSegue = @"editDestinationsSegue";
+static const NSString *doneSegue = @"endCreateSegue";
+static const NSString *detailsSegue = @"detailsSegue";
+static const NSString *photoSegue = @"mapPhotoSegue";
+static const NSString *headerName = @"MapItineraryHeaderView";
+static const NSString *cellName = @"ItineraryCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +48,27 @@
     
     self.navigationController.navigationBarHidden = false;
     
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
+    
+    self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
+    self.mapView.myLocationEnabled = YES;
+    self.mapView.delegate = self;
+    [self.mapBaseView addSubview:self.mapView];
+    
+    [self setButtons];
+    [self makeMarkers];
+    [self setBounds];
+    [self mapRoutes];
+    
+    //map photos if trip has photos
+    if (self.trip.photos){
+        for (NSArray *photo in self.trip.photos){
+            [self mapPhoto:photo];
+        }
+    }
+}
+
+- (void)setButtons {
     //change actions based on type of trip
     self.editButton.hidden = !self.canEditTrip;
     if (self.isNewTrip) {
@@ -63,40 +90,45 @@
         self.editButton.showsMenuAsPrimaryAction = true;
         [self.editButton removeTarget:self action:@selector(didPressDone) forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
-    
-    self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
-    self.mapView.myLocationEnabled = YES;
-    self.mapView.delegate = self;
-    [self.mapBaseView addSubview:self.mapView];
-    
-    //make markers for map and find outermmost points of trip to set camera view on map
-    Destination *topMost = self.trip.startLocation;
-    Destination *bottomMost = self.trip.startLocation;
-    Destination *leftMost = self.trip.startLocation;
-    Destination *rightMost = self.trip.startLocation;
+}
+
+- (void)makeMarkers {
     for (Destination *dest in self.trip.destinations) {
         [dest fetchIfNeeded];
         CLLocationCoordinate2D position = CLLocationCoordinate2DMake(dest.coordinates.latitude, dest.coordinates.longitude);
         GMSMarker *marker = [GMSMarker markerWithPosition:position];
         marker.title = dest.name;
         marker.map = self.mapView;
-        topMost = dest.coordinates.latitude > topMost.coordinates.latitude ? dest : topMost;
-        bottomMost = dest.coordinates.latitude < bottomMost.coordinates.latitude ? dest : bottomMost;
-        rightMost = dest.coordinates.longitude > rightMost.coordinates.longitude ? dest : rightMost;
-        leftMost = dest.coordinates.longitude < leftMost.coordinates.longitude ? dest : leftMost;
     }
-    
-    //find bounds of coordinates for camera view
-    GMSCoordinateBounds *bounds;
-    if ((rightMost.coordinates.longitude - leftMost.coordinates.longitude) > (topMost.coordinates.latitude - bottomMost.coordinates.latitude)) {
-        bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(rightMost.coordinates.latitude, rightMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(leftMost.coordinates.latitude, leftMost.coordinates.longitude)];
+}
+
+- (void)setBounds {
+    if (self.trip.bounds){
+        GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake([self.trip.bounds[0] doubleValue], [self.trip.bounds[1] doubleValue]) coordinate:CLLocationCoordinate2DMake([self.trip.bounds[2] doubleValue], [self.trip.bounds[3] doubleValue])];
+        [self.mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
     } else {
-        bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(topMost.coordinates.latitude, topMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(bottomMost.coordinates.latitude, bottomMost.coordinates.longitude)];
+        //find bounds of coordinates for camera view
+        Destination *topMost = self.trip.startLocation;
+        Destination *bottomMost = self.trip.startLocation;
+        Destination *leftMost = self.trip.startLocation;
+        Destination *rightMost = self.trip.startLocation;
+        for (Destination *dest in self.trip.destinations) {
+            topMost = dest.coordinates.latitude > topMost.coordinates.latitude ? dest : topMost;
+            bottomMost = dest.coordinates.latitude < bottomMost.coordinates.latitude ? dest : bottomMost;
+            rightMost = dest.coordinates.longitude > rightMost.coordinates.longitude ? dest : rightMost;
+            leftMost = dest.coordinates.longitude < leftMost.coordinates.longitude ? dest : leftMost;
+        }
+        GMSCoordinateBounds *bounds;
+        if ((rightMost.coordinates.longitude - leftMost.coordinates.longitude) > (topMost.coordinates.latitude - bottomMost.coordinates.latitude)) {
+            bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(rightMost.coordinates.latitude, rightMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(leftMost.coordinates.latitude, leftMost.coordinates.longitude)];
+        } else {
+            bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(topMost.coordinates.latitude, topMost.coordinates.longitude)  coordinate:CLLocationCoordinate2DMake(bottomMost.coordinates.latitude, bottomMost.coordinates.longitude)];
+        }
+        [self.mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
     }
-    [self.mapView moveCamera:[GMSCameraUpdate fitBounds:bounds withPadding:50]];
-    
+}
+
+- (void)mapRoutes {
     //if trip has already taken place, compare existing and planned journeys
     if (self.trip.realTimeCoordinates && self.trip.realTimeCoordinates.count > 0){
         //decode encoded polyline
@@ -120,26 +152,19 @@
         GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
         polyline.map = self.mapView;
     }
-    
-    //map photos if trip has photos
-    if (self.trip.photos){
-        for (NSArray *photo in self.trip.photos){
-            [self mapPhoto:photo];
-        }
-    }
 }
 
 - (void)didPressEdit {
-    [self performSegueWithIdentifier:@"editDestinationsSegue" sender:self];
+    [self performSegueWithIdentifier:destinationsSegue sender:self];
 }
 
 - (void)didPressDone {
-    [self performSegueWithIdentifier:@"endCreateSegue" sender:self];
+    [self performSegueWithIdentifier:doneSegue sender:self];
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
     if ([marker.title isEqualToString:@""] || !marker.title) {
-        [self performSegueWithIdentifier:@"mapPhotoSegue" sender:marker.icon];
+        [self performSegueWithIdentifier:photoSegue sender:marker.icon];
     }
     return true;
 }
@@ -198,7 +223,6 @@
                             break;
                         }
                     }
-                    
                     //only update database at end of loop
                     if (photos.count == viableResults.count){
                         self.trip.photos = photos;
@@ -253,6 +277,9 @@
 #pragma mark - Route Comparison
 
 - (NSArray *)comparePolylines:(NSArray *)plannedTripCoordinates {
+    if (!plannedTripCoordinates){
+        return nil;
+    }
     NSMutableArray *combinedPolylineSegments = [NSMutableArray array];
     NSMutableArray *plannedPolylineSegments = [NSMutableArray array];
     NSMutableArray *realTimePolylineSegments = [NSMutableArray array];
@@ -326,6 +353,10 @@
 }
 
 - (BOOL)isInbounds:(NSArray *)firstCoordinate withSecond:(NSArray *)secondCoordinate withActual:(NSArray *)realTimeCoordinate {
+    if (!firstCoordinate || !secondCoordinate || !realTimeCoordinate){
+        return false;
+    }
+    
     //check orientation of two planned coordinates (up vs down and left vs right)
     BOOL up = [firstCoordinate[0] doubleValue] <= [secondCoordinate[0] doubleValue];
     BOOL left = [firstCoordinate[1] doubleValue] <= [secondCoordinate[1] doubleValue];
@@ -345,6 +376,10 @@
 }
 
 - (NSArray *)decodePolyline:(NSString *)encodedString {
+    if (!encodedString || [encodedString isEqualToString:@""]){
+        return nil;
+    }
+    
     //turn encoded polyline string into an array of coordinates
     //based on Google's encoded polyline equation
     NSMutableArray *points = [NSMutableArray array];
@@ -358,37 +393,37 @@
     int sum;
     int shifter;
     
-     while (index < encodedString.length) {
-         // calculate next latitude
-         sum = 0;
-         shifter = 0;
-         do {
-             next5bits = (int)[encodedString characterAtIndex:index++] - 63;
-             sum |= (next5bits & 31) << shifter;
-             shifter += 5;
-         } while (next5bits >= 32 && index < encodedString.length);
+    while (index < encodedString.length) {
+        // calculate next latitude
+        sum = 0;
+        shifter = 0;
+        do {
+            next5bits = (int)[encodedString characterAtIndex:index++] - 63;
+            sum |= (next5bits & 31) << shifter;
+            shifter += 5;
+        } while (next5bits >= 32 && index < encodedString.length);
+        
+        if (index >= encodedString.length) {
+            break;
+        }
+        currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+        
+        //calculate next longitude
+        sum = 0;
+        shifter = 0;
+        do {
+            next5bits = (int)[encodedString characterAtIndex:index++] - 63;
+            sum |= (next5bits & 31) << shifter;
+            shifter += 5;
+        } while (next5bits >= 32 && index < encodedString.length);
 
-         if (index >= encodedString.length)
-             break;
-
-         currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
-
-         //calculate next longitude
-         sum = 0;
-         shifter = 0;
-         do {
-             next5bits = (int)[encodedString characterAtIndex:index++] - 63;
-             sum |= (next5bits & 31) << shifter;
-             shifter += 5;
-         } while (next5bits >= 32 && index < encodedString.length);
-
-         if (index >= encodedString.length && next5bits >= 32)
-             break;
-
-         currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
-         NSArray *coordinate = @[@(currentLat/ 100000.0), @(currentLng/ 100000.0)];
-         [points addObject:coordinate];
-     }
+        if (index >= encodedString.length && next5bits >= 32) {
+            break;
+        }
+        currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+        NSArray *coordinate = @[@(currentLat/ 100000.0), @(currentLng/ 100000.0)];
+        [points addObject:coordinate];
+    }
     return points;
 }
 
@@ -407,7 +442,7 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    MapItineraryHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind: UICollectionElementKindSectionHeader withReuseIdentifier:@"MapItineraryHeaderView" forIndexPath:indexPath];
+    MapItineraryHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind: UICollectionElementKindSectionHeader withReuseIdentifier:headerName forIndexPath:indexPath];
     headerView.delegate = self;
     headerView.nameLabel.text = self.trip.name;
     headerView.dateLabel.text = [NSDate fullDateString:self.trip.startTime];
@@ -419,7 +454,7 @@
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ItineraryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItineraryCell" forIndexPath:indexPath];
+    ItineraryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
     Destination *dest = self.trip.destinations[indexPath.item];
     [dest fetchIfNeeded];
     cell.orderLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.item];
@@ -432,23 +467,23 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"detailsSegue" sender:self.trip.destinations[indexPath.item]];
+    [self performSegueWithIdentifier:detailsSegue sender:self.trip.destinations[indexPath.item]];
 }
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"editDestinationsSegue"]){
+    if ([segue.identifier isEqualToString:destinationsSegue]){
         CreateViewController *createViewController = [segue destinationViewController];
         createViewController.isNewTrip = false;
         createViewController.trip = self.trip; 
-    } else if ([segue.identifier isEqualToString:@"endCreateSegue"]){
+    } else if ([segue.identifier isEqualToString:doneSegue]){
         HomeViewController *homeViewController = [segue destinationViewController];
         [homeViewController didCreateTrip:self.trip];
-    } else if ([segue.identifier isEqualToString:@"detailsSegue"]){
+    } else if ([segue.identifier isEqualToString:detailsSegue]){
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.destination = sender;
-    } else if ([segue.identifier isEqualToString:@"mapPhotoSegue"]){
+    } else if ([segue.identifier isEqualToString:photoSegue]){
         PhotoViewController *photoViewController = [segue destinationViewController];
         photoViewController.photoFile = sender;
         photoViewController.photoMetaData = nil;

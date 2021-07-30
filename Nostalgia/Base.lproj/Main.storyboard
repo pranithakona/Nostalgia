@@ -232,7 +232,7 @@
             <objects>
                 <viewController id="iNh-pY-PbK" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9qn-yz-DzM">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TDy-AA-s8e">
@@ -412,13 +412,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mountain" translatesAutoresizingMaskIntoConstraints="NO" id="5I7-6H-HFJ">
-                                <rect key="frame" x="0.0" y="38" width="390" height="374"/>
+                                <rect key="frame" x="0.0" y="-6" width="390" height="374"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="374" id="LOV-ul-IZc"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUf-HP-rdr">
-                                <rect key="frame" x="10" y="283.33333333333331" width="370" height="339.99999999999994"/>
+                                <rect key="frame" x="10" y="234.66666666666663" width="370" height="340"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kEz-mz-H62">
                                         <rect key="frame" x="20" y="20" width="305" height="34"/>
@@ -434,7 +434,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cht-hP-UnF">
-                                        <rect key="frame" x="64" y="103" width="270" height="80"/>
+                                        <rect key="frame" x="64" y="103.00000000000003" width="270" height="80"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="2ZU-66-QWl"/>
@@ -446,7 +446,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1r-9b-Y2P">
-                                        <rect key="frame" x="-17" y="74" width="197" height="24"/>
+                                        <rect key="frame" x="-17" y="74.000000000000028" width="197" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="197" id="o93-69-OUf"/>
                                         </constraints>
@@ -461,13 +461,13 @@
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="BC9-Xu-aBb">
-                                        <rect key="frame" x="64" y="193" width="204" height="49"/>
+                                        <rect key="frame" x="64" y="193.00000000000003" width="204" height="49"/>
                                         <connections>
                                             <action selector="dateChanged:" destination="2gI-Q7-Etb" eventType="valueChanged" id="9QX-iR-gKd"/>
                                         </connections>
                                     </datePicker>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-E8-81C">
-                                        <rect key="frame" x="5" y="286.00000000000006" width="203" height="24"/>
+                                        <rect key="frame" x="5" y="286" width="203" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="203" id="tXk-Eq-A5t"/>
                                         </constraints>
@@ -489,13 +489,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfZ-i8-VxP">
-                                        <rect key="frame" x="20" y="206.33333333333337" width="26" height="22"/>
+                                        <rect key="frame" x="20" y="206.66666666666666" width="26" height="22"/>
                                         <state key="normal">
                                             <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srh-wC-R8o">
-                                        <rect key="frame" x="12" y="252.00000000000006" width="196" height="24"/>
+                                        <rect key="frame" x="12" y="252" width="196" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="196" id="jgA-7r-LCv"/>
                                         </constraints>
@@ -511,7 +511,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vK-gl-LRR">
-                                        <rect key="frame" x="334" y="26" width="35" height="22"/>
+                                        <rect key="frame" x="334" y="26.000000000000028" width="35" height="22"/>
                                         <state key="normal" image="pencil" catalog="system"/>
                                         <connections>
                                             <action selector="editName:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="fI8-xw-Cc2"/>
@@ -975,13 +975,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MBc-g2-Yqd">
                                     <size key="itemSize" width="390" height="128"/>
-                                    <size key="headerReferenceSize" width="50" height="102"/>
+                                    <size key="headerReferenceSize" width="50" height="121"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItineraryCell" id="cdt-xr-u8I" customClass="ItineraryCell">
-                                        <rect key="frame" x="0.0" y="102" width="390" height="128"/>
+                                        <rect key="frame" x="0.0" y="121" width="390" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rv6-zc-Wvi">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="128"/>
@@ -1019,7 +1019,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="MapItineraryHeaderView" id="dCp-5h-u7x" customClass="MapItineraryHeaderView">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="102"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="121"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ak-un-5Bk">
@@ -1052,6 +1052,16 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVm-zn-r3u">
+                                            <rect key="frame" x="16" y="79" width="25" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="camera" catalog="system"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmt-2D-Ydr">
+                                            <rect key="frame" x="49" y="79" width="15" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="music.note" catalog="system"/>
+                                        </button>
                                     </subviews>
                                     <connections>
                                         <outlet property="collapseButton" destination="XR2-XW-wVH" id="5UK-bw-Zhk"/>
@@ -1086,14 +1096,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ABw-r5-XBu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3371" y="852"/>
+            <point key="canvasLocation" x="3370.7692307692305" y="851.65876777251185"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="KKc-WX-cYF">
             <objects>
                 <viewController id="UWz-ix-spz" customClass="DetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3lJ-ci-Ewa">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Gtm-Og-jhm">
@@ -1181,10 +1191,10 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ZeL-0z-YgB"/>
-        <segue reference="MVD-K8-oSW"/>
+        <segue reference="aCK-oC-lz5"/>
         <segue reference="8bE-7q-QJG"/>
         <segue reference="GPq-Uf-E3A"/>
-        <segue reference="UvE-p4-Dfb"/>
+        <segue reference="Aob-4E-UeD"/>
         <segue reference="Hvo-fD-awh"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1199,6 +1209,7 @@
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mountain" width="824" height="533"/>
+        <image name="music.note" catalog="system" width="97" height="128"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>

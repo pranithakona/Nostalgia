@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 
 @interface ShareViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -22,6 +23,8 @@
 @end
 
 @implementation ShareViewController
+static const NSString *nameKey = @"name";
+static const NSString *cellName = @"ShareCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,7 +39,7 @@
     if (self.arrayOfSharedUsers.count != 0){
         NSString *sharedUsers = @"";
         for (PFUser *user in self.arrayOfSharedUsers){
-            sharedUsers = [sharedUsers stringByAppendingString:[NSString stringWithFormat:@"%@, ",user[@"name"]]];
+            sharedUsers = [sharedUsers stringByAppendingString:[NSString stringWithFormat:@"%@, ",user[nameKey]]];
         }
         self.sharedUsersLabel.text = [sharedUsers substringToIndex:sharedUsers.length-2];
     } else {
@@ -74,7 +77,7 @@
     if (searchText) {
         if (searchText.length != 0) {
             NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(PFUser *evaluatedObject, NSDictionary *bindings) {
-                return [evaluatedObject.username containsString:searchText] || [evaluatedObject[@"name"] containsString:searchText];
+                return [evaluatedObject.username containsString:searchText] || [evaluatedObject[nameKey] containsString:searchText];
             }];
             self.filteredArrayOfUsers = [self.arrayOfUsers filteredArrayUsingPredicate:predicate];
         } else {
@@ -100,9 +103,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ShareCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ShareCell"];
+    ShareCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     PFUser *user = self.filteredArrayOfUsers[indexPath.row];
-    cell.nameLabel.text = user[@"name"];
+    cell.nameLabel.text = user[nameKey];
     cell.userNameLabel.text = user.username;
     return cell;
 }
@@ -112,9 +115,9 @@
     [self.arrayOfSharedUsers addObject:user];
     self.sharedWithView.hidden = false;
     if ([self.sharedUsersLabel.text isEqualToString:@""]){
-        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString: user[@"name"]];
+        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString: user[nameKey]];
     } else {
-        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString:[NSString stringWithFormat:@", %@", user[@"name"]]];
+        self.sharedUsersLabel.text = [self.sharedUsersLabel.text stringByAppendingString:[NSString stringWithFormat:@", %@", user[nameKey]]];
     }
 }
 

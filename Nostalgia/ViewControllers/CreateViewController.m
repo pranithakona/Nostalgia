@@ -30,6 +30,14 @@
 @end
 
 @implementation CreateViewController
+static const NSString *detailsSegue = @"editDetailsSegue";
+static const NSString *mapSegue = @"mapSegue";
+static const NSString *shareSegue = @"shareSegue";
+static const NSString *cellName = @"CreateCell";
+static const NSString *dictKey = @"API_Key";
+static const NSString *tripsKey = @"trips";
+static const NSString *routesKey = @"routes";
+static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:%@%@&key=%@";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,7 +69,7 @@
 }
 
 - (void)fetchDetails {
-    [self performSegueWithIdentifier:@"editDetailsSegue" sender:self.trip];
+    [self performSegueWithIdentifier:detailsSegue sender:self.trip];
 }
 
 # pragma mark - Create Route
@@ -73,7 +81,7 @@
     //create api endpoint based on waypoints in trip
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    const NSString *key= [dict objectForKey: @"API_Key"];
+    const NSString *key= [dict objectForKey:dictKey];
     
     NSString *destinationsString = @"";
     for (Destination *dest in self.arrayOfDestinations){
@@ -82,8 +90,7 @@
     
     //optimized or planned route
     NSString *optimizationString = isOptimized ? @"true" : @"false";
-    NSString *urlString = [NSString stringWithFormat: @"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:%@&destination=place_id:%@&waypoints=optimize:%@%@&key=%@",
-       self.startLocation.placeID, self.endLocation.placeID, optimizationString, destinationsString, key];
+    NSString *urlString = [NSString stringWithFormat: baseURL, self.startLocation.placeID, self.endLocation.placeID, optimizationString, destinationsString, key];
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL* url = [NSURL URLWithString:encodedString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
@@ -110,14 +117,28 @@
 }
 
 - (NSMutableArray *)orderDestinationswithResults:(NSDictionary *)resultsDictionary {
+    static const NSString *legsKey = @"legs";
+    static const NSString *waypointKey = @"waypoint_order";
+    static const NSString *boundsKey = @"bounds";
+    static const NSString *polylineKey = @"overview_polyline";
+    static const NSString *pointsKey = @"points";
+    static const NSString *northeastKey = @"northeast";
+    static const NSString *southwestKey = @"southwest";
+    static const NSString *latKey = @"lat";
+    static const NSString *lngKey = @"lng";
+    static const NSString *distanceKey = @"distance";
+    static const NSString *textKey = @"text";
+    static const NSString *durationKey = @"duration";
+    static const NSString *valueKey = @"value";
+    
     if (!resultsDictionary){
         return nil;
     }
-    NSArray *legs = resultsDictionary[@"routes"][0][@"legs"];
-    NSArray *waypoints = resultsDictionary[@"routes"][0][@"waypoint_order"];
-    NSDictionary *bounds = resultsDictionary[@"routes"][0][@"bounds"];
-    self.encodedPolyline = resultsDictionary[@"routes"][0][@"overview_polyline"][@"points"];
-    self.bounds = @[@([bounds[@"northeast"][@"lat"] doubleValue]),@([bounds[@"northeast"][@"lng"]doubleValue]), @([bounds[@"southwest"][@"lat"] doubleValue]),@([bounds[@"southwest"][@"lng"] doubleValue])];
+    NSArray *legs = resultsDictionary[routesKey][0][legsKey];
+    NSArray *waypoints = resultsDictionary[routesKey][0][waypointKey];
+    NSDictionary *bounds = resultsDictionary[routesKey][0][boundsKey];
+    self.encodedPolyline = resultsDictionary[routesKey][0][polylineKey][pointsKey];
+    self.bounds = @[@([bounds[northeastKey][latKey] doubleValue]),@([bounds[northeastKey][lngKey]doubleValue]), @([bounds[southwestKey][latKey] doubleValue]),@([bounds[southwestKey][lngKey] doubleValue])];
     
     //reorder destinations array based on optimized order for route
     NSMutableArray *orderedArrayOfDestinations = [NSMutableArray array];
@@ -134,8 +155,8 @@
     NSDate *currentTime = self.startTime;
     for (int i = 0; i < orderedArrayOfDestinations.count - 1; i++) {
         Destination *dest = orderedArrayOfDestinations[i];
-        dest.distanceToNextDestination = legs[i][@"distance"][@"text"];
-        dest.timeToNextDestination = [NSNumber numberWithLong:[legs[i][@"duration"][@"value"] longValue]];
+        dest.distanceToNextDestination = legs[i][distanceKey][textKey];
+        dest.timeToNextDestination = [NSNumber numberWithLong:[legs[i][durationKey][valueKey] longValue]];
         
         dest.time = currentTime;
         currentTime = [currentTime dateByAddingSeconds:[dest.duration intValue]];
@@ -163,25 +184,26 @@
     newTrip.destinations = destinationsArray;
     newTrip.encodedPolyline = self.encodedPolyline;
     newTrip.users = self.arrayOfSharedUsers;
+    newTrip.bounds = self.bounds;
     newTrip.isOptimized = self.routeTypeControl.selectedSegmentIndex == 0;
     
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
-            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:[PFUser currentUser][@"trips"]];
+            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:[PFUser currentUser][tripsKey]];
             [userTrips addObject:trip];
-            [PFUser currentUser][@"trips"] = userTrips;
+            [PFUser currentUser][tripsKey] = userTrips;
             [[PFUser currentUser] saveInBackground];
             
             //give all shared users access to trip
             for (PFUser *user in trip.users) {
-                NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
+                NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[tripsKey]];
                 [userTrips addObject:trip];
-                user[@"trips"] = userTrips;
+                user[tripsKey] = userTrips;
                 [user saveInBackground];
             }
             
             [self.activityIndicator stopAnimating];
-            [self performSegueWithIdentifier:@"mapSegue" sender:trip];
+            [self performSegueWithIdentifier:mapSegue sender:trip];
         }
     }];
 }
@@ -193,9 +215,9 @@
     //add new users to trip
     for (PFUser *user in self.arrayOfSharedUsers){
         if (![self.trip.users containsObject:user]){
-            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[@"trips"]];
+            NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[tripsKey]];
             [userTrips addObject:self.trip];
-            user[@"trips"] = userTrips;
+            user[tripsKey] = userTrips;
             [user saveInBackground];
         }
     }
@@ -203,7 +225,7 @@
     [self.trip saveInBackground];
     
     [self.activityIndicator stopAnimating];
-    [self performSegueWithIdentifier:@"mapSegue" sender:self.trip];
+    [self performSegueWithIdentifier:mapSegue sender:self.trip];
 }
 
 - (void)didAddUsers:(NSArray *)users {
@@ -314,7 +336,7 @@ didFailAutocompleteWithError:(NSError *)error {
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CreateCell" forIndexPath:indexPath];
+    CreateCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
     cell.delegate = self;
     
     Destination *dest = self.arrayOfDestinations[indexPath.item];
@@ -350,21 +372,20 @@ didFailAutocompleteWithError:(NSError *)error {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString: @"mapSegue"]){
+    if ([segue.identifier isEqualToString:mapSegue]){
         MapViewController *mapViewController = [segue destinationViewController];
         mapViewController.trip = sender;
         mapViewController.isNewTrip = true;
         mapViewController.canEditTrip = true;
-    } else if ([segue.identifier isEqualToString: @"shareSegue"]){
+    } else if ([segue.identifier isEqualToString:shareSegue]) {
         ShareViewController *shareViewController = [segue destinationViewController];
         shareViewController.delegate = self;
         shareViewController.arrayOfSharedUsers = [self.arrayOfSharedUsers mutableCopy];
-    } else if ([segue.identifier isEqualToString: @"editDetailsSegue"]){
+    } else if ([segue.identifier isEqualToString:detailsSegue]){
         NewTripViewController *newTripViewController = [segue destinationViewController];
         newTripViewController.isNewTrip = false;
         newTripViewController.trip = sender;
     }
 }
-
 
 @end

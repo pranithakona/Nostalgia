@@ -260,6 +260,7 @@
 		33CD3E1A26B36E7C00BF68BC /* info_plist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_plist.png; sourceTree = "<group>"; };
 		33CD3E1B26B36E7C00BF68BC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		33CD3E5626B36E7C00BF68BC /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
+		33CD3EC126B47F3900BF68BC /* MapViewController+Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MapViewController+Tests.h"; sourceTree = "<group>"; };
 		33DAE98526AF3087006094C3 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		33DAE98626AF3087006094C3 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		33DAE98B26AF519C006094C3 /* HomeCollectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCollectionHeader.h; sourceTree = "<group>"; };
@@ -373,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				33C641A826A2289600726C4E /* CreateViewController+Tests.h */,
+				33CD3EC126B47F3900BF68BC /* MapViewController+Tests.h */,
 				33C64141269A646F00726C4E /* NostalgiaTests.m */,
 				33C64143269A646F00726C4E /* Info.plist */,
 			);

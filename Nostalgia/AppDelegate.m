@@ -16,15 +16,14 @@
 @end
 
 @implementation AppDelegate
-
+static const NSString *serverURL = @"https://parseapi.back4app.com";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //parse
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-
         configuration.applicationId = @"IAioHjmgQ6wfFrvPJrIwSKflA3gEBfJ7qX0N3iOC";
         configuration.clientKey = @"8uynhUVAPUt0MINZrH3CH9gNUMoIcROV6zO7iCBe";
-        configuration.server = @"https://parseapi.back4app.com";
+        configuration.server = serverURL;
     }];
 
     [Parse initializeWithConfiguration:config];

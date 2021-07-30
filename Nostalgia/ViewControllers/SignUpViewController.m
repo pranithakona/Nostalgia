@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 
 @interface SignUpViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
@@ -16,10 +17,7 @@
 @end
 
 @implementation SignUpViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
+static const NSString *segue = @"signupSegue";
 
 - (IBAction)onSignup:(id)sender {
     PFUser *newUser = [PFUser user];
@@ -30,10 +28,8 @@
     newUser[@"trips"] = [NSMutableArray array];
    
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
-        if (error != nil) {
-            //handle error
-        } else {
-            [self performSegueWithIdentifier:@"signupSegue" sender:nil];
+        if (!error) {
+            [self performSegueWithIdentifier:segue sender:nil];
         }
     }];
 }

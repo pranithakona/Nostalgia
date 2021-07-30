@@ -10,6 +10,8 @@
 #import "Destination.h"
 #import "CreateViewController.h"
 #import "CreateViewController+Tests.h"
+#import "MapViewController.h"
+#import "MapViewController+Tests.h"
 #import "DateTools.h"
 @import Parse;
 @import GooglePlaces;
@@ -117,6 +119,52 @@
         XCTAssertEqual(correctDate.hour, dest.time.hour);
         XCTAssertEqual(correctDate.minute, dest.time.minute);
     }
+}
+
+- (void)testDecodePolyline {
+    MapViewController *vc = [MapViewController new];
+    NSArray *coords = [vc decodePolyline:@"egi~F~rbvOygEx}@p`@iyBd}FjnA"];
+    NSArray *actualCoords = @[@[41.83171,-87.67296], @[41.86384,-87.68301], @[41.85847,-87.66344], @[41.81780,-87.67614]];
+    
+    for (int i = 0; i < actualCoords.count; i++){
+        XCTAssertEqual(coords[i][0], actualCoords[i][0]);
+        XCTAssertEqual(coords[i][1], actualCoords[i][1]);
+    }
+    
+    NSArray *coords2 = [vc decodePolyline:@"wip~F|olzOe}BhyBgxDi{AvqFv|IrkCquEksHfzGexD}mJd{HioFd}CiR"];
+    NSArray *actualCoords2 = @[@[41.86796,-88.37903], @[41.88815,-88.39860], @[41.91779,-88.38383], @[41.87895,-88.43979], @[41.85645,-88.40546], @[41.90579,-88.45078], @[41.93542,-88.39207], @[41.88483,-88.35362], @[41.85952,-88.35053]];
+    
+    for (int i = 0; i < actualCoords2.count; i++){
+        XCTAssertEqual(coords2[i][0], actualCoords2[i][0]);
+        XCTAssertEqual(coords2[i][1], actualCoords2[i][1]);
+    }
+    
+    NSArray *coords3 = [vc decodePolyline:@"a{u~FbpmzO"];
+    NSArray *actualCoords3 = @[@[41.89633,-88.38418]];
+
+    for (int i = 0; i < actualCoords3.count; i++){
+        XCTAssertEqual(coords3[i][0], actualCoords3[i][0]);
+        XCTAssertEqual(coords3[i][1], actualCoords3[i][1]);
+    }
+    
+    NSArray *coords4 = [vc decodePolyline:@""];
+    XCTAssertNil(coords4);
+    
+    NSArray *coords5 = [vc decodePolyline:nil];
+    XCTAssertNil(coords5);
+}
+
+- (void)testInBounds {
+    MapViewController *vc = [MapViewController new];
+    BOOL inbounds = [vc isInbounds:@[41.91787,-88.38855] withSecond:@[41.91692,-88.38879] withActual:@[41.91742,-88.38867]];
+    XCTAssertTrue(inBounds);
+    
+    BOOL inbounds2 = [vc isInbounds:@[41.91787,-88.38855] withSecond:@[41.91692,-88.38879] withActual:@[41.91776,-88.38954]];
+    XCTAssertFalse(inBounds2);
+    
+    BOOL inbounds3 = [vc isInbounds:nil withSecond:@[41.91692,-88.38879] withActual:@[41.91776,-88.38954]];
+    XCTAssertFalse(inBounds3);
+    
 }
 
 @end

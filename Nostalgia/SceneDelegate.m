@@ -22,6 +22,10 @@
 static NSMutableArray<NSArray *> *currentTripSongs;
 static NSMutableSet<NSString *> *songNames;
 static BOOL isCurrentlyRouting;
+static const NSString *tokenURLString = @"https://nostalgiafbu.herokuapp.com/api/token";
+static const NSString *tokenRefreshURLString = @"https://nostalgiafbu.herokuapp.com/api/refresh_token";
+static const NSString *redirectURLString = @"spotify-ios-quick-start://spotify-login-callback";
+static const NSString *clientID = @"077bd8cb70884d9b8c1f8d18b316e735";
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     if (PFUser.currentUser) {
@@ -30,21 +34,18 @@ static BOOL isCurrentlyRouting;
     }
     
     //spotify
-    NSString *spotifyClientID = @"077bd8cb70884d9b8c1f8d18b316e735";
-    NSURL *spotifyRedirectURL = [NSURL URLWithString:@"spotify-ios-quick-start://spotify-login-callback"];
-
-    self.configuration  = [[SPTConfiguration alloc] initWithClientID:spotifyClientID redirectURL:spotifyRedirectURL];
+    NSString *spotifyClientID = clientID;
+    NSURL *spotifyRedirectURL = [NSURL URLWithString:redirectURLString];
+    NSURL *tokenSwapURL = [NSURL URLWithString:tokenURLString];
+    NSURL *tokenRefreshURL = [NSURL URLWithString:tokenRefreshURLString];
     
-    NSURL *tokenSwapURL = [NSURL URLWithString:@"https://nostalgiafbu.herokuapp.com/api/token"];
-    NSURL *tokenRefreshURL = [NSURL URLWithString:@"https://nostalgiafbu.herokuapp.com/api/refresh_token"];
-
+    self.configuration  = [[SPTConfiguration alloc] initWithClientID:spotifyClientID redirectURL:spotifyRedirectURL];
     self.configuration.tokenSwapURL = tokenSwapURL;
     self.configuration.tokenRefreshURL = tokenRefreshURL;
     self.configuration.playURI = @"";
 
-    self.sessionManager = [[SPTSessionManager alloc] initWithConfiguration:self.configuration delegate:self];
-    
     SPTScope requestedScope = SPTAppRemoteControlScope;
+    self.sessionManager = [[SPTSessionManager alloc] initWithConfiguration:self.configuration delegate:self];
     [self.sessionManager initiateSessionWithScope:requestedScope options:SPTDefaultAuthorizationOption];
     
     self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:self.configuration logLevel:SPTAppRemoteLogLevelDebug];
@@ -104,7 +105,6 @@ static BOOL isCurrentlyRouting;
 }
 
 - (void)playerStateDidChange:(id<SPTAppRemotePlayerState>)playerState {
-    NSLog(@"Track name: %@", playerState.track.name);
     if (isCurrentlyRouting && ![songNames containsObject:playerState.track.name]){
         [currentTripSongs addObject:@[playerState.track.name, playerState.track.artist.name]];
         [songNames addObject:playerState.track.name];
@@ -112,10 +112,6 @@ static BOOL isCurrentlyRouting;
 }
 
 - (void)sceneDidDisconnect:(UIScene *)scene {
-    // Called as the scene is being released by the system.
-    // This occurs shortly after the scene enters the background, or when its session is discarded.
-    // Release any resources associated with this scene that can be re-created the next time the scene connects.
-    // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
 }
 
 
@@ -134,15 +130,10 @@ static BOOL isCurrentlyRouting;
 
 
 - (void)sceneWillEnterForeground:(UIScene *)scene {
-    // Called as the scene transitions from the background to the foreground.
-    // Use this method to undo the changes made on entering the background.
 }
 
 
 - (void)sceneDidEnterBackground:(UIScene *)scene {
-    // Called as the scene transitions from the foreground to the background.
-    // Use this method to save data, release shared resources, and store enough scene-specific state information
-    // to restore the scene back to its current state.
 }
 
 

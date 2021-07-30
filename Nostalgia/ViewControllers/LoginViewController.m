@@ -9,12 +9,14 @@
 #import <Parse/Parse.h>
 
 @interface LoginViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
 @end
 
 @implementation LoginViewController
+static const NSString *segue = @"loginSegue";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,10 +27,8 @@
     NSString *password = self.passwordField.text;
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
-        if (error != nil) {
-            //handle error
-        } else {
-            [self performSegueWithIdentifier:@"loginSegue" sender:nil];
+        if (!error) {
+            [self performSegueWithIdentifier:segue sender:nil];
         }
     }];
 }
