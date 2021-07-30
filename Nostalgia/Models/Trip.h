@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *name;
 @property (copy, nonatomic) NSString *tripDescription;
 @property (strong, nonatomic) PFUser *owner;
+@property (strong, nonatomic) PFFileObject *coverPhoto;
 @property (strong, nonatomic) NSArray * _Nullable users;
 @property (copy, nonatomic) NSString *region;
 @property (copy, nonatomic) NSString *regionID;
@@ -25,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *destinations;
 @property (strong, nonatomic) NSArray *realTimeCoordinates;
 @property (strong, nonatomic) NSArray *photos;
+@property (strong, nonatomic) NSArray *songs;
 @property (strong, nonatomic) NSDate * _Nullable startTime;
 @property (copy, nonatomic) NSString *encodedPolyline;
 @property (strong, nonatomic) NSArray *bounds;

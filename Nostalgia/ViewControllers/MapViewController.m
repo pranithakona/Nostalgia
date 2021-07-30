@@ -12,12 +12,13 @@
 #import "LocationManager.h"
 #import "ItineraryCell.h"
 #import "DetailsViewController.h"
+#import "PhotoViewController.h"
 #import "DateTools.h"
 #import "NSDate+NSDateHelper.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <PhotosUI/PhotosUI.h>
 
-@interface MapViewController () <MapItineraryHeaderViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, PHPickerViewControllerDelegate>
+@interface MapViewController () <MapItineraryHeaderViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, PHPickerViewControllerDelegate, GMSMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *mapBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -67,6 +68,7 @@
     
     self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
     self.mapView.myLocationEnabled = YES;
+    self.mapView.delegate = self;
     [self.mapBaseView addSubview:self.mapView];
     
     //make markers for map and find outermmost points of trip to set camera view on map
@@ -133,6 +135,13 @@
 
 - (void)didPressDone {
     [self performSegueWithIdentifier:@"endCreateSegue" sender:self];
+}
+
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    if ([marker.title isEqualToString:@""] || !marker.title) {
+        [self performSegueWithIdentifier:@"mapPhotoSegue" sender:marker.icon];
+    }
+    return true;
 }
 
 #pragma mark - Photos
@@ -439,6 +448,10 @@
     } else if ([segue.identifier isEqualToString:@"detailsSegue"]){
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.destination = sender;
+    } else if ([segue.identifier isEqualToString:@"mapPhotoSegue"]){
+        PhotoViewController *photoViewController = [segue destinationViewController];
+        photoViewController.photoFile = sender;
+        photoViewController.photoMetaData = nil;
     }
 }
 

@@ -13,15 +13,19 @@
             <rect key="frame" x="0.0" y="0.0" width="494" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnb-R8-7Kg">
-                    <rect key="frame" x="20" y="15" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnb-R8-7Kg">
+                    <rect key="frame" x="15" y="30.5" width="464" height="39"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                    <color key="textColor" red="0.86912711320000002" green="0.74299989519999998" blue="0.84238056530000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="thv-NF-LrK"/>
+            <constraints>
+                <constraint firstItem="cnb-R8-7Kg" firstAttribute="centerY" secondItem="thv-NF-LrK" secondAttribute="centerY" id="4ye-Nn-5g0"/>
+                <constraint firstItem="cnb-R8-7Kg" firstAttribute="leading" secondItem="thv-NF-LrK" secondAttribute="leading" constant="15" id="8Js-oG-rVK"/>
+                <constraint firstItem="thv-NF-LrK" firstAttribute="trailing" secondItem="cnb-R8-7Kg" secondAttribute="trailing" constant="15" id="Ant-Zs-DUF"/>
+            </constraints>
             <connections>
                 <outlet property="nameLabel" destination="cnb-R8-7Kg" id="lHT-oA-IYV"/>
             </connections>

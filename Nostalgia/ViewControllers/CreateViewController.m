@@ -153,6 +153,7 @@
     Trip *newTrip = [Trip new];
     newTrip.name = self.name;
     newTrip.tripDescription = self.tripDescription;
+    newTrip.coverPhoto = [self getPFFileFromImage:self.photo];
     newTrip.owner = [PFUser currentUser];
     newTrip.region = self.region.name;
     newTrip.regionID = self.region.placeID;
@@ -207,6 +208,17 @@
 
 - (void)didAddUsers:(NSArray *)users {
     self.arrayOfSharedUsers = users;
+}
+
+- (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image {
+    if (!image) {
+        return nil;
+    }
+    NSData *imageData = UIImagePNGRepresentation(image);
+    if (!imageData) {
+        return nil;
+    }
+    return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 
 #pragma mark - Google Places

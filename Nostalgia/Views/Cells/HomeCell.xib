@@ -10,48 +10,69 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCell" id="oiX-YJ-7NM" customClass="HomeCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="309"/>
+            <rect key="frame" x="0.0" y="0.0" width="239" height="342"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="E5h-dq-u6E">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="309"/>
+                <rect key="frame" x="0.0" y="0.0" width="239" height="342"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMs-w5-jby">
-                        <rect key="frame" x="16" y="44" width="288" height="33"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrW-OM-ZNh">
-                        <rect key="frame" x="16" y="85" width="288" height="33"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2g-Tm-bLO">
-                        <rect key="frame" x="16" y="138" width="288" height="33"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfA-Df-yOZ">
+                        <rect key="frame" x="0.0" y="0.0" width="239" height="342"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMs-w5-jby">
+                                <rect key="frame" x="10" y="205" width="219" height="35"/>
+                                <fontDescription key="fontDescription" name="Didot" family="Didot" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrW-OM-ZNh">
+                                <rect key="frame" x="10" y="245" width="219" height="19.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2g-Tm-bLO">
+                                <rect key="frame" x="10" y="274.5" width="219" height="19.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.86912711317275404" green="0.74299989523078425" blue="0.84238056529799432" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="EMs-w5-jby" firstAttribute="centerY" secondItem="gfA-Df-yOZ" secondAttribute="centerY" multiplier="1.3" id="2Cm-Z4-PDv"/>
+                            <constraint firstAttribute="trailing" secondItem="e2g-Tm-bLO" secondAttribute="trailing" constant="10" id="LMz-cS-iWn"/>
+                            <constraint firstItem="wrW-OM-ZNh" firstAttribute="centerX" secondItem="gfA-Df-yOZ" secondAttribute="centerX" id="NJZ-Rd-fZo"/>
+                            <constraint firstAttribute="trailing" secondItem="wrW-OM-ZNh" secondAttribute="trailing" constant="10" id="Q4o-5s-qcj"/>
+                            <constraint firstItem="e2g-Tm-bLO" firstAttribute="centerX" secondItem="gfA-Df-yOZ" secondAttribute="centerX" id="QyK-aq-08q"/>
+                            <constraint firstItem="EMs-w5-jby" firstAttribute="centerX" secondItem="gfA-Df-yOZ" secondAttribute="centerX" id="Tnf-Jo-4iL"/>
+                            <constraint firstItem="e2g-Tm-bLO" firstAttribute="top" secondItem="wrW-OM-ZNh" secondAttribute="bottom" constant="10" id="UjL-OS-TWd"/>
+                            <constraint firstItem="EMs-w5-jby" firstAttribute="leading" secondItem="gfA-Df-yOZ" secondAttribute="leading" constant="10" id="X5b-Rv-INK"/>
+                            <constraint firstItem="e2g-Tm-bLO" firstAttribute="leading" secondItem="gfA-Df-yOZ" secondAttribute="leading" constant="10" id="a2K-6x-6Al"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="e2g-Tm-bLO" secondAttribute="bottom" constant="10" id="jNE-rt-s7s"/>
+                            <constraint firstAttribute="trailing" secondItem="EMs-w5-jby" secondAttribute="trailing" constant="10" id="n3c-Qs-RR2"/>
+                            <constraint firstItem="wrW-OM-ZNh" firstAttribute="leading" secondItem="gfA-Df-yOZ" secondAttribute="leading" constant="10" id="pFq-xI-3CZ"/>
+                            <constraint firstItem="wrW-OM-ZNh" firstAttribute="centerX" secondItem="gfA-Df-yOZ" secondAttribute="centerX" id="sB2-4M-lHg"/>
+                            <constraint firstItem="wrW-OM-ZNh" firstAttribute="top" secondItem="EMs-w5-jby" secondAttribute="bottom" constant="5" id="z0O-EV-kpV"/>
+                        </constraints>
+                    </view>
                 </subviews>
-                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="e2g-Tm-bLO" firstAttribute="centerX" secondItem="E5h-dq-u6E" secondAttribute="centerX" id="5CB-aS-KYG"/>
-                    <constraint firstItem="e2g-Tm-bLO" firstAttribute="centerY" secondItem="E5h-dq-u6E" secondAttribute="centerY" multiplier="1.2" id="6aH-ac-Mnh"/>
-                    <constraint firstItem="EMs-w5-jby" firstAttribute="centerX" secondItem="E5h-dq-u6E" secondAttribute="centerX" id="BYE-5u-nfQ"/>
-                    <constraint firstItem="wrW-OM-ZNh" firstAttribute="centerX" secondItem="E5h-dq-u6E" secondAttribute="centerX" id="GMw-jb-Xiz"/>
-                    <constraint firstItem="wrW-OM-ZNh" firstAttribute="centerY" secondItem="E5h-dq-u6E" secondAttribute="centerY" multiplier="0.7" id="ZrR-za-dED"/>
-                    <constraint firstItem="EMs-w5-jby" firstAttribute="centerY" secondItem="E5h-dq-u6E" secondAttribute="centerY" multiplier="0.6" id="bTJ-bv-lTN"/>
+                    <constraint firstItem="gfA-Df-yOZ" firstAttribute="leading" secondItem="E5h-dq-u6E" secondAttribute="leading" id="JrR-gJ-KXk"/>
+                    <constraint firstAttribute="bottom" secondItem="gfA-Df-yOZ" secondAttribute="bottom" id="uOQ-0i-GAu"/>
+                    <constraint firstAttribute="trailing" secondItem="gfA-Df-yOZ" secondAttribute="trailing" id="uqz-kR-uoa"/>
+                    <constraint firstItem="gfA-Df-yOZ" firstAttribute="top" secondItem="E5h-dq-u6E" secondAttribute="top" id="ypW-ou-Eec"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="320" height="309"/>
+            <size key="customSize" width="239" height="342"/>
             <connections>
+                <outlet property="cardView" destination="gfA-Df-yOZ" id="AIb-kT-r1g"/>
                 <outlet property="dateLabel" destination="e2g-Tm-bLO" id="VHa-Jt-gZL"/>
                 <outlet property="descriptionLabel" destination="wrW-OM-ZNh" id="WFJ-Gs-VyY"/>
                 <outlet property="nameLabel" destination="EMs-w5-jby" id="rtJ-OS-z6f"/>
             </connections>
-            <point key="canvasLocation" x="-189.85507246376812" y="148.32589285714286"/>
+            <point key="canvasLocation" x="-147.10144927536234" y="44.866071428571423"/>
         </collectionViewCell>
     </objects>
 </document>

@@ -7,9 +7,9 @@
 
 #import "AppDelegate.h"
 #import "LocationManager.h"
-@import Parse;
-@import GoogleMaps;
-@import GooglePlaces;
+#import <Parse/Parse.h>
+#import <GoogleMaps/GoogleMaps.h>
+#import <GooglePlaces/GooglePlaces.h>
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    //parse
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
 
         configuration.applicationId = @"IAioHjmgQ6wfFrvPJrIwSKflA3gEBfJ7qX0N3iOC";
@@ -33,18 +33,18 @@
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *key= [dict objectForKey: @"API_Key"];
     
+    //google
     [GMSServices provideAPIKey:key];
     [GMSPlacesClient provideAPIKey:key];
     
+    //location manager
     CLLocationManager *locationManager = [LocationManager shared];
     [locationManager requestAlwaysAuthorization];
 
     return YES;
 }
 
-
 #pragma mark - UISceneSession lifecycle
-
 
 - (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options {
     // Called when a new scene session is being created.

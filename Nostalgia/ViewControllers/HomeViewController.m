@@ -34,6 +34,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    
     self.locationManager = [LocationManager shared];
     self.locationManager.delegate = self;
     self.realTimeLocations = [NSMutableArray array];
@@ -82,13 +87,13 @@
     UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
         
         //item
-        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1]];
+        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1]];
         
         NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
         item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //group
-        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:0.4]];
+        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:0.5] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:0.4]];
         
         NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
         group.contentInsets = NSDirectionalEdgeInsetsMake(EDGE_INSETS, EDGE_INSETS, EDGE_INSETS, EDGE_INSETS);
@@ -155,7 +160,6 @@
     //sets timer for new trips
     [self.futureTrips addObject:trip];
     [self.collectionView reloadData];
-    
     NSTimeInterval timeInterval = trip.startTime.timeIntervalSince1970 - [NSDate now].timeIntervalSince1970;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (CLLocationManager.locationServicesEnabled){
@@ -179,9 +183,11 @@
     self.locationManager.allowsBackgroundLocationUpdates = true;
     [self.locationManager startUpdatingLocation];
     [self.locationManager startMonitoringSignificantLocationChanges];
+    [SceneDelegate clearCurrentTripSongs];
+    [SceneDelegate setIsCurrentlyRouting:true];
     
     //commented out for testing purposes
-    NSTimeInterval timeInterval = 120; //trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
+    NSTimeInterval timeInterval = 60; //trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self saveRouteWithTrip:trip];
     });
@@ -194,6 +200,7 @@
     }
     [self.locationManager stopUpdatingLocation];
     [self.locationManager stopMonitoringSignificantLocationChanges];
+    [SceneDelegate setIsCurrentlyRouting:false];
     
     [self snapToRoadsWithCoordinates:tripLocations forTrip:trip];
 }
@@ -234,6 +241,8 @@
             }
             
             trip.realTimeCoordinates = tripLocations;
+            trip.songs = [NSArray arrayWithArray:[SceneDelegate getCurrentTripSongs]];
+            NSLog(@"trip songs %@", trip.songs);
             [trip saveInBackground];
         }
     }];

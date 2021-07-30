@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PhotoViewController : UIViewController
 
-@property (strong, nonatomic) GMSPlacePhotoMetadata *photoMetaData;
+@property (strong, nonatomic) GMSPlacePhotoMetadata *_Nullable photoMetaData;
+@property (strong, nonatomic) UIImage *_Nullable photoFile;
 
 @end
 

@@ -10,7 +10,7 @@
 #import "Destination.h"
 #import <GooglePlaces/GooglePlaces.h>
 
-@interface NewTripViewController () <GMSAutocompleteViewControllerDelegate> 
+@interface NewTripViewController () <GMSAutocompleteViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionField;
@@ -19,7 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *endLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-
+@property (weak, nonatomic) IBOutlet UIView *cardView;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 
 @property (strong, nonatomic) GMSPlace *region;
 @property (strong, nonatomic) NSDate *startTime;
@@ -36,6 +37,7 @@
 
     self.startTime = self.datePicker.date;
     self.nextButton.enabled = [self requiredFields];
+    self.cardView.layer.cornerRadius = 20;
     
     //set fields with existing descriptions if is an existing trip
     if (!self.isNewTrip) {
@@ -49,12 +51,43 @@
     }
     
     self.datePicker.minimumDate = [NSDate now];
+    
 }
 
 - (BOOL)requiredFields {
     //commented out for testing purposes
     //return (![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation) || (![self.nameField.text isEqualToString:@""] && !self.isNewTrip);
     return true;
+}
+
+- (IBAction)changeImage:(id)sender {
+    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    imagePickerVC.delegate = self;
+    imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
+    
+    self.coverImageView.image = info[UIImagePickerControllerOriginalImage];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)endEditing:(id)sender {
+    if (self.nameField.isFirstResponder) {
+        [self.nameField resignFirstResponder];
+    } else if (self.descriptionField.isFirstResponder){
+        [self.descriptionField resignFirstResponder];
+    }
+}
+
+- (IBAction)editName:(id)sender {
+    [self.nameField becomeFirstResponder];
+}
+
+- (IBAction)editDescription:(id)sender {
+    [self.descriptionField becomeFirstResponder];
 }
 
 - (IBAction)dateChanged:(id)sender {
@@ -74,6 +107,13 @@
 - (IBAction)nameEditingEnded:(id)sender {
     if (!self.isNewTrip){
         self.trip.name = self.nameField.text;
+        [self.trip saveInBackground];
+    }
+}
+
+- (IBAction)descriptionEditingEnded:(id)sender {
+    if (!self.isNewTrip){
+        self.trip.tripDescription = self.descriptionField.text;
         [self.trip saveInBackground];
     }
 }
@@ -197,6 +237,7 @@
         createViewController.tripDescription = self.descriptionField.text;
         createViewController.region = self.region;
         createViewController.startTime = self.startTime;
+        createViewController.photo = self.coverImageView.image;
         createViewController.isNewTrip = true;
     } 
 }

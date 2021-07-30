@@ -16,6 +16,7 @@
 				A4B2FE0F364E2EF0C6628D4A5BF61B9F /* PBXTargetDependency */,
 			);
 			name = GooglePlaces;
+			productName = GooglePlaces;
 		};
 		E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */ = {
 			isa = PBXAggregateTarget;
@@ -25,6 +26,7 @@
 			dependencies = (
 			);
 			name = GoogleMaps;
+			productName = GoogleMaps;
 		};
 /* End PBXAggregateTarget section */
 
@@ -832,7 +834,7 @@
 		0445458171FCDEC79A17CC2B3C63E377 /* MDCInkLayerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCInkLayerDelegate.h; path = components/Ink/src/private/MDCInkLayerDelegate.h; sourceTree = "<group>"; };
 		047F159A5EAED286A6F818F75FE7DA8C /* NSDate+DateTools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDate+DateTools.h"; path = "DateTools/DateTools/NSDate+DateTools.h"; sourceTree = "<group>"; };
 		05BCB4CBB3D3294BB7361D41E6425702 /* MDCInkTouchController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCInkTouchController.m; path = components/Ink/src/MDCInkTouchController.m; sourceTree = "<group>"; };
-		0652F2476C7C87C6C0F6CB68072EA25F /* Parse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Parse.framework; path = Parse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0652F2476C7C87C6C0F6CB68072EA25F /* Parse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Parse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		077C2F036398B8DBD140FA1120535D3F /* PFUser+Deprecated.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PFUser+Deprecated.h"; path = "Parse/Parse/PFUser+Deprecated.h"; sourceTree = "<group>"; };
 		086822733B5D9CB46DFAD8DD0ED24B01 /* PFUserController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFUserController.h; path = Parse/Parse/Internal/User/Controller/PFUserController.h; sourceTree = "<group>"; };
 		08DCC520B946CE036D0EC1E67F0A57F1 /* PFCloud.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFCloud.m; path = Parse/Parse/PFCloud.m; sourceTree = "<group>"; };
@@ -859,7 +861,7 @@
 		0FDE1AEFDE822F7D6DE4410E15D606E3 /* PFObjectUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFObjectUtilities.m; path = Parse/Parse/Internal/Object/Utilities/PFObjectUtilities.m; sourceTree = "<group>"; };
 		107DA82773438CF15BA84EBE924D0D44 /* PFFileUploadResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFFileUploadResult.h; path = Parse/Parse/PFFileUploadResult.h; sourceTree = "<group>"; };
 		11D36E4D224CB8A9786177BFC76D29F7 /* PFOfflineObjectController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFOfflineObjectController.m; path = Parse/Parse/Internal/Object/Controller/OfflineController/PFOfflineObjectController.m; sourceTree = "<group>"; };
-		12D928FE954B6AFD31B4598005CD1D66 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Nostalgia.framework; path = "Pods-Nostalgia.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		12D928FE954B6AFD31B4598005CD1D66 /* Pods_Nostalgia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD8A2B0CFAAF390F6C037F99FB02A6 /* PFDefaultACLController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFDefaultACLController.h; path = Parse/Parse/Internal/ACL/DefaultACLController/PFDefaultACLController.h; sourceTree = "<group>"; };
 		13C514106BD33E40B4CDBBE7E3A57EB0 /* PFURLSessionDataTaskDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFURLSessionDataTaskDelegate.h; path = Parse/Parse/Internal/Commands/CommandRunner/URLSession/Session/TaskDelegate/PFURLSessionDataTaskDelegate.h; sourceTree = "<group>"; };
 		13CEE42357C530D4891CE583E21BB6B6 /* PFHTTPURLRequestConstructor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFHTTPURLRequestConstructor.h; path = Parse/Parse/Internal/HTTPRequest/PFHTTPURLRequestConstructor.h; sourceTree = "<group>"; };
@@ -975,7 +977,7 @@
 		3A9A33707C8065663ADD0FD5E1EA1DAA /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle; sourceTree = "<group>"; };
 		3AAE5A1BA1423CFAAE864657AACCE23E /* MDCSlantedRectShapeGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCSlantedRectShapeGenerator.m; path = components/ShapeLibrary/src/MDCSlantedRectShapeGenerator.m; sourceTree = "<group>"; };
 		3AD015FE857B77E6DC0F85C3CC7027AC /* PFURLConstructor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFURLConstructor.h; path = Parse/Parse/Internal/HTTPRequest/PFURLConstructor.h; sourceTree = "<group>"; };
-		3B24947F2420019926CB235A4254721C /* Pods_NostalgiaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_NostalgiaTests.framework; path = "Pods-NostalgiaTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B24947F2420019926CB235A4254721C /* Pods_NostalgiaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NostalgiaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B38FC889182FBE73B95E22A5C480435 /* PFRelation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFRelation.m; path = Parse/Parse/PFRelation.m; sourceTree = "<group>"; };
 		3B86AEF363682CBD90CF3ED6692C0F89 /* PFRESTQueryCommand.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFRESTQueryCommand.m; path = Parse/Parse/Internal/Commands/PFRESTQueryCommand.m; sourceTree = "<group>"; };
 		3B88A7BD1D3FD223F5638D292C31B8D4 /* PFFileUploadController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFFileUploadController.h; path = Parse/Parse/PFFileUploadController.h; sourceTree = "<group>"; };
@@ -1004,7 +1006,7 @@
 		46DB2A166885A7452F13024CB9F34626 /* MDFTextAccessibility.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MDFTextAccessibility.modulemap; sourceTree = "<group>"; };
 		46DD2ACD808A683F3DE9E5B096085411 /* BFCancellationToken.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFCancellationToken.m; path = Bolts/Common/BFCancellationToken.m; sourceTree = "<group>"; };
 		46E886014B45D1779B8260A7251E1DE7 /* PFMutableQueryState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFMutableQueryState.h; path = Parse/Parse/Internal/Query/State/PFMutableQueryState.h; sourceTree = "<group>"; };
-		4714B1350D67F0E3CCA7DB110DB8BE9B /* Pods_Nostalgia_NostalgiaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Nostalgia_NostalgiaUITests.framework; path = "Pods-Nostalgia-NostalgiaUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4714B1350D67F0E3CCA7DB110DB8BE9B /* Pods_Nostalgia_NostalgiaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia_NostalgiaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4719E11321F5FCB5A0D530732B3B1C5D /* PFMutableRelationState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFMutableRelationState.m; path = Parse/Parse/Internal/Relation/State/PFMutableRelationState.m; sourceTree = "<group>"; };
 		482899A0D3C5C7DF0AD1EFC7FBF9D74F /* UIView+MaterialRTL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+MaterialRTL.h"; path = "Sources/UIView+MaterialRTL.h"; sourceTree = "<group>"; };
 		48B8FAA1EEBA44882D9B9605C7CDD7D4 /* PFSession.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFSession.h; path = Parse/Parse/PFSession.h; sourceTree = "<group>"; };
@@ -1015,7 +1017,7 @@
 		498CA5C53B6960D11FFB43751FD7B365 /* PFKeyValueCache_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFKeyValueCache_Private.h; path = Parse/Parse/Internal/KeyValueCache/PFKeyValueCache_Private.h; sourceTree = "<group>"; };
 		4A00D37D3556A08A7B3BFA98CD422E99 /* PFRESTObjectBatchCommand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFRESTObjectBatchCommand.h; path = Parse/Parse/Internal/Commands/PFRESTObjectBatchCommand.h; sourceTree = "<group>"; };
 		4A04E5A6B5DC58AF4CAC4108978F718B /* PFObjectFilePersistenceController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFObjectFilePersistenceController.m; path = Parse/Parse/Internal/Object/FilePersistence/PFObjectFilePersistenceController.m; sourceTree = "<group>"; };
-		4AF171581392AD234F23BE913F0C22FE /* DateTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DateTools.framework; path = DateTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AF171581392AD234F23BE913F0C22FE /* DateTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DateTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7D7F6C7E8DE13C12AA8D3954FDEA79 /* PFWeakValue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFWeakValue.h; path = Parse/Parse/Internal/PFWeakValue.h; sourceTree = "<group>"; };
 		4B914DD50270BE1B01479AB95B8F0B69 /* MDCRectangleShapeGenerator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCRectangleShapeGenerator.h; path = components/Shapes/src/MDCRectangleShapeGenerator.h; sourceTree = "<group>"; };
 		4BB056FF42C4E039A86011C63B124782 /* PFReachability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFReachability.h; path = Parse/Parse/Internal/PFReachability.h; sourceTree = "<group>"; };
@@ -1229,7 +1231,7 @@
 		982B42B1829350A4B7EA5E966D98AE20 /* PFAssert.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFAssert.h; path = Parse/Parse/Internal/PFAssert.h; sourceTree = "<group>"; };
 		994C8E08E702C5732884A06F7DF5F98A /* PFRelationPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFRelationPrivate.h; path = Parse/Parse/Internal/Relation/PFRelationPrivate.h; sourceTree = "<group>"; };
 		994DAE570830DEFC354ADC0FC57A1EB0 /* PFFileObject+Synchronous.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PFFileObject+Synchronous.h"; path = "Parse/Parse/PFFileObject+Synchronous.h"; sourceTree = "<group>"; };
-		9A2AC0B8BAC6EF061EBC28825653DF99 /* MDFInternationalization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MDFInternationalization.framework; path = MDFInternationalization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A2AC0B8BAC6EF061EBC28825653DF99 /* MDFInternationalization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDFInternationalization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6F0455ED0882082D11CB32A4BD5414 /* MDCTypographyUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCTypographyUtilities.h; path = components/Typography/src/private/MDCTypographyUtilities.h; sourceTree = "<group>"; };
 		9AB649BD7B8CBEC4C3A233E38C0D6EEA /* PFAnonymousUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFAnonymousUtils.m; path = Parse/Parse/PFAnonymousUtils.m; sourceTree = "<group>"; };
 		9B0D488F78CDAFC074161E6DAA9B53C2 /* PFAlertView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFAlertView.h; path = Parse/Parse/Internal/PFAlertView.h; sourceTree = "<group>"; };
@@ -1243,7 +1245,7 @@
 		9CEFDB86FE9A0CC11C3E3EF9F168F82A /* MDCShapeGenerating.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCShapeGenerating.h; path = components/Shapes/src/MDCShapeGenerating.h; sourceTree = "<group>"; };
 		9D10732DEE767CA16903F5E76E208B8A /* PFQueryController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFQueryController.h; path = Parse/Parse/Internal/Query/Controller/PFQueryController.h; sourceTree = "<group>"; };
 		9D10B5D5D59585A54C8E07EFA5F96570 /* UIColor+MaterialBlending.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+MaterialBlending.h"; path = "components/private/Color/src/UIColor+MaterialBlending.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E120B26DC4DC643078744AA997D2423 /* MDCShapedShadowLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCShapedShadowLayer.h; path = components/Shapes/src/MDCShapedShadowLayer.h; sourceTree = "<group>"; };
 		9E9D4F971FAAB81F32EFAC5A2714B638 /* PFBase64Encoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFBase64Encoder.h; path = Parse/Parse/Internal/PFBase64Encoder.h; sourceTree = "<group>"; };
 		9F3F6361FD833A4FB74759F5228A1D96 /* MDFInternationalization.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MDFInternationalization.modulemap; sourceTree = "<group>"; };
@@ -1254,7 +1256,7 @@
 		A22BF048C9FCC818FF569CF6E95797CD /* PFMutableObjectState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFMutableObjectState.h; path = Parse/Parse/Internal/Object/State/PFMutableObjectState.h; sourceTree = "<group>"; };
 		A298FD214332CBDAC58E2C16F8C0F331 /* Pods-NostalgiaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NostalgiaTests.release.xcconfig"; sourceTree = "<group>"; };
 		A2CD3D721C4377DD5AFB405F429AA215 /* MDCLegacyInkLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCLegacyInkLayer.m; path = components/Ink/src/private/MDCLegacyInkLayer.m; sourceTree = "<group>"; };
-		A34157B3708EDB7D17422B3D92F591D2 /* MaterialComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MaterialComponents.framework; path = MaterialComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A34157B3708EDB7D17422B3D92F591D2 /* MaterialComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaterialComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A34312491745619872B6E0513ADD0E77 /* PFPinningObjectStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFPinningObjectStore.h; path = Parse/Parse/Internal/Object/PinningStore/PFPinningObjectStore.h; sourceTree = "<group>"; };
 		A38089516ABBFC8DA68AE356C8356F66 /* NSLocale+MaterialRTL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLocale+MaterialRTL.h"; path = "Sources/NSLocale+MaterialRTL.h"; sourceTree = "<group>"; };
 		A40F603E5459831BB13E0EC7BD86D3B9 /* PFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFNetworkActivityIndicatorManager.m; path = Parse/Parse/PFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
@@ -1335,7 +1337,7 @@
 		C2DA6209AE58C5DBB935BCFFDA1F9E06 /* UIColor+MaterialElevation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MaterialElevation.m"; path = "components/Elevation/src/UIColor+MaterialElevation.m"; sourceTree = "<group>"; };
 		C2FCA9F767F30BBE0A972C36DDAF5DCA /* DTError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DTError.m; path = DateTools/DateTools/DTError.m; sourceTree = "<group>"; };
 		C376A0CBBE58568B0E61691659F373BA /* PFURLSession.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFURLSession.m; path = Parse/Parse/Internal/Commands/CommandRunner/URLSession/Session/PFURLSession.m; sourceTree = "<group>"; };
-		C3E946B2A51DA5BC7FF8F3009B4D8808 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Parse/Parse/Resources/en.lproj; sourceTree = "<group>"; };
+		C3E946B2A51DA5BC7FF8F3009B4D8808 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Parse/Parse/Resources/en.lproj; sourceTree = "<group>"; };
 		C43FE9303EA4E35DF9D33B621A4F48AA /* PFObjectState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFObjectState.h; path = Parse/Parse/Internal/Object/State/PFObjectState.h; sourceTree = "<group>"; };
 		C455C36DD77DDD92D708BE1D6993D5E3 /* PFDevice.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFDevice.h; path = Parse/Parse/Internal/PFDevice.h; sourceTree = "<group>"; };
 		C47D61A455F08581EE63635C0311E9DC /* PFOperationSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFOperationSet.h; path = Parse/Parse/Internal/Object/OperationSet/PFOperationSet.h; sourceTree = "<group>"; };
@@ -1439,7 +1441,7 @@
 		EBBD6E029DB54F23E5FA7892735FBD8E /* Pods-Nostalgia-NostalgiaUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Nostalgia-NostalgiaUITests-frameworks.sh"; sourceTree = "<group>"; };
 		EC7F8B3702EC0A4381889B77A917985E /* PFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFNetworkActivityIndicatorManager.h; path = Parse/Parse/PFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		ECA96724444341D75CE833F82E70BC7D /* MDFTextAccessibility-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MDFTextAccessibility-dummy.m"; sourceTree = "<group>"; };
-		ED7ADA84A7005589821D254428CD2D26 /* Parse.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = Parse.bundle; path = "Parse-Parse.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED7ADA84A7005589821D254428CD2D26 /* Parse.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Parse.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE36D2E25A08DC645E324DC80F35ABEB /* MDCElevationOverriding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCElevationOverriding.h; path = components/Elevation/src/MDCElevationOverriding.h; sourceTree = "<group>"; };
 		EE9BF81BC852B919A7628168C3102B5D /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1119A3D7012F99AD4B17EC195FEFADC /* PFInstallation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFInstallation.h; path = Parse/Parse/PFInstallation.h; sourceTree = "<group>"; };
@@ -1461,7 +1463,7 @@
 		F7B9B4D58ECFE5763298A0F66A5733F3 /* PFSystemLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFSystemLogger.h; path = Parse/Parse/Internal/PFSystemLogger.h; sourceTree = "<group>"; };
 		F81EEA0811C2353C703E2E141B61F7DB /* ParseModule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ParseModule.h; path = Parse/Parse/Internal/ParseModule.h; sourceTree = "<group>"; };
 		F8355041F5D88C29C44E6C45CE272601 /* MDFRTL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDFRTL.m; path = Sources/MDFRTL.m; sourceTree = "<group>"; };
-		F84B331B5D6AAF1548DD1BB004AE5C2A /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Bolts.framework; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F84B331B5D6AAF1548DD1BB004AE5C2A /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F84D0833BAE49EEAC5E70EB99A0BB26F /* UIFont+MaterialSimpleEquality.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIFont+MaterialSimpleEquality.h"; path = "components/Typography/src/UIFont+MaterialSimpleEquality.h"; sourceTree = "<group>"; };
 		F8EDD490D3A359FF4C9670961F1D3D43 /* PFConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFConfig.m; path = Parse/Parse/PFConfig.m; sourceTree = "<group>"; };
 		F96E8C8240C95295CFEFAF8580944EFA /* UIFont+MaterialTypography.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIFont+MaterialTypography.m"; path = "components/Typography/src/UIFont+MaterialTypography.m"; sourceTree = "<group>"; };
@@ -1470,7 +1472,7 @@
 		FAC7E44A8675A1B84E8C85D2B8CB5312 /* PFOfflineObjectController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PFOfflineObjectController.h; path = Parse/Parse/Internal/Object/Controller/OfflineController/PFOfflineObjectController.h; sourceTree = "<group>"; };
 		FAD1C83D180FD6B6042B916D814FD4B4 /* MDCRippleTouchControllerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCRippleTouchControllerDelegate.h; path = components/Ripple/src/MDCRippleTouchControllerDelegate.h; sourceTree = "<group>"; };
 		FB138D167C5022A70400C3DF029DE932 /* DateTools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DateTools.release.xcconfig; sourceTree = "<group>"; };
-		FB8220FA4D9117310AEFC629A6EE4A08 /* MDFTextAccessibility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MDFTextAccessibility.framework; path = MDFTextAccessibility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB8220FA4D9117310AEFC629A6EE4A08 /* MDFTextAccessibility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDFTextAccessibility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAE7E10D0539ECBB89E02B1B2569CB9 /* MDCRippleView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCRippleView.m; path = components/Ripple/src/MDCRippleView.m; sourceTree = "<group>"; };
 		FBFCC41354ED6AC27E770E6E835FD95B /* MDCPillShapeGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCPillShapeGenerator.m; path = components/ShapeLibrary/src/MDCPillShapeGenerator.m; sourceTree = "<group>"; };
 		FCF162C13154B846BE00D467E6BD2219 /* PFRESTObjectCommand.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PFRESTObjectCommand.m; path = Parse/Parse/Internal/Commands/PFRESTObjectCommand.m; sourceTree = "<group>"; };
@@ -2033,7 +2035,6 @@
 				155687BF4255C3051EB8C77CC94868FA /* Core */,
 				C8CD69A735F7DEDD44DD675B50EE7D60 /* Support Files */,
 			);
-			name = Parse;
 			path = Parse;
 			sourceTree = "<group>";
 		};
@@ -2089,7 +2090,6 @@
 				B70729BBFDFB0CF197CA9A40B2FBF3CA /* Resources */,
 				B6772CA6FB9E441DAE0ACED93BBA3EEE /* Support Files */,
 			);
-			name = DateTools;
 			path = DateTools;
 			sourceTree = "<group>";
 		};
@@ -2149,7 +2149,6 @@
 				A23B37C8C88E6E875BA9CCFE0658CAB9 /* Maps */,
 				C7A73BB7D69B8DAAF86A5BEA0CC26CC7 /* Support Files */,
 			);
-			name = GoogleMaps;
 			path = GoogleMaps;
 			sourceTree = "<group>";
 		};
@@ -2169,7 +2168,6 @@
 				58E50765E0D5C82585FDA54C19F9D0B8 /* UIView+MaterialRTL.m */,
 				3EE4C41C0F59B01A53746DF610F8E2ED /* Support Files */,
 			);
-			name = MDFInternationalization;
 			path = MDFInternationalization;
 			sourceTree = "<group>";
 		};
@@ -2239,7 +2237,6 @@
 				E416CC8395FF9276F6BA497C3201F1D5 /* Support Files */,
 				5BF642AB72446A90AC34B20605CFE904 /* Tasks */,
 			);
-			name = Bolts;
 			path = Bolts;
 			sourceTree = "<group>";
 		};
@@ -2284,7 +2281,6 @@
 				46231E8D1F3723954E56E748A2736918 /* Resources */,
 				EC44BAFA7E10249F3A537694A71E0D02 /* Support Files */,
 			);
-			name = GooglePlaces;
 			path = GooglePlaces;
 			sourceTree = "<group>";
 		};
@@ -2401,7 +2397,6 @@
 				344542AA29B6823546497F8DBE672244 /* Support Files */,
 				9C4B10A861D82C45DD4077E7E6003BF9 /* Typography */,
 			);
-			name = MaterialComponents;
 			path = MaterialComponents;
 			sourceTree = "<group>";
 		};
@@ -2612,7 +2607,6 @@
 				494F8B940B7A74DFCC22FAE1C689EABA /* NSArray+MDFUtils.m */,
 				655CBFBC898E532408D380CE34294595 /* Support Files */,
 			);
-			name = MDFTextAccessibility;
 			path = MDFTextAccessibility;
 			sourceTree = "<group>";
 		};

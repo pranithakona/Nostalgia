@@ -9,4 +9,8 @@
 
 @implementation HomeCell
 
+- (void)awakeFromNib {
+    self.cardView.layer.cornerRadius = 15;
+}
+
 @end

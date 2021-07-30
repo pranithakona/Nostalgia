@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,68 @@
 		33C6419F26A14A9B00726C4E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C6419E26A14A9B00726C4E /* LocationManager.m */; };
 		33C641AE26AB6B2B00726C4E /* NSDate+NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */; };
 		33C641B126AF260500726C4E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C641B026AF260500726C4E /* ProfileViewController.m */; };
+		33CD3E6326B36E7D00BF68BC /* MPMessagePack-LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DD626B36E7C00BF68BC /* MPMessagePack-LICENSE.md */; };
+		33CD3E6426B36E7D00BF68BC /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DD726B36E7C00BF68BC /* CHANGELOG.md */; };
+		33CD3E6526B36E7D00BF68BC /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CD3DD826B36E7C00BF68BC /* SpotifyiOS.xcframework */; };
+		33CD3E6626B36E7D00BF68BC /* SPTAppRemoteCallback.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DDC26B36E7C00BF68BC /* SPTAppRemoteCallback.html */; };
+		33CD3E6726B36E7D00BF68BC /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DDD26B36E7C00BF68BC /* index.html */; };
+		33CD3E6826B36E7D00BF68BC /* _index.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE026B36E7C00BF68BC /* _index.scss */; };
+		33CD3E6926B36E7D00BF68BC /* _variables.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE126B36E7C00BF68BC /* _variables.scss */; };
+		33CD3E6A26B36E7D00BF68BC /* _xcode.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE226B36E7C00BF68BC /* _xcode.scss */; };
+		33CD3E6B26B36E7D00BF68BC /* _print.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE326B36E7C00BF68BC /* _print.scss */; };
+		33CD3E6C26B36E7D00BF68BC /* _layout.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE426B36E7C00BF68BC /* _layout.scss */; };
+		33CD3E6D26B36E7D00BF68BC /* _object.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE526B36E7C00BF68BC /* _object.scss */; };
+		33CD3E6E26B36E7D00BF68BC /* style.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE626B36E7C00BF68BC /* style.scss */; };
+		33CD3E6F26B36E7D00BF68BC /* _normalize.scss in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE726B36E7C00BF68BC /* _normalize.scss */; };
+		33CD3E7026B36E7D00BF68BC /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DE826B36E7C00BF68BC /* style.css */; };
+		33CD3E7126B36E7D00BF68BC /* SPTSessionManager.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DEA26B36E7C00BF68BC /* SPTSessionManager.html */; };
+		33CD3E7226B36E7D00BF68BC /* SPTAppRemoteConnectionParams.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DEB26B36E7C00BF68BC /* SPTAppRemoteConnectionParams.html */; };
+		33CD3E7326B36E7D00BF68BC /* SPTAppRemote.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DEC26B36E7C00BF68BC /* SPTAppRemote.html */; };
+		33CD3E7426B36E7D00BF68BC /* SPTSession.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DED26B36E7C00BF68BC /* SPTSession.html */; };
+		33CD3E7526B36E7D00BF68BC /* SPTConfiguration.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DEE26B36E7C00BF68BC /* SPTConfiguration.html */; };
+		33CD3E7626B36E7D00BF68BC /* SPTError.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DEF26B36E7C00BF68BC /* SPTError.html */; };
+		33CD3E7726B36E7D00BF68BC /* hierarchy.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF026B36E7C00BF68BC /* hierarchy.html */; };
+		33CD3E7826B36E7D00BF68BC /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF226B36E7C00BF68BC /* script.js */; };
+		33CD3E7926B36E7D00BF68BC /* SPTAppRemoteLogLevel.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF426B36E7C00BF68BC /* SPTAppRemoteLogLevel.html */; };
+		33CD3E7A26B36E7D00BF68BC /* SPTAppRemotePlaybackOptionsRepeatMode.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF526B36E7C00BF68BC /* SPTAppRemotePlaybackOptionsRepeatMode.html */; };
+		33CD3E7B26B36E7D00BF68BC /* SPTAppRemoteConnectionParamsImageFormat.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF626B36E7C00BF68BC /* SPTAppRemoteConnectionParamsImageFormat.html */; };
+		33CD3E7C26B36E7D00BF68BC /* SPTAuthorizationOptions.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF726B36E7C00BF68BC /* SPTAuthorizationOptions.html */; };
+		33CD3E7D26B36E7D00BF68BC /* SPTScope.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF826B36E7C00BF68BC /* SPTScope.html */; };
+		33CD3E7E26B36E7D00BF68BC /* SPTErrorCode.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DF926B36E7C00BF68BC /* SPTErrorCode.html */; };
+		33CD3E7F26B36E7D00BF68BC /* SPTAppRemoteErrorCode.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DFA26B36E7C00BF68BC /* SPTAppRemoteErrorCode.html */; };
+		33CD3E8026B36E7D00BF68BC /* library_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DFC26B36E7C00BF68BC /* library_background.png */; };
+		33CD3E8126B36E7D00BF68BC /* disclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DFD26B36E7C00BF68BC /* disclosure.png */; };
+		33CD3E8226B36E7D00BF68BC /* disclosure_open.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DFE26B36E7C00BF68BC /* disclosure_open.png */; };
+		33CD3E8326B36E7D00BF68BC /* button_bar_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3DFF26B36E7C00BF68BC /* button_bar_background.png */; };
+		33CD3E8426B36E7D00BF68BC /* title_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0026B36E7C00BF68BC /* title_background.png */; };
+		33CD3E8526B36E7D00BF68BC /* SPTAppRemoteAlbum.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0226B36E7C00BF68BC /* SPTAppRemoteAlbum.html */; };
+		33CD3E8626B36E7D00BF68BC /* SPTAppRemotePlayerAPI.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0326B36E7C00BF68BC /* SPTAppRemotePlayerAPI.html */; };
+		33CD3E8726B36E7D00BF68BC /* SPTAppRemoteTrack.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0426B36E7C00BF68BC /* SPTAppRemoteTrack.html */; };
+		33CD3E8826B36E7D00BF68BC /* SPTAppRemoteContentItem.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0526B36E7C00BF68BC /* SPTAppRemoteContentItem.html */; };
+		33CD3E8926B36E7D00BF68BC /* SPTAppRemoteUserAPIDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0626B36E7C00BF68BC /* SPTAppRemoteUserAPIDelegate.html */; };
+		33CD3E8A26B36E7D00BF68BC /* SPTAppRemotePlaybackRestrictions.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0726B36E7C00BF68BC /* SPTAppRemotePlaybackRestrictions.html */; };
+		33CD3E8B26B36E7D00BF68BC /* SPTAppRemoteCrossfadeState.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0826B36E7C00BF68BC /* SPTAppRemoteCrossfadeState.html */; };
+		33CD3E8C26B36E7D00BF68BC /* SPTAppRemoteImageAPI.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0926B36E7C00BF68BC /* SPTAppRemoteImageAPI.html */; };
+		33CD3E8D26B36E7D00BF68BC /* SPTAppRemotePlayerStateDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0A26B36E7C00BF68BC /* SPTAppRemotePlayerStateDelegate.html */; };
+		33CD3E8E26B36E7D00BF68BC /* SPTAppRemoteImageRepresentable.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0B26B36E7C00BF68BC /* SPTAppRemoteImageRepresentable.html */; };
+		33CD3E8F26B36E7D00BF68BC /* SPTAppRemotePodcastPlaybackSpeed.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0C26B36E7C00BF68BC /* SPTAppRemotePodcastPlaybackSpeed.html */; };
+		33CD3E9026B36E7D00BF68BC /* SPTAppRemoteDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0D26B36E7C00BF68BC /* SPTAppRemoteDelegate.html */; };
+		33CD3E9126B36E7D00BF68BC /* SPTAppRemoteUserAPI.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0E26B36E7C00BF68BC /* SPTAppRemoteUserAPI.html */; };
+		33CD3E9226B36E7D00BF68BC /* SPTAppRemoteContentAPI.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E0F26B36E7C00BF68BC /* SPTAppRemoteContentAPI.html */; };
+		33CD3E9326B36E7D00BF68BC /* SPTAppRemotePlayerState.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1026B36E7C00BF68BC /* SPTAppRemotePlayerState.html */; };
+		33CD3E9426B36E7D00BF68BC /* SPTSessionManagerDelegate.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1126B36E7C00BF68BC /* SPTSessionManagerDelegate.html */; };
+		33CD3E9526B36E7D00BF68BC /* SPTAppRemoteLibraryState.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1226B36E7C00BF68BC /* SPTAppRemoteLibraryState.html */; };
+		33CD3E9626B36E7D00BF68BC /* SPTAppRemotePlaybackOptions.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1326B36E7C00BF68BC /* SPTAppRemotePlaybackOptions.html */; };
+		33CD3E9726B36E7D00BF68BC /* SPTAppRemoteUserCapabilities.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1426B36E7C00BF68BC /* SPTAppRemoteUserCapabilities.html */; };
+		33CD3E9826B36E7D00BF68BC /* SPTAppRemoteArtist.html in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1526B36E7C00BF68BC /* SPTAppRemoteArtist.html */; };
+		33CD3E9926B36E7D00BF68BC /* auth.md in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1626B36E7C00BF68BC /* auth.md */; };
+		33CD3E9A26B36E7D00BF68BC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1726B36E7C00BF68BC /* README.md */; };
+		33CD3E9B26B36E7D00BF68BC /* import_sdk.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1926B36E7C00BF68BC /* import_sdk.png */; };
+		33CD3E9C26B36E7D00BF68BC /* info_plist.png in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1A26B36E7C00BF68BC /* info_plist.png */; };
+		33CD3E9D26B36E7D00BF68BC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 33CD3E1B26B36E7C00BF68BC /* .gitignore */; };
+		33CD3EBD26B36E7D00BF68BC /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CD3E5626B36E7C00BF68BC /* SpotifyiOS.framework */; };
+		33CD3EBE26B36F2800BF68BC /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33CD3DD826B36E7C00BF68BC /* SpotifyiOS.xcframework */; };
+		33CD3EBF26B36F2800BF68BC /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33CD3DD826B36E7C00BF68BC /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33DAE98726AF3087006094C3 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE98626AF3087006094C3 /* SearchViewController.m */; };
 		33DAE98E26AF519C006094C3 /* HomeCollectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DAE98C26AF519C006094C3 /* HomeCollectionHeader.m */; };
 		33DAE99126AF52EE006094C3 /* HomeCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33DAE99026AF52EE006094C3 /* HomeCollectionHeader.xib */; };
@@ -65,6 +127,20 @@
 			remoteInfo = Nostalgia;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		33CD3EC026B36F2800BF68BC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				33CD3EBF26B36F2800BF68BC /* SpotifyiOS.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NostalgiaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +200,66 @@
 		33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NSDateHelper.m"; sourceTree = "<group>"; };
 		33C641AF26AF260500726C4E /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		33C641B026AF260500726C4E /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		33CD3DD626B36E7C00BF68BC /* MPMessagePack-LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "MPMessagePack-LICENSE.md"; sourceTree = "<group>"; };
+		33CD3DD726B36E7C00BF68BC /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		33CD3DD826B36E7C00BF68BC /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
+		33CD3DDC26B36E7C00BF68BC /* SPTAppRemoteCallback.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteCallback.html; sourceTree = "<group>"; };
+		33CD3DDD26B36E7C00BF68BC /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		33CD3DE026B36E7C00BF68BC /* _index.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _index.scss; sourceTree = "<group>"; };
+		33CD3DE126B36E7C00BF68BC /* _variables.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _variables.scss; sourceTree = "<group>"; };
+		33CD3DE226B36E7C00BF68BC /* _xcode.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _xcode.scss; sourceTree = "<group>"; };
+		33CD3DE326B36E7C00BF68BC /* _print.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _print.scss; sourceTree = "<group>"; };
+		33CD3DE426B36E7C00BF68BC /* _layout.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _layout.scss; sourceTree = "<group>"; };
+		33CD3DE526B36E7C00BF68BC /* _object.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _object.scss; sourceTree = "<group>"; };
+		33CD3DE626B36E7C00BF68BC /* style.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = style.scss; sourceTree = "<group>"; };
+		33CD3DE726B36E7C00BF68BC /* _normalize.scss */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = _normalize.scss; sourceTree = "<group>"; };
+		33CD3DE826B36E7C00BF68BC /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		33CD3DEA26B36E7C00BF68BC /* SPTSessionManager.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTSessionManager.html; sourceTree = "<group>"; };
+		33CD3DEB26B36E7C00BF68BC /* SPTAppRemoteConnectionParams.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteConnectionParams.html; sourceTree = "<group>"; };
+		33CD3DEC26B36E7C00BF68BC /* SPTAppRemote.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemote.html; sourceTree = "<group>"; };
+		33CD3DED26B36E7C00BF68BC /* SPTSession.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTSession.html; sourceTree = "<group>"; };
+		33CD3DEE26B36E7C00BF68BC /* SPTConfiguration.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTConfiguration.html; sourceTree = "<group>"; };
+		33CD3DEF26B36E7C00BF68BC /* SPTError.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTError.html; sourceTree = "<group>"; };
+		33CD3DF026B36E7C00BF68BC /* hierarchy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = hierarchy.html; sourceTree = "<group>"; };
+		33CD3DF226B36E7C00BF68BC /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
+		33CD3DF426B36E7C00BF68BC /* SPTAppRemoteLogLevel.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteLogLevel.html; sourceTree = "<group>"; };
+		33CD3DF526B36E7C00BF68BC /* SPTAppRemotePlaybackOptionsRepeatMode.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlaybackOptionsRepeatMode.html; sourceTree = "<group>"; };
+		33CD3DF626B36E7C00BF68BC /* SPTAppRemoteConnectionParamsImageFormat.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteConnectionParamsImageFormat.html; sourceTree = "<group>"; };
+		33CD3DF726B36E7C00BF68BC /* SPTAuthorizationOptions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAuthorizationOptions.html; sourceTree = "<group>"; };
+		33CD3DF826B36E7C00BF68BC /* SPTScope.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTScope.html; sourceTree = "<group>"; };
+		33CD3DF926B36E7C00BF68BC /* SPTErrorCode.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTErrorCode.html; sourceTree = "<group>"; };
+		33CD3DFA26B36E7C00BF68BC /* SPTAppRemoteErrorCode.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteErrorCode.html; sourceTree = "<group>"; };
+		33CD3DFC26B36E7C00BF68BC /* library_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = library_background.png; sourceTree = "<group>"; };
+		33CD3DFD26B36E7C00BF68BC /* disclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disclosure.png; sourceTree = "<group>"; };
+		33CD3DFE26B36E7C00BF68BC /* disclosure_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disclosure_open.png; sourceTree = "<group>"; };
+		33CD3DFF26B36E7C00BF68BC /* button_bar_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_bar_background.png; sourceTree = "<group>"; };
+		33CD3E0026B36E7C00BF68BC /* title_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_background.png; sourceTree = "<group>"; };
+		33CD3E0226B36E7C00BF68BC /* SPTAppRemoteAlbum.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteAlbum.html; sourceTree = "<group>"; };
+		33CD3E0326B36E7C00BF68BC /* SPTAppRemotePlayerAPI.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlayerAPI.html; sourceTree = "<group>"; };
+		33CD3E0426B36E7C00BF68BC /* SPTAppRemoteTrack.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteTrack.html; sourceTree = "<group>"; };
+		33CD3E0526B36E7C00BF68BC /* SPTAppRemoteContentItem.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteContentItem.html; sourceTree = "<group>"; };
+		33CD3E0626B36E7C00BF68BC /* SPTAppRemoteUserAPIDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteUserAPIDelegate.html; sourceTree = "<group>"; };
+		33CD3E0726B36E7C00BF68BC /* SPTAppRemotePlaybackRestrictions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlaybackRestrictions.html; sourceTree = "<group>"; };
+		33CD3E0826B36E7C00BF68BC /* SPTAppRemoteCrossfadeState.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteCrossfadeState.html; sourceTree = "<group>"; };
+		33CD3E0926B36E7C00BF68BC /* SPTAppRemoteImageAPI.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteImageAPI.html; sourceTree = "<group>"; };
+		33CD3E0A26B36E7C00BF68BC /* SPTAppRemotePlayerStateDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlayerStateDelegate.html; sourceTree = "<group>"; };
+		33CD3E0B26B36E7C00BF68BC /* SPTAppRemoteImageRepresentable.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteImageRepresentable.html; sourceTree = "<group>"; };
+		33CD3E0C26B36E7C00BF68BC /* SPTAppRemotePodcastPlaybackSpeed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePodcastPlaybackSpeed.html; sourceTree = "<group>"; };
+		33CD3E0D26B36E7C00BF68BC /* SPTAppRemoteDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteDelegate.html; sourceTree = "<group>"; };
+		33CD3E0E26B36E7C00BF68BC /* SPTAppRemoteUserAPI.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteUserAPI.html; sourceTree = "<group>"; };
+		33CD3E0F26B36E7C00BF68BC /* SPTAppRemoteContentAPI.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteContentAPI.html; sourceTree = "<group>"; };
+		33CD3E1026B36E7C00BF68BC /* SPTAppRemotePlayerState.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlayerState.html; sourceTree = "<group>"; };
+		33CD3E1126B36E7C00BF68BC /* SPTSessionManagerDelegate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTSessionManagerDelegate.html; sourceTree = "<group>"; };
+		33CD3E1226B36E7C00BF68BC /* SPTAppRemoteLibraryState.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteLibraryState.html; sourceTree = "<group>"; };
+		33CD3E1326B36E7C00BF68BC /* SPTAppRemotePlaybackOptions.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemotePlaybackOptions.html; sourceTree = "<group>"; };
+		33CD3E1426B36E7C00BF68BC /* SPTAppRemoteUserCapabilities.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteUserCapabilities.html; sourceTree = "<group>"; };
+		33CD3E1526B36E7C00BF68BC /* SPTAppRemoteArtist.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SPTAppRemoteArtist.html; sourceTree = "<group>"; };
+		33CD3E1626B36E7C00BF68BC /* auth.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = auth.md; sourceTree = "<group>"; };
+		33CD3E1726B36E7C00BF68BC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		33CD3E1926B36E7C00BF68BC /* import_sdk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_sdk.png; sourceTree = "<group>"; };
+		33CD3E1A26B36E7C00BF68BC /* info_plist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_plist.png; sourceTree = "<group>"; };
+		33CD3E1B26B36E7C00BF68BC /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		33CD3E5626B36E7C00BF68BC /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		33DAE98526AF3087006094C3 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		33DAE98626AF3087006094C3 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		33DAE98B26AF519C006094C3 /* HomeCollectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCollectionHeader.h; sourceTree = "<group>"; };
@@ -153,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CD3EBE26B36F2800BF68BC /* SpotifyiOS.xcframework in Frameworks */,
 				0010C689D3EF9BA10C0C4F5D /* Pods_Nostalgia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +298,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CD3E6526B36E7D00BF68BC /* SpotifyiOS.xcframework in Frameworks */,
+				33CD3EBD26B36E7D00BF68BC /* SpotifyiOS.framework in Frameworks */,
 				28704E0FA8132A71515CAD6A /* Pods_NostalgiaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -179,6 +318,7 @@
 		07B761E4E4EC79F6022F5AFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				33CD3DD426B36E7C00BF68BC /* ios-sdk-master */,
 				AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */,
 				32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */,
 				051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */,
@@ -214,8 +354,7 @@
 				33C6415A269A6A6800726C4E /* ViewControllers */,
 				33C6415B269A6BEF00726C4E /* Views */,
 				33C6415C269A6BFC00726C4E /* Models */,
-				33C6419D26A14A9B00726C4E /* LocationManager.h */,
-				33C6419E26A14A9B00726C4E /* LocationManager.m */,
+				33DAEE8D26B36087006094C3 /* Utilities */,
 				33C64125269A646E00726C4E /* AppDelegate.h */,
 				33C64126269A646E00726C4E /* AppDelegate.m */,
 				33C64128269A646E00726C4E /* SceneDelegate.h */,
@@ -226,8 +365,6 @@
 				33C64133269A646F00726C4E /* LaunchScreen.storyboard */,
 				33C64136269A646F00726C4E /* Info.plist */,
 				33C64137269A646F00726C4E /* main.m */,
-				33C641AC26AB6B2B00726C4E /* NSDate+NSDateHelper.h */,
-				33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */,
 			);
 			path = Nostalgia;
 			sourceTree = "<group>";
@@ -300,6 +437,170 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		33CD3DD426B36E7C00BF68BC /* ios-sdk-master */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DD526B36E7C00BF68BC /* Licenses */,
+				33CD3DD726B36E7C00BF68BC /* CHANGELOG.md */,
+				33CD3DD826B36E7C00BF68BC /* SpotifyiOS.xcframework */,
+				33CD3DD926B36E7C00BF68BC /* docs */,
+				33CD3E1726B36E7C00BF68BC /* README.md */,
+				33CD3E1826B36E7C00BF68BC /* img */,
+				33CD3E1B26B36E7C00BF68BC /* .gitignore */,
+				33CD3E5626B36E7C00BF68BC /* SpotifyiOS.framework */,
+			);
+			name = "ios-sdk-master";
+			path = "../../../Downloads/ios-sdk-master";
+			sourceTree = "<group>";
+		};
+		33CD3DD526B36E7C00BF68BC /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DD626B36E7C00BF68BC /* MPMessagePack-LICENSE.md */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
+		33CD3DD926B36E7C00BF68BC /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DDA26B36E7C00BF68BC /* html */,
+				33CD3E1626B36E7C00BF68BC /* auth.md */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
+		33CD3DDA26B36E7C00BF68BC /* html */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DDB26B36E7C00BF68BC /* Blocks */,
+				33CD3DDD26B36E7C00BF68BC /* index.html */,
+				33CD3DDE26B36E7C00BF68BC /* css */,
+				33CD3DE926B36E7C00BF68BC /* Classes */,
+				33CD3DF026B36E7C00BF68BC /* hierarchy.html */,
+				33CD3DF126B36E7C00BF68BC /* js */,
+				33CD3DF326B36E7C00BF68BC /* Constants */,
+				33CD3DFB26B36E7C00BF68BC /* img */,
+				33CD3E0126B36E7C00BF68BC /* Protocols */,
+			);
+			path = html;
+			sourceTree = "<group>";
+		};
+		33CD3DDB26B36E7C00BF68BC /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DDC26B36E7C00BF68BC /* SPTAppRemoteCallback.html */,
+			);
+			path = Blocks;
+			sourceTree = "<group>";
+		};
+		33CD3DDE26B36E7C00BF68BC /* css */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DDF26B36E7C00BF68BC /* scss */,
+				33CD3DE826B36E7C00BF68BC /* style.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		33CD3DDF26B36E7C00BF68BC /* scss */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DE026B36E7C00BF68BC /* _index.scss */,
+				33CD3DE126B36E7C00BF68BC /* _variables.scss */,
+				33CD3DE226B36E7C00BF68BC /* _xcode.scss */,
+				33CD3DE326B36E7C00BF68BC /* _print.scss */,
+				33CD3DE426B36E7C00BF68BC /* _layout.scss */,
+				33CD3DE526B36E7C00BF68BC /* _object.scss */,
+				33CD3DE626B36E7C00BF68BC /* style.scss */,
+				33CD3DE726B36E7C00BF68BC /* _normalize.scss */,
+			);
+			path = scss;
+			sourceTree = "<group>";
+		};
+		33CD3DE926B36E7C00BF68BC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DEA26B36E7C00BF68BC /* SPTSessionManager.html */,
+				33CD3DEB26B36E7C00BF68BC /* SPTAppRemoteConnectionParams.html */,
+				33CD3DEC26B36E7C00BF68BC /* SPTAppRemote.html */,
+				33CD3DED26B36E7C00BF68BC /* SPTSession.html */,
+				33CD3DEE26B36E7C00BF68BC /* SPTConfiguration.html */,
+				33CD3DEF26B36E7C00BF68BC /* SPTError.html */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		33CD3DF126B36E7C00BF68BC /* js */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DF226B36E7C00BF68BC /* script.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		33CD3DF326B36E7C00BF68BC /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DF426B36E7C00BF68BC /* SPTAppRemoteLogLevel.html */,
+				33CD3DF526B36E7C00BF68BC /* SPTAppRemotePlaybackOptionsRepeatMode.html */,
+				33CD3DF626B36E7C00BF68BC /* SPTAppRemoteConnectionParamsImageFormat.html */,
+				33CD3DF726B36E7C00BF68BC /* SPTAuthorizationOptions.html */,
+				33CD3DF826B36E7C00BF68BC /* SPTScope.html */,
+				33CD3DF926B36E7C00BF68BC /* SPTErrorCode.html */,
+				33CD3DFA26B36E7C00BF68BC /* SPTAppRemoteErrorCode.html */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		33CD3DFB26B36E7C00BF68BC /* img */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3DFC26B36E7C00BF68BC /* library_background.png */,
+				33CD3DFD26B36E7C00BF68BC /* disclosure.png */,
+				33CD3DFE26B36E7C00BF68BC /* disclosure_open.png */,
+				33CD3DFF26B36E7C00BF68BC /* button_bar_background.png */,
+				33CD3E0026B36E7C00BF68BC /* title_background.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		33CD3E0126B36E7C00BF68BC /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3E0226B36E7C00BF68BC /* SPTAppRemoteAlbum.html */,
+				33CD3E0326B36E7C00BF68BC /* SPTAppRemotePlayerAPI.html */,
+				33CD3E0426B36E7C00BF68BC /* SPTAppRemoteTrack.html */,
+				33CD3E0526B36E7C00BF68BC /* SPTAppRemoteContentItem.html */,
+				33CD3E0626B36E7C00BF68BC /* SPTAppRemoteUserAPIDelegate.html */,
+				33CD3E0726B36E7C00BF68BC /* SPTAppRemotePlaybackRestrictions.html */,
+				33CD3E0826B36E7C00BF68BC /* SPTAppRemoteCrossfadeState.html */,
+				33CD3E0926B36E7C00BF68BC /* SPTAppRemoteImageAPI.html */,
+				33CD3E0A26B36E7C00BF68BC /* SPTAppRemotePlayerStateDelegate.html */,
+				33CD3E0B26B36E7C00BF68BC /* SPTAppRemoteImageRepresentable.html */,
+				33CD3E0C26B36E7C00BF68BC /* SPTAppRemotePodcastPlaybackSpeed.html */,
+				33CD3E0D26B36E7C00BF68BC /* SPTAppRemoteDelegate.html */,
+				33CD3E0E26B36E7C00BF68BC /* SPTAppRemoteUserAPI.html */,
+				33CD3E0F26B36E7C00BF68BC /* SPTAppRemoteContentAPI.html */,
+				33CD3E1026B36E7C00BF68BC /* SPTAppRemotePlayerState.html */,
+				33CD3E1126B36E7C00BF68BC /* SPTSessionManagerDelegate.html */,
+				33CD3E1226B36E7C00BF68BC /* SPTAppRemoteLibraryState.html */,
+				33CD3E1326B36E7C00BF68BC /* SPTAppRemotePlaybackOptions.html */,
+				33CD3E1426B36E7C00BF68BC /* SPTAppRemoteUserCapabilities.html */,
+				33CD3E1526B36E7C00BF68BC /* SPTAppRemoteArtist.html */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		33CD3E1826B36E7C00BF68BC /* img */ = {
+			isa = PBXGroup;
+			children = (
+				33CD3E1926B36E7C00BF68BC /* import_sdk.png */,
+				33CD3E1A26B36E7C00BF68BC /* info_plist.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
 		33DAE99C26AF8A27006094C3 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +637,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		33DAEE8D26B36087006094C3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				33C6419D26A14A9B00726C4E /* LocationManager.h */,
+				33C6419E26A14A9B00726C4E /* LocationManager.m */,
+				33C641AC26AB6B2B00726C4E /* NSDate+NSDateHelper.h */,
+				33C641AD26AB6B2B00726C4E /* NSDate+NSDateHelper.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		8DFDFB854A46ADF0851456FC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,6 +674,7 @@
 				33C64120269A646E00726C4E /* Resources */,
 				D15EB4FBD5C3365222ABD3BB /* [CP] Embed Pods Frameworks */,
 				1DFEF63D51C2A68BF4A5E2D8 /* [CP] Copy Pods Resources */,
+				33CD3EC026B36F2800BF68BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -473,6 +786,64 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33CD3E8526B36E7D00BF68BC /* SPTAppRemoteAlbum.html in Resources */,
+				33CD3E9326B36E7D00BF68BC /* SPTAppRemotePlayerState.html in Resources */,
+				33CD3E8226B36E7D00BF68BC /* disclosure_open.png in Resources */,
+				33CD3E8126B36E7D00BF68BC /* disclosure.png in Resources */,
+				33CD3E6E26B36E7D00BF68BC /* style.scss in Resources */,
+				33CD3E7126B36E7D00BF68BC /* SPTSessionManager.html in Resources */,
+				33CD3E8826B36E7D00BF68BC /* SPTAppRemoteContentItem.html in Resources */,
+				33CD3E9426B36E7D00BF68BC /* SPTSessionManagerDelegate.html in Resources */,
+				33CD3E6F26B36E7D00BF68BC /* _normalize.scss in Resources */,
+				33CD3E7226B36E7D00BF68BC /* SPTAppRemoteConnectionParams.html in Resources */,
+				33CD3E9626B36E7D00BF68BC /* SPTAppRemotePlaybackOptions.html in Resources */,
+				33CD3E7A26B36E7D00BF68BC /* SPTAppRemotePlaybackOptionsRepeatMode.html in Resources */,
+				33CD3E6326B36E7D00BF68BC /* MPMessagePack-LICENSE.md in Resources */,
+				33CD3E9B26B36E7D00BF68BC /* import_sdk.png in Resources */,
+				33CD3E9126B36E7D00BF68BC /* SPTAppRemoteUserAPI.html in Resources */,
+				33CD3E9C26B36E7D00BF68BC /* info_plist.png in Resources */,
+				33CD3E7F26B36E7D00BF68BC /* SPTAppRemoteErrorCode.html in Resources */,
+				33CD3E8E26B36E7D00BF68BC /* SPTAppRemoteImageRepresentable.html in Resources */,
+				33CD3E6B26B36E7D00BF68BC /* _print.scss in Resources */,
+				33CD3E6726B36E7D00BF68BC /* index.html in Resources */,
+				33CD3E7826B36E7D00BF68BC /* script.js in Resources */,
+				33CD3E6826B36E7D00BF68BC /* _index.scss in Resources */,
+				33CD3E7726B36E7D00BF68BC /* hierarchy.html in Resources */,
+				33CD3E8A26B36E7D00BF68BC /* SPTAppRemotePlaybackRestrictions.html in Resources */,
+				33CD3E8426B36E7D00BF68BC /* title_background.png in Resources */,
+				33CD3E9026B36E7D00BF68BC /* SPTAppRemoteDelegate.html in Resources */,
+				33CD3E7926B36E7D00BF68BC /* SPTAppRemoteLogLevel.html in Resources */,
+				33CD3E7326B36E7D00BF68BC /* SPTAppRemote.html in Resources */,
+				33CD3E6D26B36E7D00BF68BC /* _object.scss in Resources */,
+				33CD3E6926B36E7D00BF68BC /* _variables.scss in Resources */,
+				33CD3E9D26B36E7D00BF68BC /* .gitignore in Resources */,
+				33CD3E8D26B36E7D00BF68BC /* SPTAppRemotePlayerStateDelegate.html in Resources */,
+				33CD3E9226B36E7D00BF68BC /* SPTAppRemoteContentAPI.html in Resources */,
+				33CD3E6626B36E7D00BF68BC /* SPTAppRemoteCallback.html in Resources */,
+				33CD3E7C26B36E7D00BF68BC /* SPTAuthorizationOptions.html in Resources */,
+				33CD3E8726B36E7D00BF68BC /* SPTAppRemoteTrack.html in Resources */,
+				33CD3E8B26B36E7D00BF68BC /* SPTAppRemoteCrossfadeState.html in Resources */,
+				33CD3E6426B36E7D00BF68BC /* CHANGELOG.md in Resources */,
+				33CD3E9726B36E7D00BF68BC /* SPTAppRemoteUserCapabilities.html in Resources */,
+				33CD3E8C26B36E7D00BF68BC /* SPTAppRemoteImageAPI.html in Resources */,
+				33CD3E9826B36E7D00BF68BC /* SPTAppRemoteArtist.html in Resources */,
+				33CD3E7526B36E7D00BF68BC /* SPTConfiguration.html in Resources */,
+				33CD3E7026B36E7D00BF68BC /* style.css in Resources */,
+				33CD3E7B26B36E7D00BF68BC /* SPTAppRemoteConnectionParamsImageFormat.html in Resources */,
+				33CD3E7E26B36E7D00BF68BC /* SPTErrorCode.html in Resources */,
+				33CD3E9A26B36E7D00BF68BC /* README.md in Resources */,
+				33CD3E9926B36E7D00BF68BC /* auth.md in Resources */,
+				33CD3E7426B36E7D00BF68BC /* SPTSession.html in Resources */,
+				33CD3E9526B36E7D00BF68BC /* SPTAppRemoteLibraryState.html in Resources */,
+				33CD3E7626B36E7D00BF68BC /* SPTError.html in Resources */,
+				33CD3E8326B36E7D00BF68BC /* button_bar_background.png in Resources */,
+				33CD3E6A26B36E7D00BF68BC /* _xcode.scss in Resources */,
+				33CD3E8626B36E7D00BF68BC /* SPTAppRemotePlayerAPI.html in Resources */,
+				33CD3E6C26B36E7D00BF68BC /* _layout.scss in Resources */,
+				33CD3E7D26B36E7D00BF68BC /* SPTScope.html in Resources */,
+				33CD3E8926B36E7D00BF68BC /* SPTAppRemoteUserAPIDelegate.html in Resources */,
+				33CD3E8F26B36E7D00BF68BC /* SPTAppRemotePodcastPlaybackSpeed.html in Resources */,
+				33CD3E8026B36E7D00BF68BC /* library_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -50,7 +50,7 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"ExploreFilterHeader" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ExploreFilterHeader"];
     self.collectionView.collectionViewLayout = [self generateLayout];
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86 longitude:153.67 zoom:10];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.7767 longitude:96.797 zoom:10];
     
     GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:@"5c25f377317d20b8"];
     self.mapView = [GMSMapView mapWithFrame:self.view.frame mapID:mapID camera:camera];
@@ -316,6 +316,7 @@
     } else if ([segue.identifier isEqualToString:@"photoSegue"]) {
         PhotoViewController *photoViewController = [segue destinationViewController];
         photoViewController.photoMetaData = sender;
+        photoViewController.photoFile = nil;
     }
 }
 

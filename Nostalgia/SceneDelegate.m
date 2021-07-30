@@ -6,22 +6,110 @@
 //
 
 #import "SceneDelegate.h"
+#import "AppDelegate.h"
+#import "HomeViewController.h"
 @import Parse;
 
-@interface SceneDelegate ()
+@interface SceneDelegate () <SPTSessionManagerDelegate, SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate>
+
+@property (strong, nonatomic) SPTSessionManager *sessionManager;
+@property (strong, nonatomic) SPTConfiguration *configuration;
+@property (strong, nonatomic) SPTAppRemote *appRemote;
 
 @end
 
 @implementation SceneDelegate
-
+static NSMutableArray<NSArray *> *currentTripSongs;
+static NSMutableSet<NSString *> *songNames;
+static BOOL isCurrentlyRouting;
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     if (PFUser.currentUser) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
     }
+    
+    //spotify
+    NSString *spotifyClientID = @"077bd8cb70884d9b8c1f8d18b316e735";
+    NSURL *spotifyRedirectURL = [NSURL URLWithString:@"spotify-ios-quick-start://spotify-login-callback"];
+
+    self.configuration  = [[SPTConfiguration alloc] initWithClientID:spotifyClientID redirectURL:spotifyRedirectURL];
+    
+    NSURL *tokenSwapURL = [NSURL URLWithString:@"https://nostalgiafbu.herokuapp.com/api/token"];
+    NSURL *tokenRefreshURL = [NSURL URLWithString:@"https://nostalgiafbu.herokuapp.com/api/refresh_token"];
+
+    self.configuration.tokenSwapURL = tokenSwapURL;
+    self.configuration.tokenRefreshURL = tokenRefreshURL;
+    self.configuration.playURI = @"";
+
+    self.sessionManager = [[SPTSessionManager alloc] initWithConfiguration:self.configuration delegate:self];
+    
+    SPTScope requestedScope = SPTAppRemoteControlScope;
+    [self.sessionManager initiateSessionWithScope:requestedScope options:SPTDefaultAuthorizationOption];
+    
+    self.appRemote = [[SPTAppRemote alloc] initWithConfiguration:self.configuration logLevel:SPTAppRemoteLogLevelDebug];
+    self.appRemote.delegate = self;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        currentTripSongs = [NSMutableArray array];
+        songNames = [NSMutableSet set];
+    });
 }
 
+- (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts {
+    [self.sessionManager application:[UIApplication sharedApplication] openURL:URLContexts.allObjects.firstObject.URL options:@{}];
+}
+
++ (NSArray *)getCurrentTripSongs {
+    return currentTripSongs;
+}
+
++ (void)clearCurrentTripSongs {
+    [currentTripSongs removeAllObjects];
+    [songNames removeAllObjects];
+}
+
++ (void)setIsCurrentlyRouting:(BOOL)isRouting {
+    isCurrentlyRouting = isRouting;
+}
+
+#pragma mark - Spotify
+
+- (void)sessionManager:(SPTSessionManager *)manager didInitiateSession:(SPTSession *)session {
+    self.appRemote.connectionParameters.accessToken = session.accessToken;
+    [self.appRemote connect];
+}
+
+- (void)sessionManager:(SPTSessionManager *)manager didFailWithError:(NSError *)error {
+}
+
+- (void)sessionManager:(SPTSessionManager *)manager didRenewSession:(SPTSession *)session {
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    [self.sessionManager application:app openURL:url options:options];
+    return true;
+}
+
+- (void)appRemoteDidEstablishConnection:(SPTAppRemote *)appRemote {
+  self.appRemote.playerAPI.delegate = self;
+  [self.appRemote.playerAPI subscribeToPlayerState:nil];
+}
+
+- (void)appRemote:(SPTAppRemote *)appRemote didDisconnectWithError:(NSError *)error {
+}
+
+- (void)appRemote:(SPTAppRemote *)appRemote didFailConnectionAttemptWithError:(NSError *)error {
+}
+
+- (void)playerStateDidChange:(id<SPTAppRemotePlayerState>)playerState {
+    NSLog(@"Track name: %@", playerState.track.name);
+    if (isCurrentlyRouting && ![songNames containsObject:playerState.track.name]){
+        [currentTripSongs addObject:@[playerState.track.name, playerState.track.artist.name]];
+        [songNames addObject:playerState.track.name];
+    }
+}
 
 - (void)sceneDidDisconnect:(UIScene *)scene {
     // Called as the scene is being released by the system.
@@ -32,14 +120,16 @@
 
 
 - (void)sceneDidBecomeActive:(UIScene *)scene {
-    // Called when the scene has moved from an inactive state to an active state.
-    // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    if (self.appRemote.connectionParameters.accessToken) {
+        [self.appRemote connect];
+    }
 }
 
 
 - (void)sceneWillResignActive:(UIScene *)scene {
-    // Called when the scene will move from an active state to an inactive state.
-    // This may occur due to temporary interruptions (ex. an incoming phone call).
+    if (self.appRemote.isConnected) {
+      [self.appRemote disconnect];
+    }
 }
 
 

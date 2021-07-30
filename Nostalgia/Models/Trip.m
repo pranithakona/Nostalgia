@@ -14,6 +14,7 @@
 @dynamic name;
 @dynamic tripDescription;
 @dynamic owner;
+@dynamic coverPhoto;
 @dynamic users;
 @dynamic region;
 @dynamic regionID;
@@ -26,6 +27,7 @@
 @dynamic bounds;
 @dynamic isOptimized;
 @dynamic photos;
+@dynamic songs;
 
 + (nonnull NSString *)parseClassName {
     return @"Trip";

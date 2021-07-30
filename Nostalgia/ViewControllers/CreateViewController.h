@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Destination *startLocation;
 @property (strong, nonatomic) Destination *endLocation;
 @property (strong, nonatomic) Trip *trip;
+@property (strong, nonatomic) UIImage *photo;
 @property (nonatomic) BOOL isNewTrip;
 
 @end

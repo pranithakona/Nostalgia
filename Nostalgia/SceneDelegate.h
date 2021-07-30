@@ -9,7 +9,11 @@
 
 @interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
 
-@property (strong, nonatomic) UIWindow * window;
+@property (strong, nonatomic) UIWindow *window;
+
++ (NSArray *)getCurrentTripSongs;
++ (void)clearCurrentTripSongs;
++ (void)setIsCurrentlyRouting:(BOOL)isRouting;
 
 @end
 
