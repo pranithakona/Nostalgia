@@ -39,7 +39,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Motion.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Parse-Parse.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Parse-ParseUI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

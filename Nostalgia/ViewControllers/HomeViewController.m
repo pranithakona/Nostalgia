@@ -16,16 +16,26 @@
 #import "LocationManager.h"
 #import "HomeCollectionHeader.h"
 #import <Parse/Parse.h>
+#import <Motion/Motion-Swift.h>
 
-@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout>
+@interface HomeViewController () <UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *upcomingButton;
+@property (weak, nonatomic) IBOutlet UIButton *pastButton;
+@property (weak, nonatomic) IBOutlet UIView *upcomingButtonBottomView;
+@property (weak, nonatomic) IBOutlet UIView *pastButtonBottomView;
+@property (weak, nonatomic) IBOutlet UIView *buttonsView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) NSMutableArray<Trip *> *futureTrips;
 @property (strong, nonatomic) NSMutableArray<Trip *> *pastTrips;
+@property (strong, nonatomic) NSArray<Trip *> *allTrips;
+@property (strong, nonatomic) NSArray<Trip *> *filteredTrips;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSMutableArray<CLLocation *> *realTimeLocations;
+
 
 @end
 
@@ -35,6 +45,7 @@ static const NSString *cellName = @"HomeCell";
 static const NSString *tripSegue = @"tripDetailsSegue";
 static const NSString *newTripSegue = @"newTripSegue";
 static const NSString *dictKey = @"API_Key";
+static const NSString *nameKey = @"name";
 static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?path=%@&interpolate=true&key=%@";
 
 - (void)viewDidLoad {
@@ -44,6 +55,7 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.view.backgroundColor = [UIColor clearColor];
+    //self.navigationController.isMotionEnabled = true;
     
     self.locationManager = [LocationManager shared];
     self.locationManager.delegate = self;
@@ -53,7 +65,8 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     self.collectionView.dataSource = self;
     [self.collectionView registerNib:[UINib nibWithNibName:headerName bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerName];
     [self.collectionView registerNib:[UINib nibWithNibName:cellName bundle:nil] forCellWithReuseIdentifier:cellName];
-    self.collectionView.collectionViewLayout = [self generateLayout];
+    
+    self.searchBar.delegate = self;
     
     self.futureTrips = [NSMutableArray array];
     self.pastTrips = [NSMutableArray array];
@@ -61,7 +74,8 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     //sort user trips based on date
     [self.activityIndicator startAnimating];
     NSDate *now = [NSDate now];
-    for (Trip *trip in [PFUser currentUser][@"trips"]){
+    self.allTrips = [PFUser currentUser][@"trips"];
+    for (Trip *trip in self.allTrips){
         [trip fetchIfNeeded];
         if ([trip.startTime isEarlierThanOrEqualTo:now]){
             [self.pastTrips addObject:trip];
@@ -69,6 +83,7 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
             [self.futureTrips addObject:trip];
         }
     }
+    self.filteredTrips = self.futureTrips;
     [self.activityIndicator stopAnimating];
     
     //schedule route tracking for each future trip
@@ -85,63 +100,81 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
 
 #pragma mark - Collection View
 
-- (UICollectionViewLayout *)generateLayout {    
-    UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
-        //item
-        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1]];
-        NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
-        item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
-        
-        //group
-        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:0.5] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:0.4]];
-        NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
-        group.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
-        
-        //section
-        NSCollectionLayoutSection *sectionLayout = [NSCollectionLayoutSection sectionWithGroup:group];
-        NSCollectionLayoutSize *headerSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1] heightDimension:[NSCollectionLayoutDimension estimatedDimension:44]];
-        NSCollectionLayoutBoundarySupplementaryItem *sectionHeader = [NSCollectionLayoutBoundarySupplementaryItem boundarySupplementaryItemWithLayoutSize:headerSize elementKind:UICollectionElementKindSectionHeader alignment:NSRectAlignmentTop];
-        sectionLayout.boundarySupplementaryItems = @[sectionHeader];
-        sectionLayout.orthogonalScrollingBehavior = UICollectionLayoutSectionOrthogonalScrollingBehaviorContinuous;
-        
-        return sectionLayout;
-    }];
-    return layout;
+- (IBAction)changeToFuture:(id)sender {
+    self.filteredTrips = self.futureTrips;
+    [self.upcomingButton setTitleColor:[UIColor systemGreenColor] forState:UIControlStateNormal];
+    [self.pastButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    self.upcomingButtonBottomView.hidden = false;
+    self.pastButtonBottomView.hidden = true;
+    [self.collectionView reloadData];
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    HomeCollectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerName forIndexPath:indexPath];
-    headerView.nameLabel.text = indexPath.section == 0 ? @"Upcoming" : @"Past";
-    return headerView;
+- (IBAction)changeToPast:(id)sender {
+    self.filteredTrips = self.pastTrips;
+    [self.pastButton setTitleColor:[UIColor systemGreenColor] forState:UIControlStateNormal];
+    [self.upcomingButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    self.pastButtonBottomView.hidden = false;
+    self.upcomingButtonBottomView.hidden = true;
+    [self.collectionView reloadData];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
-    Trip *trip = data[indexPath.item];
+    Trip *trip = self.filteredTrips[indexPath.item];
     [self performSegueWithIdentifier:tripSegue sender:trip];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return section == 0 ? self.futureTrips.count : self.pastTrips.count;
+    return self.filteredTrips.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *data = indexPath.section == 0 ? self.futureTrips : self.pastTrips;
     HomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
     
-    Trip *trip = data[indexPath.item];
+    Trip *trip = self.filteredTrips[indexPath.item];
     cell.nameLabel.text = trip.name;
     cell.descriptionLabel.text = trip.tripDescription;
     cell.dateLabel.text = [trip.startTime formattedDateWithStyle:NSDateFormatterMediumStyle];
+    if (trip.coverPhoto){
+        cell.backgroundImageView.file = trip.coverPhoto;
+        [cell.backgroundImageView loadInBackground];
+    } else {
+        cell.backgroundImageView.image = [UIImage imageNamed:@"mountain"];
+    }
     
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
     
     return cell;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText) {
+        if (searchText.length != 0) {
+            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(PFUser *evaluatedObject, NSDictionary *bindings) {
+                NSString *tripName = evaluatedObject[@"name"];
+                return [tripName.lowercaseString containsString:searchText.lowercaseString];
+            }];
+            self.filteredTrips = [self.allTrips filteredArrayUsingPredicate:predicate];
+        } else {
+            self.filteredTrips = self.allTrips;
+        }
+        [self.collectionView reloadData];
+    }
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = YES;
+    self.buttonsView.hidden = true;
+    self.filteredTrips = self.allTrips;
+    [self.collectionView reloadData];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [searchBar resignFirstResponder];
+    self.buttonsView.hidden = false;
+    [self changeToFuture:self];
 }
 
 #pragma mark - Route Tracking

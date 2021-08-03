@@ -46,8 +46,6 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
     self.collectionView.dataSource = self;
     
     UICollectionViewFlowLayout *layout = [self.collectionView collectionViewLayout];
-    layout.minimumLineSpacing = 5;
-    layout.minimumInteritemSpacing = 5;
     CGFloat itemWidth = self.collectionView.frame.size.width;
     layout.itemSize = CGSizeMake(itemWidth, 150);
     
@@ -341,6 +339,7 @@ didFailAutocompleteWithError:(NSError *)error {
     
     Destination *dest = self.arrayOfDestinations[indexPath.item];
     [cell setCellWithDestination:dest];
+    cell.topConnectorView.hidden = indexPath.item == 0;
     
     //switch between optimized and planned views
     if (self.routeTypeControl.selectedSegmentIndex == 0) {
@@ -349,7 +348,6 @@ didFailAutocompleteWithError:(NSError *)error {
     } else {
         cell.optimizeView.hidden = false;
         cell.planView.hidden = true;
-        cell.orderLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.item];
     }
     return cell;
 }
@@ -367,6 +365,7 @@ didFailAutocompleteWithError:(NSError *)error {
     Destination *dest = self.arrayOfDestinations[sourceIndexPath.item];
     [self.arrayOfDestinations removeObjectAtIndex:sourceIndexPath.item];
     [self.arrayOfDestinations insertObject:dest atIndex:destinationIndexPath.item];
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Navigation

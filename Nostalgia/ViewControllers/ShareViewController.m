@@ -91,7 +91,6 @@ static const NSString *cellName = @"ShareCell";
     searchBar.showsCancelButton = YES;
 }
 
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     searchBar.showsCancelButton = NO;
     searchBar.text = @"";

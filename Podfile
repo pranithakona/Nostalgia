@@ -5,10 +5,12 @@ target 'Nostalgia' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Parse'
+  pod 'Parse/UI'
   pod 'GoogleMaps', '= 3.10.0-beta1'
   pod 'GooglePlaces', '= 3.10.0-beta1'
   pod 'DateTools'
   pod 'MaterialComponents/Buttons'
+  pod 'Motion'
 
   # Pods for Nostalgia
 

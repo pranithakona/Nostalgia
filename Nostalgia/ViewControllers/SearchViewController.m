@@ -42,7 +42,7 @@ static const NSString *exploreHeaderName = @"ExploreFilterHeader";
 static const NSString *itinerarySegue = @"existingItinerarySegue";
 static const NSString *photoSegue = @"photoSegue";
 static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=1500%@&key=%@";
-static const NSString *mapID = @"5c25f377317d20b8";
+static const NSString *mapIdString = @"5c25f377317d20b8";
 static const NSString *dictKey = @"API_Key";
 
 - (void)viewDidLoad {
@@ -59,7 +59,7 @@ static const NSString *dictKey = @"API_Key";
     self.collectionView.collectionViewLayout = [self generateLayout];
     
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.7767 longitude:96.797 zoom:10];
-    GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:mapID];
+    GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:mapIdString];
     self.mapView = [GMSMapView mapWithFrame:self.view.frame mapID:mapID camera:camera];
     self.mapView.myLocationEnabled = YES;
     self.mapView.delegate = self;
