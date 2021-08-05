@@ -74,13 +74,15 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     //sort user trips based on date
     [self.activityIndicator startAnimating];
     NSDate *now = [NSDate now];
+    [[PFUser currentUser] fetch];
     self.allTrips = [PFUser currentUser][@"trips"];
     for (Trip *trip in self.allTrips){
         [trip fetchIfNeeded];
+        if (!trip) continue;
         if ([trip.startTime isEarlierThanOrEqualTo:now]){
-            [self.pastTrips addObject:trip];
+            [self.pastTrips insertObject:trip atIndex:0];
         } else {
-            [self.futureTrips addObject:trip];
+            [self.futureTrips insertObject:trip atIndex:0];
         }
     }
     self.filteredTrips = self.futureTrips;

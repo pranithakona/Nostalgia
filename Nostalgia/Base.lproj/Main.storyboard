@@ -567,10 +567,10 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUf-HP-rdr">
-                                <rect key="frame" x="0.0" y="325" width="390" height="519"/>
+                                <rect key="frame" x="0.0" y="314" width="390" height="530"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kEz-mz-H62">
-                                        <rect key="frame" x="20" y="25.000000000000004" width="305" height="34.333333333333343"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kEz-mz-H62">
+                                        <rect key="frame" x="20" y="25" width="305" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="305" id="Hfk-DN-nYU"/>
@@ -584,7 +584,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cht-hP-UnF">
-                                        <rect key="frame" x="64" y="108.33333333333331" width="280" height="80"/>
+                                        <rect key="frame" x="64" y="110" width="280" height="80"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="2ZU-66-QWl"/>
@@ -595,8 +595,8 @@
                                             <action selector="descriptionEditingEnded:" destination="2gI-Q7-Etb" eventType="editingDidEnd" id="HER-sj-99K"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1r-9b-Y2P">
-                                        <rect key="frame" x="-17" y="79.333333333333314" width="197" height="24"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1r-9b-Y2P">
+                                        <rect key="frame" x="64" y="69" width="197" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="197" id="o93-69-OUf"/>
                                         </constraints>
@@ -605,21 +605,39 @@
                                         <inset key="imageEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="Region">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="map.fill" catalog="system" symbolScale="medium"/>
                                         </state>
                                         <connections>
                                             <action selector="changeRegion:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="xzH-yh-xVa"/>
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="BC9-Xu-aBb">
-                                        <rect key="frame" x="64" y="198.33333333333337" width="204" height="62.666666666666686"/>
+                                        <rect key="frame" x="64" y="200" width="204" height="31"/>
                                         <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="2Eg-mf-cv5"/>
+                                        </constraints>
                                         <connections>
                                             <action selector="dateChanged:" destination="2gI-Q7-Etb" eventType="valueChanged" id="9QX-iR-gKd"/>
                                         </connections>
                                     </datePicker>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-E8-81C">
+                                        <rect key="frame" x="64" y="300" width="204" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="204" id="cX2-Zj-g4u"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="titleEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="End Location">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changeEndLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="0WB-xp-KjZ"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7CD-RA-1WS">
-                                        <rect key="frame" x="352" y="137.33333333333331" width="18" height="22"/>
+                                        <rect key="frame" x="352" y="139" width="18" height="22"/>
                                         <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="pencil" catalog="system"/>
                                         <connections>
@@ -627,40 +645,16 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WfZ-i8-VxP">
-                                        <rect key="frame" x="20" y="218.66666666666663" width="26" height="22"/>
+                                        <rect key="frame" x="20" y="204.66666666666663" width="26" height="22"/>
                                         <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal">
                                             <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vK-gl-LRR">
-                                        <rect key="frame" x="352.66666666666669" y="31.333333333333314" width="17.333333333333314" height="22"/>
-                                        <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="pencil" catalog="system"/>
-                                        <connections>
-                                            <action selector="editName:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="fI8-xw-Cc2"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceu-E8-81C">
-                                        <rect key="frame" x="5" y="310" width="203" height="24"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srh-wC-R8o">
+                                        <rect key="frame" x="64" y="251" width="204" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="203" id="tXk-Eq-A5t"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                        <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="contentEdgeInsets" minX="-40" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <inset key="titleEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="End Location" image="arrowshape.turn.up.backward.fill" catalog="system">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changeEndLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="0WB-xp-KjZ"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srh-wC-R8o">
-                                        <rect key="frame" x="14" y="253" width="197" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="196" id="jgA-7r-LCv"/>
+                                            <constraint firstAttribute="width" constant="204" id="4R4-JL-J67"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                         <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -668,40 +662,65 @@
                                         <inset key="titleEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="Start Location">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <imageReference key="image" image="arrowshape.turn.up.right.fill" catalog="system" symbolScale="medium"/>
                                         </state>
                                         <connections>
                                             <action selector="changeStartLocation:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="fWt-wK-ujw"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vK-gl-LRR">
+                                        <rect key="frame" x="352.66666666666669" y="31" width="17.333333333333314" height="22"/>
+                                        <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="pencil" catalog="system"/>
+                                        <connections>
+                                            <action selector="editName:" destination="2gI-Q7-Etb" eventType="touchUpInside" id="fI8-xw-Cc2"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.turn.up.backward.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-Bu-Y5s">
+                                        <rect key="frame" x="20" y="303.66666666666669" width="21.333333333333329" height="17.333333333333343"/>
+                                        <color key="tintColor" red="0.20392156859999999" green="0.63921568630000003" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowshape.turn.up.forward.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WiR-IA-iG7">
+                                        <rect key="frame" x="20" y="254.66666666666666" width="21.333333333333329" height="17.333333333333314"/>
+                                        <color key="tintColor" red="0.20392156859999999" green="0.63921568630000003" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mappin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9R9-0W-TDk">
+                                        <rect key="frame" x="20" y="77.333333333333329" width="16.333333333333329" height="19.666666666666671"/>
+                                        <color key="tintColor" red="0.20392156859999999" green="0.63921568630000003" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="srh-wC-R8o" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="12" id="19J-Ya-L0Q"/>
+                                    <constraint firstItem="srh-wC-R8o" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="64" id="19J-Ya-L0Q"/>
+                                    <constraint firstItem="9R9-0W-TDk" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="20" id="36W-q2-yMI"/>
                                     <constraint firstItem="WfZ-i8-VxP" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="20" id="3yF-EI-M3z"/>
                                     <constraint firstItem="Cht-hP-UnF" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="64" id="5Ge-Sr-5Q9"/>
+                                    <constraint firstItem="ms2-Bu-Y5s" firstAttribute="centerY" secondItem="ceu-E8-81C" secondAttribute="centerY" id="6OW-Pa-JuS"/>
                                     <constraint firstItem="7CD-RA-1WS" firstAttribute="centerY" secondItem="Cht-hP-UnF" secondAttribute="centerY" id="ASh-bz-7JV"/>
-                                    <constraint firstAttribute="bottom" secondItem="ceu-E8-81C" secondAttribute="bottom" constant="185" id="EZd-0w-Sp0"/>
-                                    <constraint firstItem="d1r-9b-Y2P" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="-17" id="IWM-3B-rnR"/>
-                                    <constraint firstItem="ceu-E8-81C" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="5" id="MMw-lh-UeX"/>
+                                    <constraint firstItem="9R9-0W-TDk" firstAttribute="centerY" secondItem="d1r-9b-Y2P" secondAttribute="centerY" id="Irg-QJ-YS3"/>
+                                    <constraint firstItem="ms2-Bu-Y5s" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="20" id="JPh-Jf-zR3"/>
+                                    <constraint firstItem="ceu-E8-81C" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="64" id="MMw-lh-UeX"/>
                                     <constraint firstItem="kEz-mz-H62" firstAttribute="top" secondItem="OUf-HP-rdr" secondAttribute="top" constant="25" id="N2b-WS-MHz"/>
-                                    <constraint firstItem="ceu-E8-81C" firstAttribute="top" secondItem="srh-wC-R8o" secondAttribute="bottom" constant="10" id="QuI-J9-0uq"/>
                                     <constraint firstAttribute="trailing" secondItem="7CD-RA-1WS" secondAttribute="trailing" constant="20" id="RHW-jb-6tJ"/>
                                     <constraint firstAttribute="trailing" secondItem="4vK-gl-LRR" secondAttribute="trailing" constant="20" id="VLf-tK-9bs"/>
+                                    <constraint firstItem="WiR-IA-iG7" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="20" id="VaO-SH-s4a"/>
                                     <constraint firstItem="BC9-Xu-aBb" firstAttribute="top" secondItem="Cht-hP-UnF" secondAttribute="bottom" constant="10" id="XU9-Wb-9Ow"/>
                                     <constraint firstItem="4vK-gl-LRR" firstAttribute="centerY" secondItem="kEz-mz-H62" secondAttribute="centerY" id="XhR-wX-5eJ"/>
-                                    <constraint firstItem="d1r-9b-Y2P" firstAttribute="top" secondItem="kEz-mz-H62" secondAttribute="bottom" constant="20" id="ZdR-xw-pAq"/>
+                                    <constraint firstItem="WiR-IA-iG7" firstAttribute="centerY" secondItem="srh-wC-R8o" secondAttribute="centerY" id="aHA-s8-UBc"/>
                                     <constraint firstAttribute="trailing" secondItem="BC9-Xu-aBb" secondAttribute="trailing" constant="122" id="jKx-yB-YFz"/>
                                     <constraint firstItem="BC9-Xu-aBb" firstAttribute="leading" secondItem="WfZ-i8-VxP" secondAttribute="trailing" constant="18" id="kVL-8m-JUU"/>
+                                    <constraint firstItem="ceu-E8-81C" firstAttribute="top" secondItem="srh-wC-R8o" secondAttribute="bottom" constant="25" id="mhR-r4-hzM"/>
                                     <constraint firstItem="kEz-mz-H62" firstAttribute="leading" secondItem="OUf-HP-rdr" secondAttribute="leading" constant="20" id="oKe-7C-Vm1"/>
                                     <constraint firstItem="7CD-RA-1WS" firstAttribute="leading" secondItem="Cht-hP-UnF" secondAttribute="trailing" constant="8" id="pGX-zg-Aat"/>
-                                    <constraint firstItem="srh-wC-R8o" firstAttribute="top" secondItem="BC9-Xu-aBb" secondAttribute="bottom" constant="15" id="yMc-CX-Yr8"/>
+                                    <constraint firstAttribute="bottom" secondItem="ceu-E8-81C" secondAttribute="bottom" priority="999" constant="206" id="tMF-uT-UDd"/>
+                                    <constraint firstItem="d1r-9b-Y2P" firstAttribute="top" secondItem="kEz-mz-H62" secondAttribute="bottom" constant="10" id="x9A-GC-oJ1"/>
+                                    <constraint firstItem="srh-wC-R8o" firstAttribute="top" secondItem="BC9-Xu-aBb" secondAttribute="bottom" constant="20" id="yMc-CX-Yr8"/>
                                     <constraint firstItem="Cht-hP-UnF" firstAttribute="top" secondItem="d1r-9b-Y2P" secondAttribute="bottom" constant="5" id="ysO-aw-kk2"/>
+                                    <constraint firstItem="d1r-9b-Y2P" firstAttribute="leading" secondItem="9R9-0W-TDk" secondAttribute="trailing" constant="27.670000000000002" id="zYV-Qs-1Bp"/>
                                     <constraint firstItem="WfZ-i8-VxP" firstAttribute="centerY" secondItem="BC9-Xu-aBb" secondAttribute="centerY" id="zjU-LI-vb9"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InP-bJ-4J3">
-                                <rect key="frame" x="0.0" y="157.33333333333334" width="390" height="22.666666666666657"/>
+                                <rect key="frame" x="0.0" y="168.66666666666666" width="390" height="0.33333333333334281"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
                                     <imageReference key="image" image="camera" catalog="system" symbolScale="large"/>
@@ -931,9 +950,7 @@
                                 <color key="backgroundColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="iconmonstr-plus-thin-32" symbolScale="large"/>
-                                </state>
+                                <state key="normal" image="iconmonstr-plus-thin-32"/>
                                 <connections>
                                     <action selector="addLocation:" destination="4PE-La-PCA" eventType="touchUpInside" id="Vpj-0e-C8y"/>
                                 </connections>
@@ -1220,23 +1237,23 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" id="8gh-MZ-ZP2" customClass="SongCell">
-                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64.666664123535156"/>
+                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8gh-MZ-ZP2" id="1Wc-Vi-9YT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64.666664123535156"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconmonstr-spotify-1-16" translatesAutoresizingMaskIntoConstraints="NO" id="PtW-6Y-xjp">
                                                                 <rect key="frame" x="5" y="26" width="16" height="16"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-Yo-oDl">
-                                                                <rect key="frame" x="36" y="10.000000000000002" width="261" height="24.666666666666671"/>
+                                                                <rect key="frame" x="36" y="10" width="261" height="24"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XhD-ag-CtA">
-                                                                <rect key="frame" x="36" y="34.666666666666664" width="251" height="20"/>
+                                                                <rect key="frame" x="36" y="34" width="251" height="20"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1605,7 +1622,7 @@
         <image name="Screen Shot 2021-08-05 at 3.13.39 PM" width="1240" height="760"/>
         <image name="arrow.forward" catalog="system" width="128" height="98"/>
         <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="106"/>
-        <image name="arrowshape.turn.up.right.fill" catalog="system" width="128" height="106"/>
+        <image name="arrowshape.turn.up.forward.fill" catalog="system" width="128" height="106"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
@@ -1621,7 +1638,7 @@
         <image name="iconmonstr-spotify-1-16" width="16" height="16"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
-        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="mappin" catalog="system" width="105" height="128"/>
         <image name="mountain" width="824" height="533"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
