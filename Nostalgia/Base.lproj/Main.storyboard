@@ -729,10 +729,9 @@
                                 <rect key="frame" x="288" y="7" width="86" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="tintColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="-30" maxY="0.0"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
+                                <state key="normal" title="Next"/>
                                 <connections>
                                     <segue destination="4PE-La-PCA" kind="show" identifier="newDestinationsSegue" id="MVD-K8-oSW"/>
                                 </connections>
@@ -924,9 +923,7 @@
                                 <color key="backgroundColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="iconmonstr-plus-thin-32" symbolScale="large"/>
-                                </state>
+                                <state key="normal" image="iconmonstr-plus-thin-32"/>
                                 <connections>
                                     <action selector="addLocation:" destination="4PE-La-PCA" eventType="touchUpInside" id="Vpj-0e-C8y"/>
                                 </connections>
@@ -1213,23 +1210,23 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" id="8gh-MZ-ZP2" customClass="SongCell">
-                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64"/>
+                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64.333335876464844"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8gh-MZ-ZP2" id="1Wc-Vi-9YT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64.333335876464844"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconmonstr-spotify-1-16" translatesAutoresizingMaskIntoConstraints="NO" id="PtW-6Y-xjp">
                                                                 <rect key="frame" x="5" y="26" width="16" height="16"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-Yo-oDl">
-                                                                <rect key="frame" x="36" y="10" width="261" height="24"/>
+                                                                <rect key="frame" x="36" y="9.9999999999999982" width="261" height="24.333333333333329"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XhD-ag-CtA">
-                                                                <rect key="frame" x="36" y="34" width="251" height="20"/>
+                                                                <rect key="frame" x="36" y="34.333333333333336" width="251" height="20"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1589,7 +1586,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="6xT-qd-fia"/>
         <segue reference="ZeL-0z-YgB"/>
-        <segue reference="aCK-oC-lz5"/>
+        <segue reference="MVD-K8-oSW"/>
         <segue reference="1Hc-Ws-KRL"/>
         <segue reference="GPq-Uf-E3A"/>
         <segue reference="Aob-4E-UeD"/>
