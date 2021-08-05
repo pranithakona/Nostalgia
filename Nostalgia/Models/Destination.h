@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *name;
 @property (copy, nonatomic) NSString *placeID;
 @property (strong, nonatomic) PFGeoPoint *coordinates;
-@property (strong, nonatomic) NSDate * time;
-@property (strong, nonatomic) NSNumber * timeToNextDestination;
-@property (copy, nonatomic) NSString * distanceToNextDestination;
-@property (strong, nonatomic) NSNumber * duration;
+@property (strong, nonatomic) NSDate *time;
+@property (strong, nonatomic) NSNumber *timeToNextDestination;
+@property (copy, nonatomic) NSString *distanceToNextDestination;
+@property (strong, nonatomic) NSNumber *duration;
 @property (strong, nonatomic) NSArray *photos;
 
 + (void)postDestination:(GMSPlace *)place withCompletion:(void (^)(Destination * _Nullable dest, NSError * _Nullable error))completion;

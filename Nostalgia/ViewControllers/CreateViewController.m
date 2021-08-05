@@ -55,6 +55,9 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
     //is editing an existing trip
     if (!self.isNewTrip){
         self.arrayOfDestinations = [NSMutableArray arrayWithArray: self.trip.destinations];
+        self.startLocation = self.arrayOfDestinations[0];
+        self.endLocation = [self.arrayOfDestinations lastObject];
+        self.startTime = self.trip.startTime;
         [self.arrayOfDestinations removeObjectAtIndex:0];
         [self.arrayOfDestinations removeLastObject];
         self.arrayOfSharedUsers = self.trip.users;

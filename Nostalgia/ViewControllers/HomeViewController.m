@@ -209,8 +209,7 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     [SceneDelegate clearCurrentTripSongs];
     [SceneDelegate setIsCurrentlyRouting:true];
     
-    //commented out for testing purposes
-    NSTimeInterval timeInterval = 60; //trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
+    NSTimeInterval timeInterval = trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self saveRouteWithTrip:trip];
     });

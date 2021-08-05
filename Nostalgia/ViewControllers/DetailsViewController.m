@@ -8,6 +8,8 @@
 #import "DetailsViewController.h"
 #import "DestinationHeader.h"
 #import "ExploreCell.h"
+#import "NSDate+NSDateHelper.h"
+#import "DateTools.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -53,6 +55,13 @@ static const NSString *headerName = @"DestinationHeader";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     DestinationHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerName forIndexPath:indexPath];
     header.nameLabel.text = self.destination.name;
+    NSString *dateString = [NSDate timeOnlyString:self.destination.time];
+    if (self.destination.duration && [self.destination.duration longValue] != 0){
+        NSString *dateEndString = [NSDate timeOnlyString:[self.destination.time dateByAddingSeconds:[self.destination.duration longValue]]];
+        header.timeLabel.text = [NSString stringWithFormat: @"%@ - %@",dateString, dateEndString];
+    } else {
+        header.timeLabel.text = dateString;
+    }
     return header;
 }
 

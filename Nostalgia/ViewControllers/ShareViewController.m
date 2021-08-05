@@ -53,6 +53,7 @@ static const NSString *cellName = @"ShareCell";
     [query includeKey:@"username"];
     [query includeKey:@"name"];
     [query includeKey:@"trips"];
+    [query includeKey:@"photo"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
         if (users != nil) {
@@ -106,6 +107,10 @@ static const NSString *cellName = @"ShareCell";
     PFUser *user = self.filteredArrayOfUsers[indexPath.row];
     cell.nameLabel.text = user[nameKey];
     cell.userNameLabel.text = user.username;
+    if (user[@"photo"]) {
+        cell.profileImageView.file = user[@"photo"];
+        [cell.profileImageView loadInBackground];
+    }
     return cell;
 }
 

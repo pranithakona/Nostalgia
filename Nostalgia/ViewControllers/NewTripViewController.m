@@ -54,9 +54,7 @@
 }
 
 - (BOOL)requiredFields {
-    //commented out for testing purposes
-    //return (![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation) || (![self.nameField.text isEqualToString:@""] && !self.isNewTrip);
-    return true;
+    return (![self.nameField.text isEqualToString:@""] && self.startTime && self.region && self.startLocation && self.endLocation) || (![self.nameField.text isEqualToString:@""] && !self.isNewTrip);
 }
 
 - (IBAction)changeImage:(id)sender {

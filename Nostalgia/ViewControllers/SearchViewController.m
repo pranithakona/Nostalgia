@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIView *detailsView;
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
 @property (weak, nonatomic) IBOutlet UIButton *collapseButton;
+@property (weak, nonatomic) IBOutlet UIButton *searchButton;
 
 @property (strong, nonatomic) NSArray<GMSPlacePhotoMetadata *> *photosArray;
 @property (strong, nonatomic) NSArray<Trip *> *itinerariesArray;
@@ -49,7 +50,8 @@ static const NSString *dictKey = @"API_Key";
     [super viewDidLoad];
     
     self.placesClient = [GMSPlacesClient sharedClient];
-    self.navigationController.navigationBarHidden = true;
+    self.searchButton.layer.cornerRadius = self.searchButton.bounds.size.width/2;
+    self.searchButton.layer.masksToBounds = true;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -58,7 +60,7 @@ static const NSString *dictKey = @"API_Key";
     [self.collectionView registerNib:[UINib nibWithNibName:exploreHeaderName bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:exploreHeaderName];
     self.collectionView.collectionViewLayout = [self generateLayout];
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.7767 longitude:96.797 zoom:10];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:32.7767 longitude:-96.797 zoom:10];
     GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:mapIdString];
     self.mapView = [GMSMapView mapWithFrame:self.view.frame mapID:mapID camera:camera];
     self.mapView.myLocationEnabled = YES;
@@ -66,10 +68,6 @@ static const NSString *dictKey = @"API_Key";
     [self.view addSubview:self.mapView];
     [self.view insertSubview:self.buttonView aboveSubview:self.mapView];
     [self.view insertSubview:self.detailsView aboveSubview:self.mapView];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = true;
 }
 
 - (void)fetchItinerariesForRegion:(NSString *)placeID {
@@ -124,14 +122,26 @@ static const NSString *dictKey = @"API_Key";
 - (UICollectionViewLayout *)generateLayout {
     UICollectionViewLayout *layout = [[UICollectionViewCompositionalLayout alloc] initWithSectionProvider:^NSCollectionLayoutSection *_Nullable(NSInteger section, id<NSCollectionLayoutEnvironment> sectionProvider) {
         int sectionHeaderHeight = section == 1 ? 100 : 45;
+        int groupWidth = section == 2 ? 150 : 250;
+        float itemHeight = section == 1 ? 0.5 : 1.0;
         
         //item
-        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1.0]];
+        NSCollectionLayoutSize *itemSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:itemHeight]];
         NSCollectionLayoutItem *item = [NSCollectionLayoutItem itemWithLayoutSize:itemSize];
+        item.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //group
-        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension absoluteDimension:250] heightDimension:[NSCollectionLayoutDimension absoluteDimension:200]];
-        NSCollectionLayoutGroup *group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
+        NSCollectionLayoutSize *groupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension absoluteDimension:groupWidth] heightDimension:[NSCollectionLayoutDimension absoluteDimension:200]];
+        NSCollectionLayoutGroup *group;
+        if (section == 1){
+            NSCollectionLayoutSize *innerGroupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:0.5] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1.0]];
+            NSCollectionLayoutGroup *innerGroup = [NSCollectionLayoutGroup verticalGroupWithLayoutSize:innerGroupSize subitem:item count:2];
+            NSCollectionLayoutSize *fourGroupSize = [NSCollectionLayoutSize sizeWithWidthDimension:[NSCollectionLayoutDimension fractionalWidthDimension:1.0] heightDimension:[NSCollectionLayoutDimension fractionalHeightDimension:1.0]];
+            NSCollectionLayoutGroup *fourGroup = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:fourGroupSize subitem:innerGroup count:2];
+            group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:fourGroup count:1];
+        } else {
+            group = [NSCollectionLayoutGroup horizontalGroupWithLayoutSize:groupSize subitem:item count:1];
+        }
         group.contentInsets = NSDirectionalEdgeInsetsMake(5, 5, 5, 5);
         
         //section
@@ -182,6 +192,7 @@ static const NSString *dictKey = @"API_Key";
     ExploreCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
     cell.backgroundImageView.image = nil;
     cell.nameLabel.hidden = false;
+    cell.nameLabel.textColor = [UIColor systemGreenColor];
     
     if (indexPath.section == 0) {
         //place photos
@@ -201,6 +212,13 @@ static const NSString *dictKey = @"API_Key";
         //existing itineraries
         Trip *trip = self.itinerariesArray[indexPath.item];
         cell.nameLabel.text = trip.name;
+        cell.nameLabel.textColor = [UIColor whiteColor];
+        if (trip.coverPhoto){
+            cell.backgroundImageView.file = trip.coverPhoto;
+            [cell.backgroundImageView loadInBackground];
+        } else {
+            cell.backgroundImageView.image = [UIImage imageNamed:@"mountain"];
+        }
     }
     return cell;
 }
@@ -238,7 +256,7 @@ static const NSString *dictKey = @"API_Key";
 
 - (IBAction)didExpandDetails:(id)sender {
     [UIView animateWithDuration:0.5 animations:^{
-        self.detailsView.transform = CGAffineTransformMakeTranslation(0, -600);
+        self.detailsView.transform = CGAffineTransformMakeTranslation(0, -500);
     }];
     self.expandButton.hidden = true;
     self.collapseButton.hidden = false;
@@ -247,7 +265,7 @@ static const NSString *dictKey = @"API_Key";
 
 - (IBAction)didCollapseDetails:(id)sender {
     [UIView animateWithDuration:0.5 animations:^{
-        self.detailsView.transform = CGAffineTransformMakeTranslation(0, 40);
+        self.detailsView.transform = CGAffineTransformMakeTranslation(0, 10);
     }];
     self.expandButton.hidden = false;
     self.collapseButton.hidden = true;

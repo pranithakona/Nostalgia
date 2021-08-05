@@ -17,33 +17,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="230" height="194"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpn-Ut-74f">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bpn-Ut-74f" customClass="PFImageView">
                         <rect key="frame" x="0.0" y="0.0" width="230" height="194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEc-uA-NfZ">
-                        <rect key="frame" x="16" y="36" width="198" height="92"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEc-uA-NfZ">
+                        <rect key="frame" x="10" y="10" width="210" height="174"/>
+                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                        <color key="textColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
-            <color key="backgroundColor" systemColor="systemYellowColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="uEc-uA-NfZ" secondAttribute="bottom" constant="10" id="0Xq-gq-q5l"/>
+                <constraint firstAttribute="trailing" secondItem="uEc-uA-NfZ" secondAttribute="trailing" constant="10" id="9eQ-93-rrv"/>
+                <constraint firstItem="uEc-uA-NfZ" firstAttribute="centerX" secondItem="SEy-5g-ep8" secondAttribute="centerX" id="AQL-77-crW"/>
+                <constraint firstItem="uEc-uA-NfZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="o7h-3S-TcA"/>
+                <constraint firstItem="uEc-uA-NfZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="oRU-Uz-8Hl"/>
+            </constraints>
             <size key="customSize" width="230" height="194"/>
             <connections>
-                <outlet property="backgroundImageView" destination="bpn-Ut-74f" id="fNq-J4-5ea"/>
+                <outlet property="backgroundImageView" destination="bpn-Ut-74f" id="Kru-Bd-6pL"/>
                 <outlet property="nameLabel" destination="uEc-uA-NfZ" id="wMy-AD-ZfM"/>
             </connections>
             <point key="canvasLocation" x="155.07246376811597" y="123.21428571428571"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

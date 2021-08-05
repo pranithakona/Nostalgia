@@ -12,6 +12,7 @@
 #import "LocationManager.h"
 #import "ItineraryCell.h"
 #import "DetailsViewController.h"
+#import "TripDetailsViewController.h"
 #import "PhotoViewController.h"
 #import "DateTools.h"
 #import "NSDate+NSDateHelper.h"
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIView *mapBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet UIView *collectionBaseView;
 
 @property (strong, nonatomic) GMSMapView *mapView;
 
@@ -32,9 +34,11 @@
 static const NSString *destinationsSegue = @"editDestinationsSegue";
 static const NSString *doneSegue = @"endCreateSegue";
 static const NSString *detailsSegue = @"detailsSegue";
+static const NSString *tripDetailsSegue = @"tripDetailsSegue";
 static const NSString *photoSegue = @"mapPhotoSegue";
 static const NSString *headerName = @"MapItineraryHeaderView";
 static const NSString *cellName = @"ItineraryCell";
+static const NSString *mapIdString = @"ea891679bda3d3b0";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,10 +54,12 @@ static const NSString *cellName = @"ItineraryCell";
     
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:self.trip.startLocation.coordinates.latitude longitude:self.trip.startLocation.coordinates.longitude zoom:10];
     
-    self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame camera:camera];
+    GMSMapID *mapID = [GMSMapID mapIDWithIdentifier:mapIdString];
+    self.mapView = [GMSMapView mapWithFrame:self.mapBaseView.frame mapID:mapID camera:camera];
     self.mapView.myLocationEnabled = YES;
     self.mapView.delegate = self;
     [self.mapBaseView addSubview:self.mapView];
+    [self.mapView addSubview:self.collectionBaseView];
     
     [self setButtons];
     [self makeMarkers];
@@ -141,7 +147,6 @@ static const NSString *cellName = @"ItineraryCell";
                     [path addCoordinate:CLLocationCoordinate2DMake([coordinate[0] doubleValue],[coordinate[1] doubleValue])];
                 }
                 GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-                polyline.strokeWidth = 3;
                 polyline.strokeColor = colors[i];
                 polyline.map = self.mapView;
             }
@@ -205,8 +210,7 @@ static const NSString *cellName = @"ItineraryCell";
         [result.itemProvider loadObjectOfClass:[UIImage class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
             if (error == nil && [object isKindOfClass:[UIImage class]]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIImage *resizedImage = [self resizeImage:object withSize:CGSizeMake(50, 50)];
-                    PFFileObject *imageFile = [self getPFFileFromImage:resizedImage];
+                    PFFileObject *imageFile = [self getPFFileFromImage:object];
                     NSArray *photo =@[imageFile, @(asset.location.coordinate.latitude), @(asset.location.coordinate.longitude)];
                     [photos addObject:photo];
                     [self mapPhoto:photo];
@@ -216,8 +220,7 @@ static const NSString *cellName = @"ItineraryCell";
                     for (Destination *dest in self.trip.destinations){
                         if (lat >= dest.coordinates.latitude - 0.0006 && lat <= dest.coordinates.latitude + 0.0006 && lng >= dest.coordinates.longitude - 0.0006 && lng <= dest.coordinates.longitude + 0.0006){
                             NSMutableArray *array = [NSMutableArray arrayWithArray:dest.photos];
-                            PFFileObject *file = [self getPFFileFromImage:object];
-                            [array addObject:file];
+                            [array addObject:imageFile];
                             dest.photos = array;
                             [dest saveInBackground];
                             break;
@@ -242,14 +245,15 @@ static const NSString *cellName = @"ItineraryCell";
     PFFileObject *imageFile = photo[0];
     [imageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
         if (!error) {
-            marker.icon = [UIImage imageWithData:imageData];
+            UIImage *resizedImage = [self resizeImage:[UIImage imageWithData:imageData] withSize:CGSizeMake(50, 50)];
+            marker.icon = resizedImage;
         }
     }];
     
     marker.map = self.mapView;
 }
 
-- (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image {
+- (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image {
     if (!image) {
         return nil;
     }
@@ -433,19 +437,22 @@ static const NSString *cellName = @"ItineraryCell";
     [UIView animateWithDuration:0.5 animations:^{
         self.collectionView.transform = CGAffineTransformMakeTranslation(0, -400);
     }];
+    self.collectionBaseView.hidden = false;
 }
 
 - (void)didCollapseItinerary {
     [UIView animateWithDuration:1.0 animations:^{
-        self.collectionView.transform = CGAffineTransformMakeTranslation(0, 30);
+        self.collectionView.transform = CGAffineTransformMakeTranslation(0, 10);
     }];
+    self.collectionBaseView.hidden = true;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MapItineraryHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind: UICollectionElementKindSectionHeader withReuseIdentifier:headerName forIndexPath:indexPath];
     headerView.delegate = self;
     headerView.nameLabel.text = self.trip.name;
-    headerView.dateLabel.text = [NSDate fullDateString:self.trip.startTime];
+    headerView.regionLabel.text = [NSString stringWithFormat:@"- %@", self.trip.region];
+    headerView.dateLabel.text = [NSDate dateOnlyString:self.trip.startTime];
     return headerView;
 }
 
@@ -460,8 +467,20 @@ static const NSString *cellName = @"ItineraryCell";
     cell.orderLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.item];
     cell.nameLabel.text = dest.name;
     
+    //cell.orderLabel.hidden = indexPath.item == 0 || indexPath.item == (self.trip.destinations.count - 1);
+    cell.topConnectorView.hidden = indexPath.item == 0;
+    cell.bottomConnectorView.hidden = indexPath.item == (self.trip.destinations.count - 1);
+    
     NSString *dateString = [NSDate timeOnlyString:dest.time];
-    cell.timeLabel.text = dateString;
+    if (indexPath.item == 0){
+        cell.timeLabel.text = [NSString stringWithFormat: @"%@ - Start",dateString];
+    } else if (indexPath.item == (self.trip.destinations.count - 1)){
+        cell.timeLabel.text = [NSString stringWithFormat: @"%@ - End",dateString];
+    } else {
+        NSString *dateEndString = [NSDate timeOnlyString:[dest.time dateByAddingSeconds:[dest.duration longValue]]];
+        cell.timeLabel.text = [NSString stringWithFormat: @"%@ - %@",dateString, dateEndString];
+    }
+    
     
     return cell;
 }
@@ -479,10 +498,15 @@ static const NSString *cellName = @"ItineraryCell";
         createViewController.trip = self.trip; 
     } else if ([segue.identifier isEqualToString:doneSegue]){
         HomeViewController *homeViewController = [segue destinationViewController];
-        [homeViewController didCreateTrip:self.trip];
+        if (self.isNewTrip){
+            [homeViewController didCreateTrip:self.trip];
+        }
     } else if ([segue.identifier isEqualToString:detailsSegue]){
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.destination = sender;
+    } else if ([segue.identifier isEqualToString:tripDetailsSegue]){
+        TripDetailsViewController *tripDetailsViewController = [segue destinationViewController];
+        tripDetailsViewController.trip = self.trip;
     } else if ([segue.identifier isEqualToString:photoSegue]){
         PhotoViewController *photoViewController = [segue destinationViewController];
         photoViewController.photoFile = sender;

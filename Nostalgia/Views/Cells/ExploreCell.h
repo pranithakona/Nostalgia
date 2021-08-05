@@ -6,12 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/PFImageView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ExploreCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet PFImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end

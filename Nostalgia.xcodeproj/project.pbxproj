@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0010C689D3EF9BA10C0C4F5D /* Pods_Nostalgia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADA9F26AC3F74E07A24B6F9 /* Pods_Nostalgia.framework */; };
 		28704E0FA8132A71515CAD6A /* Pods_NostalgiaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051A22867CF9D883DAE920F0 /* Pods_NostalgiaTests.framework */; };
+		338049C126BA5A3900BEA8DE /* TripDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C026BA5A3900BEA8DE /* TripDetailsViewController.m */; };
+		338049C426BA5B9D00BEA8DE /* TripDetailsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C326BA5B9D00BEA8DE /* TripDetailsHeader.m */; };
+		338049C726BA5C4B00BEA8DE /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C626BA5C4B00BEA8DE /* SongCell.m */; };
 		33C64127269A646E00726C4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64126269A646E00726C4E /* AppDelegate.m */; };
 		33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64129269A646E00726C4E /* SceneDelegate.m */; };
 		33C64130269A646E00726C4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33C6412E269A646E00726C4E /* Main.storyboard */; };
@@ -147,6 +150,12 @@
 		0AEAA43EEA0FFFE11C27A60D /* Pods-Nostalgia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.release.xcconfig"; path = "Target Support Files/Pods-Nostalgia/Pods-Nostalgia.release.xcconfig"; sourceTree = "<group>"; };
 		326E31CE31439C428A6B4AF5 /* Pods-Nostalgia-NostalgiaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia-NostalgiaUITests.release.xcconfig"; path = "Target Support Files/Pods-Nostalgia-NostalgiaUITests/Pods-Nostalgia-NostalgiaUITests.release.xcconfig"; sourceTree = "<group>"; };
 		32FA355DF108C333EED24E96 /* Pods_Nostalgia_NostalgiaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nostalgia_NostalgiaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		338049BF26BA5A3900BEA8DE /* TripDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TripDetailsViewController.h; sourceTree = "<group>"; };
+		338049C026BA5A3900BEA8DE /* TripDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripDetailsViewController.m; sourceTree = "<group>"; };
+		338049C226BA5B9D00BEA8DE /* TripDetailsHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TripDetailsHeader.h; sourceTree = "<group>"; };
+		338049C326BA5B9D00BEA8DE /* TripDetailsHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripDetailsHeader.m; sourceTree = "<group>"; };
+		338049C526BA5C4B00BEA8DE /* SongCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
+		338049C626BA5C4B00BEA8DE /* SongCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		33C64122269A646E00726C4E /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C64125269A646E00726C4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		33C64126269A646E00726C4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -415,6 +424,8 @@
 				33DAE99F26B0A4D1006094C3 /* PhotoViewController.m */,
 				33DAE9A126B219CE006094C3 /* DetailsViewController.h */,
 				33DAE9A226B219CE006094C3 /* DetailsViewController.m */,
+				338049BF26BA5A3900BEA8DE /* TripDetailsViewController.h */,
+				338049C026BA5A3900BEA8DE /* TripDetailsViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -616,6 +627,8 @@
 				33C64188269F81E000726C4E /* MapItineraryHeaderView.m */,
 				33DAE9A426B2552F006094C3 /* DestinationHeader.h */,
 				33DAE9A526B2552F006094C3 /* DestinationHeader.m */,
+				338049C226BA5B9D00BEA8DE /* TripDetailsHeader.h */,
+				338049C326BA5B9D00BEA8DE /* TripDetailsHeader.m */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -635,6 +648,8 @@
 				33DAE99226AF6FBE006094C3 /* ExploreCell.h */,
 				33DAE99326AF6FBE006094C3 /* ExploreCell.m */,
 				33DAE99426AF6FBE006094C3 /* ExploreCell.xib */,
+				338049C526BA5C4B00BEA8DE /* SongCell.h */,
+				338049C626BA5C4B00BEA8DE /* SongCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1013,6 +1028,8 @@
 				33C64182269F471400726C4E /* HomeCell.m in Sources */,
 				33C64171269A8B7400726C4E /* CreateViewController.m in Sources */,
 				33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */,
+				338049C426BA5B9D00BEA8DE /* TripDetailsHeader.m in Sources */,
+				338049C726BA5C4B00BEA8DE /* SongCell.m in Sources */,
 				33DAE9A626B2552F006094C3 /* DestinationHeader.m in Sources */,
 				33C64189269F81E000726C4E /* MapItineraryHeaderView.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
@@ -1026,6 +1043,7 @@
 				33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */,
 				33DAE99526AF6FBE006094C3 /* ExploreCell.m in Sources */,
 				33C64179269BEAD000726C4E /* CreateCell.m in Sources */,
+				338049C126BA5A3900BEA8DE /* TripDetailsViewController.m in Sources */,
 				33DAE9A026B0A4D1006094C3 /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

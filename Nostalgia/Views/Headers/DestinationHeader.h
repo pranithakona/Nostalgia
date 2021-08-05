@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DestinationHeader : UICollectionReusableView
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end
 
