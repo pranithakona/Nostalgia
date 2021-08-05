@@ -52,6 +52,10 @@
                                     <action selector="onLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JKO-qc-l3S"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Screen Shot 2021-08-05 at 3.13.39 PM" translatesAutoresizingMaskIntoConstraints="NO" id="XmJ-FU-dIh">
+                                <rect key="frame" x="103" y="125" width="186" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -73,7 +77,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="130.58035714285714"/>
+            <point key="canvasLocation" x="135.38461538461539" y="130.09478672985782"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="UK1-fI-ozK">
@@ -95,12 +99,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SWp-m9-mlj">
-                                <rect key="frame" x="82" y="279" width="226" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfJ-5f-fB6">
                                 <rect key="frame" x="162" y="436" width="66" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -112,6 +110,16 @@
                                     <action selector="onSignup:" destination="FwW-tl-kWY" eventType="touchUpInside" id="WQf-br-EbK"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Screen Shot 2021-08-05 at 3.13.39 PM" translatesAutoresizingMaskIntoConstraints="NO" id="JvB-5r-G0l">
+                                <rect key="frame" x="102" y="72" width="186" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SWp-m9-mlj">
+                                <rect key="frame" x="82" y="289" width="226" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e0r-R3-9ej"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -923,7 +931,9 @@
                                 <color key="backgroundColor" red="0.20392156859999999" green="0.63980836600000002" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="iconmonstr-plus-thin-32"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="iconmonstr-plus-thin-32" symbolScale="large"/>
+                                </state>
                                 <connections>
                                     <action selector="addLocation:" destination="4PE-La-PCA" eventType="touchUpInside" id="Vpj-0e-C8y"/>
                                 </connections>
@@ -1210,23 +1220,23 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongCell" id="8gh-MZ-ZP2" customClass="SongCell">
-                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64.333335876464844"/>
+                                                    <rect key="frame" x="0.0" y="24.333333969116211" width="307" height="64"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8gh-MZ-ZP2" id="1Wc-Vi-9YT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64.333335876464844"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="307" height="64"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconmonstr-spotify-1-16" translatesAutoresizingMaskIntoConstraints="NO" id="PtW-6Y-xjp">
                                                                 <rect key="frame" x="5" y="26" width="16" height="16"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vJ-Yo-oDl">
-                                                                <rect key="frame" x="36" y="9.9999999999999982" width="261" height="24.333333333333329"/>
+                                                                <rect key="frame" x="36" y="10" width="261" height="24"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XhD-ag-CtA">
-                                                                <rect key="frame" x="36" y="34.333333333333336" width="251" height="20"/>
+                                                                <rect key="frame" x="36" y="34" width="251" height="20"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -1584,7 +1594,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6xT-qd-fia"/>
+        <segue reference="Pkk-ss-cby"/>
         <segue reference="ZeL-0z-YgB"/>
         <segue reference="MVD-K8-oSW"/>
         <segue reference="1Hc-Ws-KRL"/>
@@ -1592,6 +1602,7 @@
         <segue reference="Aob-4E-UeD"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="Screen Shot 2021-08-05 at 3.13.39 PM" width="1240" height="760"/>
         <image name="arrow.forward" catalog="system" width="128" height="98"/>
         <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="106"/>
         <image name="arrowshape.turn.up.right.fill" catalog="system" width="128" height="106"/>
