@@ -11,6 +11,7 @@ target 'Nostalgia' do
   pod 'DateTools'
   pod 'MaterialComponents/Buttons'
   pod 'Motion'
+  pod 'Cosmos'
 
   # Pods for Nostalgia
 

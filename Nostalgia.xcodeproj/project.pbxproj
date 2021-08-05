@@ -12,6 +12,8 @@
 		338049C126BA5A3900BEA8DE /* TripDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C026BA5A3900BEA8DE /* TripDetailsViewController.m */; };
 		338049C426BA5B9D00BEA8DE /* TripDetailsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C326BA5B9D00BEA8DE /* TripDetailsHeader.m */; };
 		338049C726BA5C4B00BEA8DE /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C626BA5C4B00BEA8DE /* SongCell.m */; };
+		338049CA26BC87EE00BEA8DE /* InfoWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C926BC87EE00BEA8DE /* InfoWindowView.m */; };
+		338049CC26BC87FF00BEA8DE /* InfoWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 338049CB26BC87FF00BEA8DE /* InfoWindowView.xib */; };
 		33C64127269A646E00726C4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64126269A646E00726C4E /* AppDelegate.m */; };
 		33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64129269A646E00726C4E /* SceneDelegate.m */; };
 		33C64130269A646E00726C4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33C6412E269A646E00726C4E /* Main.storyboard */; };
@@ -156,6 +158,9 @@
 		338049C326BA5B9D00BEA8DE /* TripDetailsHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TripDetailsHeader.m; sourceTree = "<group>"; };
 		338049C526BA5C4B00BEA8DE /* SongCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		338049C626BA5C4B00BEA8DE /* SongCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
+		338049C826BC87EE00BEA8DE /* InfoWindowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoWindowView.h; sourceTree = "<group>"; };
+		338049C926BC87EE00BEA8DE /* InfoWindowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoWindowView.m; sourceTree = "<group>"; };
+		338049CB26BC87FF00BEA8DE /* InfoWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoWindowView.xib; sourceTree = "<group>"; };
 		33C64122269A646E00726C4E /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C64125269A646E00726C4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		33C64126269A646E00726C4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -435,6 +440,9 @@
 			children = (
 				33DAE99D26AF8A2E006094C3 /* Cells */,
 				33DAE99C26AF8A27006094C3 /* Headers */,
+				338049C826BC87EE00BEA8DE /* InfoWindowView.h */,
+				338049C926BC87EE00BEA8DE /* InfoWindowView.m */,
+				338049CB26BC87FF00BEA8DE /* InfoWindowView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -789,6 +797,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33C64135269A646F00726C4E /* LaunchScreen.storyboard in Resources */,
+				338049CC26BC87FF00BEA8DE /* InfoWindowView.xib in Resources */,
 				33DAE99126AF52EE006094C3 /* HomeCollectionHeader.xib in Resources */,
 				33C64132269A646F00726C4E /* Assets.xcassets in Resources */,
 				33C64130269A646E00726C4E /* Main.storyboard in Resources */,
@@ -1031,6 +1040,7 @@
 				338049C426BA5B9D00BEA8DE /* TripDetailsHeader.m in Sources */,
 				338049C726BA5C4B00BEA8DE /* SongCell.m in Sources */,
 				33DAE9A626B2552F006094C3 /* DestinationHeader.m in Sources */,
+				338049CA26BC87EE00BEA8DE /* InfoWindowView.m in Sources */,
 				33C64189269F81E000726C4E /* MapItineraryHeaderView.m in Sources */,
 				33C64168269A7D5D00726C4E /* HomeViewController.m in Sources */,
 				33DAE98726AF3087006094C3 /* SearchViewController.m in Sources */,

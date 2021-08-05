@@ -11,6 +11,7 @@
 #import "HomeCollectionHeader.h"
 #import "MapViewController.h"
 #import "PhotoViewController.h"
+#import "InfoWindowView.h"
 #import "Trip.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
@@ -43,6 +44,7 @@ static const NSString *exploreHeaderName = @"ExploreFilterHeader";
 static const NSString *itinerarySegue = @"existingItinerarySegue";
 static const NSString *photoSegue = @"photoSegue";
 static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=1500%@&key=%@";
+static const NSString *detailsBaseURL = @"https://maps.googleapis.com/maps/api/place/details/json?place_id=%@&fields=name,formatted_address,formatted_phone_number,rating,website,types&key=%@";
 static const NSString *mapIdString = @"5c25f377317d20b8";
 static const NSString *dictKey = @"API_Key";
 
@@ -108,6 +110,31 @@ static const NSString *dictKey = @"API_Key";
             NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
             strongSelf.placesArray = resultsDictionary[resultsKey];
             [strongSelf.collectionView reloadData];
+        }
+    }];
+    [task resume];
+}
+
+- (void)fetchPlaceDetails:(NSString *)placeID withCompletion:(void (^)(NSDictionary * _Nullable results))completion{
+    static const NSString *resultsKey = @"result";
+    
+    //if type is nil, get all nearby places, otherwise filter by type of place
+    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
+    NSString *key= [dict objectForKey:dictKey];
+    
+    NSString *urlString = [NSString stringWithFormat: detailsBaseURL, placeID, key];
+    NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURL* url = [NSURL URLWithString:encodedString];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+
+     __block NSError *error1 = [[NSError alloc] init];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if ([data length]>0 && error == nil) {
+            NSDictionary *resultsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+            NSDictionary *results = resultsDictionary[resultsKey];
+            completion(results);
         }
     }];
     [task resume];
@@ -229,6 +256,7 @@ static const NSString *dictKey = @"API_Key";
     static const NSString *latKey = @"lat";
     static const NSString *lngKey = @"lng";
     static const NSString *nameKey = @"name";
+    static const NSString *idKey = @"place_id";
     
     if (indexPath.section == 0) {
         //open photo
@@ -238,16 +266,35 @@ static const NSString *dictKey = @"API_Key";
         [self didCollapseDetails:self];
         NSDictionary *place = self.placesArray[indexPath.item];
         CLLocationCoordinate2D location = CLLocationCoordinate2DMake([place[geometryKey][locationKey][latKey] doubleValue], [place[geometryKey][locationKey][lngKey] doubleValue]);
-        self.infoMarker = [GMSMarker markerWithPosition:location];
-        self.infoMarker.title = place[nameKey];
-        self.infoMarker.opacity = 0;
-        CGPoint pos = self.infoMarker.infoWindowAnchor;
-        pos.y = 1;
-        self.infoMarker.infoWindowAnchor = pos;
-        self.infoMarker.map = self.mapView;
-        self.mapView.selectedMarker = self.infoMarker;
-        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:15];
-        [self.mapView setCamera:camera];
+        [self fetchPlaceDetails:place[idKey] withCompletion:^(NSDictionary * _Nullable results) {
+            self.infoMarker = [GMSMarker markerWithPosition:location];
+            self.infoMarker.title = place[nameKey];
+            
+            NSArray *types = results[@"types"];
+            NSString *typesString = @"";
+            for (NSString *type in types){
+                NSString *newString = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+                typesString = [typesString stringByAppendingString: [NSString stringWithFormat: @"%@,", newString]];
+            }
+            typesString = [typesString substringToIndex:typesString.length - 2];
+            NSString *details = @"";
+            details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"formatted_address"]]];
+            details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"website"]]];
+            details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"formatted_phone_number"]]];
+            details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", typesString]];
+            details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"rating"]]];
+            
+            self.infoMarker.snippet = details;
+            self.infoMarker.opacity = 0;
+            CGPoint pos = self.infoMarker.infoWindowAnchor;
+            pos.y = 1;
+            self.infoMarker.infoWindowAnchor = pos;
+            self.infoMarker.map = self.mapView;
+            self.mapView.selectedMarker = self.infoMarker;
+            
+            GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:15];
+            [self.mapView setCamera:camera];
+        }];
     } else if (indexPath.section == 2) {
         //open trip on map view
         [self performSegueWithIdentifier:itinerarySegue sender:self.itinerariesArray[indexPath.item]];
@@ -319,14 +366,48 @@ static const NSString *dictKey = @"API_Key";
 }
 
 - (void)mapView:(GMSMapView *)mapView didTapPOIWithPlaceID:(NSString *)placeID name:(NSString *)name location:(CLLocationCoordinate2D)location {
-    self.infoMarker = [GMSMarker markerWithPosition:location];
-    self.infoMarker.title = name;
-    self.infoMarker.opacity = 0;
-    CGPoint pos = self.infoMarker.infoWindowAnchor;
-    pos.y = 1;
-    self.infoMarker.infoWindowAnchor = pos;
-    self.infoMarker.map = mapView;
-    mapView.selectedMarker = self.infoMarker;
+    [self fetchPlaceDetails:placeID withCompletion:^(NSDictionary * _Nullable results) {
+        NSLog(@"after %@", results);
+        self.infoMarker = [GMSMarker markerWithPosition:location];
+        self.infoMarker.title = name;
+        
+        NSArray *types = results[@"types"];
+        NSString *typesString = @"";
+        for (NSString *type in types){
+            NSString *newString = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+            typesString = [typesString stringByAppendingString: [NSString stringWithFormat: @"%@, ", newString]];
+        }
+        typesString = [typesString substringToIndex:typesString.length - 3];
+        NSString *details = @"";
+        details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"formatted_address"]]];
+        details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"website"]]];
+        details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"formatted_phone_number"]]];
+        details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", typesString]];
+        details = [details stringByAppendingString: [NSString stringWithFormat: @"%@/n", results[@"rating"]]];
+        
+        self.infoMarker.snippet = details;
+        self.infoMarker.opacity = 0;
+        CGPoint pos = self.infoMarker.infoWindowAnchor;
+        pos.y = 1;
+        self.infoMarker.infoWindowAnchor = pos;
+        self.infoMarker.map = mapView;
+        mapView.selectedMarker = self.infoMarker;
+    }];
+}
+
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"InfoWindowView" owner:self options:nil];
+    InfoWindowView *infoView = [topLevelObjects objectAtIndex:0];
+    NSArray *details = [marker.snippet componentsSeparatedByString:@"/n"];
+    
+    infoView.nameLabel.text = marker.title;
+    infoView.addressLabel.text = details[0];
+    infoView.websiteLabel.text = details[1];
+    infoView.phoneLabel.text = details[2];
+    infoView.typeLabel.text = details[3];
+    infoView.cosmosView.rating = [details[4] doubleValue];
+    
+    return infoView;
 }
 
 #pragma mark - Navigation
