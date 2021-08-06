@@ -78,7 +78,6 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     self.allTrips = [PFUser currentUser][@"trips"];
     for (Trip *trip in self.allTrips){
         [trip fetchIfNeeded];
-        if (!trip) continue;
         if ([trip.startTime isEarlierThanOrEqualTo:now]){
             [self.pastTrips insertObject:trip atIndex:0];
         } else {
@@ -211,6 +210,7 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     [SceneDelegate clearCurrentTripSongs];
     [SceneDelegate setIsCurrentlyRouting:true];
     
+    [trip.endLocation fetchIfNeeded];
     NSTimeInterval timeInterval = trip.endLocation.time.timeIntervalSince1970 - trip.startTime.timeIntervalSince1970;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self saveRouteWithTrip:trip];
@@ -236,10 +236,12 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     NSString *key= [dict objectForKey:dictKey];
     
     NSString *coords = @"";
-    for (NSArray *coordinate in coordinates) {
-        coords = [coords stringByAppendingString:[NSString stringWithFormat:@"|%f,%f",[coordinate[0] doubleValue],[coordinate[1] doubleValue]]];
+    if (coordinates.count > 0) {
+        for (NSArray *coordinate in coordinates) {
+            coords = [coords stringByAppendingString:[NSString stringWithFormat:@"|%f,%f",[coordinate[0] doubleValue],[coordinate[1] doubleValue]]];
+        }
+        coords = [coords substringFromIndex:1];
     }
-    coords = [coords substringFromIndex:1];
     
     NSString *urlString = [NSString stringWithFormat: baseURL,coords,key];
     NSString *encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];

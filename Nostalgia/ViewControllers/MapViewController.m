@@ -210,7 +210,8 @@ static const NSString *mapIdString = @"ea891679bda3d3b0";
         [result.itemProvider loadObjectOfClass:[UIImage class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
             if (error == nil && [object isKindOfClass:[UIImage class]]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    PFFileObject *imageFile = [self getPFFileFromImage:object];
+                    UIImage *newImage = [self resizeImage:object withSize:CGSizeMake(500, 500)];
+                    PFFileObject *imageFile = [self getPFFileFromImage:newImage];
                     NSArray *photo =@[imageFile, @(asset.location.coordinate.latitude), @(asset.location.coordinate.longitude)];
                     [photos addObject:photo];
                     [self mapPhoto:photo];
@@ -218,7 +219,7 @@ static const NSString *mapIdString = @"ea891679bda3d3b0";
                     double lat = asset.location.coordinate.latitude;
                     double lng = asset.location.coordinate.longitude;
                     for (Destination *dest in self.trip.destinations){
-                        if (lat >= dest.coordinates.latitude - 0.0006 && lat <= dest.coordinates.latitude + 0.0006 && lng >= dest.coordinates.longitude - 0.0006 && lng <= dest.coordinates.longitude + 0.0006){
+                        if (lat >= dest.coordinates.latitude - 0.001 && lat <= dest.coordinates.latitude + 0.001 && lng >= dest.coordinates.longitude - 0.001 && lng <= dest.coordinates.longitude + 0.001){
                             NSMutableArray *array = [NSMutableArray arrayWithArray:dest.photos];
                             [array addObject:imageFile];
                             dest.photos = array;

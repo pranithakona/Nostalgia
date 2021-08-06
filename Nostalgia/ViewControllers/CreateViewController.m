@@ -132,7 +132,7 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
     static const NSString *durationKey = @"duration";
     static const NSString *valueKey = @"value";
     
-    if (!resultsDictionary){
+    if (!resultsDictionary || resultsDictionary.count == 0){
         return nil;
     }
     NSArray *legs = resultsDictionary[routesKey][0][legsKey];
@@ -188,6 +188,8 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
     newTrip.bounds = self.bounds;
     newTrip.isOptimized = self.routeTypeControl.selectedSegmentIndex == 0;
     
+    NSLog(@"array of users%@", newTrip.users);
+    
     [Trip postTrip:newTrip withCompletion:^(Trip * _Nullable trip, NSError * _Nullable error) {
         if (!error){
             NSMutableArray *userTrips = [NSMutableArray arrayWithArray:[PFUser currentUser][tripsKey]];
@@ -197,6 +199,7 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
             
             //give all shared users access to trip
             for (PFUser *user in trip.users) {
+                NSLog(@"user %@", user);
                 NSMutableArray *userTrips = [NSMutableArray arrayWithArray:user[tripsKey]];
                 [userTrips addObject:trip];
                 user[tripsKey] = userTrips;
@@ -212,6 +215,7 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
 - (void)editTripWithDestinations:(NSArray *)destinationsArray {
     self.trip.destinations = destinationsArray;
     self.trip.encodedPolyline = self.encodedPolyline;
+    self.trip.bounds = self.bounds;
     
     //add new users to trip
     for (PFUser *user in self.arrayOfSharedUsers){
