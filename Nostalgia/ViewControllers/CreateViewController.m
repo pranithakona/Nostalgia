@@ -10,6 +10,7 @@
 #import "MapViewController.h"
 #import "ShareViewController.h"
 #import "Trip.h"
+#import "SharedTrip.h"
 #import "CreateCell.h"
 #import "DateTools.h"
 #import "MaterialButtons.h"
@@ -204,6 +205,8 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
                 [userTrips addObject:trip];
                 user[tripsKey] = userTrips;
                 [user saveInBackground];
+                
+                [SharedTrip postSharedTrip:trip withUser:user];
             }
             
             [self.activityIndicator stopAnimating];
@@ -224,6 +227,8 @@ static const NSString *baseURL = @"https://maps.googleapis.com/maps/api/directio
             [userTrips addObject:self.trip];
             user[tripsKey] = userTrips;
             [user saveInBackground];
+            
+            [SharedTrip postSharedTrip:self.trip withUser:user];
         }
     }
     self.trip.users = self.arrayOfSharedUsers;

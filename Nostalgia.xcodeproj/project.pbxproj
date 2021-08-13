@@ -14,6 +14,7 @@
 		338049C726BA5C4B00BEA8DE /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C626BA5C4B00BEA8DE /* SongCell.m */; };
 		338049CA26BC87EE00BEA8DE /* InfoWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049C926BC87EE00BEA8DE /* InfoWindowView.m */; };
 		338049CC26BC87FF00BEA8DE /* InfoWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 338049CB26BC87FF00BEA8DE /* InfoWindowView.xib */; };
+		338049CF26C4342C00BEA8DE /* SharedTrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 338049CE26C4342C00BEA8DE /* SharedTrip.m */; };
 		33C64127269A646E00726C4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64126269A646E00726C4E /* AppDelegate.m */; };
 		33C6412A269A646E00726C4E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33C64129269A646E00726C4E /* SceneDelegate.m */; };
 		33C64130269A646E00726C4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33C6412E269A646E00726C4E /* Main.storyboard */; };
@@ -161,6 +162,8 @@
 		338049C826BC87EE00BEA8DE /* InfoWindowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoWindowView.h; sourceTree = "<group>"; };
 		338049C926BC87EE00BEA8DE /* InfoWindowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoWindowView.m; sourceTree = "<group>"; };
 		338049CB26BC87FF00BEA8DE /* InfoWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoWindowView.xib; sourceTree = "<group>"; };
+		338049CD26C4342C00BEA8DE /* SharedTrip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedTrip.h; sourceTree = "<group>"; };
+		338049CE26C4342C00BEA8DE /* SharedTrip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedTrip.m; sourceTree = "<group>"; };
 		33C64122269A646E00726C4E /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C64125269A646E00726C4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		33C64126269A646E00726C4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -454,6 +457,8 @@
 				33C64175269BCA6100726C4E /* Destination.m */,
 				33C6417D269E1B5700726C4E /* Trip.h */,
 				33C6417E269E1B5700726C4E /* Trip.m */,
+				338049CD26C4342C00BEA8DE /* SharedTrip.h */,
+				338049CE26C4342C00BEA8DE /* SharedTrip.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1053,6 +1058,7 @@
 				33C64162269A6DBB00726C4E /* LoginViewController.m in Sources */,
 				33DAE99526AF6FBE006094C3 /* ExploreCell.m in Sources */,
 				33C64179269BEAD000726C4E /* CreateCell.m in Sources */,
+				338049CF26C4342C00BEA8DE /* SharedTrip.m in Sources */,
 				338049C126BA5A3900BEA8DE /* TripDetailsViewController.m in Sources */,
 				33DAE9A026B0A4D1006094C3 /* PhotoViewController.m in Sources */,
 			);

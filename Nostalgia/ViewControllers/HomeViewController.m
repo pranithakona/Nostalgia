@@ -31,7 +31,7 @@
 
 @property (strong, nonatomic) NSMutableArray<Trip *> *futureTrips;
 @property (strong, nonatomic) NSMutableArray<Trip *> *pastTrips;
-@property (strong, nonatomic) NSArray<Trip *> *allTrips;
+@property (strong, nonatomic) NSMutableArray<Trip *> *allTrips;
 @property (strong, nonatomic) NSArray<Trip *> *filteredTrips;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSMutableArray<CLLocation *> *realTimeLocations;
@@ -71,6 +71,8 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
     self.futureTrips = [NSMutableArray array];
     self.pastTrips = [NSMutableArray array];
     
+    
+    
     //sort user trips based on date
     [self.activityIndicator startAnimating];
     NSDate *now = [NSDate now];
@@ -85,6 +87,7 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
         }
     }
     self.filteredTrips = self.futureTrips;
+    [self fetchSharedTrips];
     [self.activityIndicator stopAnimating];
     
     //schedule route tracking for each future trip
@@ -97,6 +100,26 @@ static const NSString *baseURL = @"https://roads.googleapis.com/v1/snapToRoads?p
         });
     }
     [self.locationManager requestWhenInUseAuthorization];
+}
+
+- (void)fetchSharedTrips {
+    PFQuery *query = [PFQuery queryWithClassName:@"SharedTrip"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    query.limit = 20;
+    [query includeKey:@"user"];
+    [query includeKey:@"trip"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *trips, NSError *error) {
+        if (trips != nil && trips.count > 0) {
+            for (Trip *trip in trips){
+                [self.futureTrips insertObject:trip atIndex:0];
+                [self.allTrips addObject:trip];
+                [trip deleteInBackground];
+            }
+            [PFUser currentUser][@"trips"] = self.allTrips;
+            [[PFUser currentUser] saveInBackground];
+        }
+    }];
 }
 
 #pragma mark - Collection View
